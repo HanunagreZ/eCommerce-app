@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "dev": "webpack serve --env develop",
-    "lint": "eslint src",
-    "format": "prettier --write src",
-    "ci:format": "prettier --check src",
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
+    "serve": "webpack serve --open --mode development",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix",
+    "format": "prettier --write ./src",
     "prepare": "husky install",
     "test": "jest"
   },

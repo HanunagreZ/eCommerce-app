@@ -8,6 +8,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const devServer = (isDev) => !isDev ? {} : {
   devServer: {
     open: true,
+    hot: true,
     port: 8080,
   },
 };
@@ -30,10 +31,6 @@ module.exports = ({ development }) => ({
         test: /\.[tj]s$/,
         use: 'ts-loader',
         exclude: /node_modules/,
-      },
-      {
-        test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.s[ac]ss$/i,
