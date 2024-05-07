@@ -1,7 +1,11 @@
 export default class Input {
   private element: HTMLInputElement;
 
-  constructor(placeholder: string, className: string, parentElement: HTMLElement) {
+  constructor(
+    placeholder: string,
+    className: string,
+    parentElement: HTMLElement,
+  ) {
     this.element = document.createElement('input');
     this.element.classList.add(className);
     this.element.setAttribute('type', 'text');
