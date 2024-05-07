@@ -1,7 +1,7 @@
 import './InputField.scss';
-import Div from '../ui-components/Div/Div';
-import Input from '../ui-components/Input/Input';
-import Label from '../ui-components/Label/Label';
+import Div from '../../ui-components/Div/Div';
+import Input from '../../ui-components/Input/Input';
+import Label from '../../ui-components/Label/Label';
 
 export default class InputField {
   private container: Div;
