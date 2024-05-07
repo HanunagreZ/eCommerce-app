@@ -1,8 +1,8 @@
 export default class Button {
-  private element: HTMLElement;
+  private element: HTMLButtonElement;
 
   constructor(text: string, className: string, parentElement: HTMLElement) {
-    this.element = document.createElement('button');
+    this.element = document.createElement("button");
     this.element.classList.add(className);
     this.element.innerText = text;
     this.render(parentElement);
@@ -13,7 +13,7 @@ export default class Button {
   }
 
   addListener(callback: () => void) {
-    this.element.addEventListener('click', callback);
+    this.element.addEventListener("click", callback);
   }
 
   render(parentElement: HTMLElement) {

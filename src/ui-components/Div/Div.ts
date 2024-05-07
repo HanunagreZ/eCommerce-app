@@ -1,8 +1,8 @@
 export default class Div {
-  private element: HTMLElement;
+  private element: HTMLDivElement;
 
   constructor(className: string, parentElement: HTMLElement) {
-    this.element = document.createElement('div');
+    this.element = document.createElement("div");
     this.element.classList.add(className);
     this.render(parentElement);
   }
