@@ -1,0 +1,91 @@
+@import '../../styles.scss';
+
+.header {
+  height: 76px;
+  display: flex;
+  justify-content: space-between;
+
+  border-bottom: solid 1px rgb(155, 151, 148);
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+
+  img {
+    width: 110px;
+    height: 28px;
+  }
+}
+
+.header__nav {
+  display: flex;
+  gap: 30px;
+}
+
+.header__nav-list {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.header__nav-item {
+  display: flex;
+}
+
+.header__nav-link {
+  color: #111111;
+  text-decoration: none;
+  font:
+    16px 'Poppins',
+    sans-serif;
+}
+
+.header__btn {
+  width: 100px;
+  height: 44px;
+  font:
+    16px 'Poppins',
+    sans-serif;
+  color: #6e41e2;
+  border: 2px solid #6e41e2;
+  border-radius: 4px;
+  align-self: center;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+}
+
+.ham1 {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 400ms;
+  user-select: none;
+}
+.ham1 path {
+  fill: none;
+  transition:
+    stroke-dasharray 400ms,
+    stroke-dashoffset 400ms;
+  stroke: #337ab7;
+  stroke-width: 5.5;
+  stroke-linecap: round;
+}
+.ham1.active {
+  transform: rotate(45deg);
+}
+.ham1 .top {
+  stroke-dasharray: 40 139;
+}
+.ham1 .bottom {
+  stroke-dasharray: 40 180;
+}
+.ham1.active .top {
+  stroke-dashoffset: -98px;
+}
+.ham1.active .bottom {
+  stroke-dashoffset: -138px;
+}
