@@ -12,7 +12,7 @@ export default class Button {
     return this.element;
   }
 
-  addListener(callback: () => void) {
+  addListener(callback: (e: Event) => void) {
     this.element.addEventListener('click', callback);
   }
 

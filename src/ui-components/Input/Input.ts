@@ -17,6 +17,10 @@ export default class Input {
     this.element.addEventListener('input', callback);
   }
 
+  removeListener(callback: () => void) {
+    this.element.removeEventListener('input', callback);
+  }
+
   render(parentElement: HTMLElement) {
     parentElement.append(this.element);
   }
