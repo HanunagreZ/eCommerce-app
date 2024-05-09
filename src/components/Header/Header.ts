@@ -1,8 +1,9 @@
 // import Button from '../../ui-components/Button/Button';
 import Div from '../../ui-components/Div/Div';
 import './header.scss';
-import NavUnauth from './NavUnauth';
 import A from '../../ui-components/A/A';
+import NavUnauth from './NavUnauth';
+import Burger from './Burger';
 
 export default class Header {
   private element: HTMLHeadElement;
@@ -20,7 +21,8 @@ export default class Header {
     imgLogo.src = 'assets/testLogo.png';
     logoLink.get().append(imgLogo);
 
-    new NavUnauth(this.element);
+    new NavUnauth('header__nav').render(this.element);
+    new Burger(this.element);
     parentElement.append(this.element);
   }
 }

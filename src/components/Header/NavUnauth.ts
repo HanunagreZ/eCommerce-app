@@ -4,10 +4,14 @@ import Button from '../../ui-components/Button/Button';
 
 export default class NavUnauth {
   private element: HTMLElement;
-  constructor(parentElement: HTMLElement) {
+
+  constructor(className: string) {
     this.element = document.createElement('nav');
-    this.element.classList.add('header__nav');
-    this.render(parentElement);
+    this.element.classList.add(className);
+  }
+
+  get() {
+    return this.element;
   }
 
   render(parentElement: HTMLElement) {
@@ -15,11 +19,33 @@ export default class NavUnauth {
     list.classList.add('header__nav-list');
     this.element.append(list);
 
-    new A('#', 'Help', new Li(list).get());
-    new A('#', 'Catalog', new Li(list).get());
-    new A('#', 'Sign in', new Li(list).get());
+    const helpLink = new A('#', 'Help', new Li(list).get());
 
-    new Button('Sign up', 'header__btn', this.element);
+    helpLink.get().addEventListener('click', () => {
+      const burgerPopup = document.querySelector('.burger__popup');
+      burgerPopup?.classList.toggle('burger__popup_active');
+    });
+
+    const catalogLink = new A('#', 'Catalog', new Li(list).get());
+
+    catalogLink.get().addEventListener('click', () => {
+      const burgerPopup = document.querySelector('.burger__popup');
+      burgerPopup?.classList.toggle('burger__popup_active');
+    });
+
+    const signInLink = new A('#', 'Sign in', new Li(list).get());
+
+    signInLink.get().addEventListener('click', () => {
+      const burgerPopup = document.querySelector('.burger__popup');
+      burgerPopup?.classList.toggle('burger__popup_active');
+    });
+
+    const buttonSignUp = new Button('Sign up', 'header__btn', this.element);
+
+    buttonSignUp.get().addEventListener('click', () => {
+      const burgerPopup = document.querySelector('.burger__popup');
+      burgerPopup?.classList.toggle('burger__popup_active');
+    });
 
     parentElement.append(this.element);
   }
