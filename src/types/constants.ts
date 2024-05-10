@@ -25,6 +25,10 @@ const constants = {
         reg: /^[A-Za-z]+$/,
       },
     ],
+    dateOfBirth: {
+      labelText: 'Date of birth',
+      clueText: 'Date format: DD.MM.YYYY. You must be above 13 years old.',
+    },
   },
 };
 export default constants;
