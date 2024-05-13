@@ -12,7 +12,6 @@ class Router {
 
   private route() {
     const { pathname } = window.location;
-    console.log(window.location.pathname);
     const matchedRoute = this.routes.find((route) => route.path === pathname);
     if (!matchedRoute) {
       this.navigateTo('/404');
