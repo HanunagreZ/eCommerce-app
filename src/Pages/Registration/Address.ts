@@ -21,7 +21,7 @@ export class Address {
   }
 
   render(parentElement: HTMLElement) {
-    new Label(constants.registration.country, 'registration__bill-country_label', parentElement);
+    new Label(constants.registration.country, 'registration__country_label', parentElement);
     this.country.render(parentElement);
     constants.registration.countries
       .map((country) => {
@@ -51,7 +51,11 @@ export class Address {
     return this.country;
   }
 
-  getAddressIData() {
+  getAddressData() {
     return this.addressData;
   }
+
+  // remove(){
+  //   this.country.
+  // }
 }

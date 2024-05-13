@@ -11,12 +11,11 @@ export default class Login {
   private form: HTMLFormElement;
   private inputFields: InputField[] = [];
   private button: Button;
-  constructor(parentElement: HTMLElement) {
+  constructor() {
     this.form = document.createElement('form');
     this.form.classList.add('login__form');
-    this.button = this.button = new Button('Log in', 'button');
+    this.button = new Button(constants.login.buttonTitle, 'button');
     this.button.addListener((e: Event) => this.login(e));
-    this.render(parentElement);
   }
 
   addInputs(data: IRegistrationData[]) {
@@ -25,16 +24,17 @@ export default class Login {
       this.inputFields.push(field);
     });
   }
-  render(parentElement: HTMLElement) {
-    const formWrapper = new Div('login__wrapper', parentElement);
+  render() {
+    const formWrapper = new Div('login__wrapper');
     new Span(constants.login.formTitle, 'login__title', this.form);
     const isLogined = new Div('login__navigate-to-login', this.form);
     isLogined.get().innerText = constants.registration.haveAccount;
-    //TODO add link Log in
+    //TODO add link Register
     this.addInputs(constants.login.generalData);
     this.button.render(this.form);
 
     formWrapper.get().append(this.form);
+    return formWrapper.get();
   }
   login(e: Event) {
     e.preventDefault();

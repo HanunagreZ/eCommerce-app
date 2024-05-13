@@ -1,15 +1,16 @@
+@import '../../styles.scss';
 .login__wrapper {
-  margin: 60px auto;
   width: 96%;
   max-width: 748px;
-  border: 1px solid rgb(0, 0, 0);
+  margin: 60px auto;
   padding: 48px 0;
+  border: 1px solid rgb(0, 0, 0);
 }
 
 .login__form {
-  margin: 0 auto;
   width: 96%;
   max-width: 473px;
+  margin: 0 auto;
   font-family: Poppins;
   color: #666666;
 

@@ -3,3 +3,23 @@ export interface IRegistrationData {
   clueText: string;
   reg: RegExp;
 }
+
+export interface ICustomerRegistration {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  addresses: IAddress[];
+  defaultShippingAddress: number;
+  shippingAddresses: number[];
+  defaultBillingAddress: number;
+  billingAddresses: number[];
+}
+
+interface IAddress {
+  country: string;
+  streetName: string;
+  postalCode: string;
+  city: string;
+}

@@ -20,6 +20,9 @@
   &.error {
     border-color: red;
   }
+  &:disabled {
+    color: rgba(102, 102, 102, 0.35);
+  }
 }
 
 .input-field-label {
