@@ -1,8 +1,8 @@
-// import './pages/Router/variants/Router';
 import Router from './pages/Router/Router';
 import routes from './pages/Router/routes';
 
-const router = new Router(routes);
+// const app = document.querySelector('#app');
+const router = new Router(document.body, routes);
 // router.navigateTo('/');
 const btn = document.querySelector('#button');
 if (btn)

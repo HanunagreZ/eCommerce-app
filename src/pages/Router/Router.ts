@@ -1,40 +1,10 @@
-// import routes from './routes';
-
-// class Router {
-//   private readonly root: HTMLElement;
-
-//   constructor(parameters) {
-//     this.root = parameters.root || document.body;
-//   }
-
-//   render(pageUI) {
-//     this.root.innerHTML = '';
-//     let page: HTMLElement = pageUI.render();
-//     this.root.appendChild(page);
-//   }
-
-//   loadPage(path) {
-//     const page = routes.layout;
-
-//     this.render(page);
-//     document.title;
-//   }
-// }
-// router.ts
-const app = document.querySelector('#app');
-
-import routes from './routes';
-console.log(routes);
-
-interface Route {
-  path: string;
-  component: string;
-}
-
+import IRoute from './types';
 class Router {
-  private routes: Route[];
+  private root: HTMLElement;
+  private routes: IRoute[];
 
-  constructor(routeList: Route[]) {
+  constructor(root: HTMLElement, routeList: IRoute[]) {
+    this.root = root;
     this.routes = routeList;
     window.addEventListener('popstate', this.route.bind(this));
     this.route();
@@ -42,22 +12,20 @@ class Router {
 
   private route() {
     const { pathname } = window.location;
-    console.log(pathname);
-    if (pathname.includes('products')) console.log(pathname);
+    console.log(window.location.pathname);
     const matchedRoute = this.routes.find((route) => route.path === pathname);
     if (!matchedRoute) {
       this.navigateTo('/404');
       const page404 = this.routes.find((route) => route.path.includes('404'));
-      if (app && page404) app.innerHTML = page404?.component;
+      if (page404) {
+        this.root.innerHTML = '';
+        this.root.appendChild(page404.component);
+      }
       return;
     }
-
     const { component } = matchedRoute;
-    const pageComponent = component;
-
-    if (app) app.innerHTML = pageComponent;
-
-    // Render the pageElement...
+    this.root.innerHTML = '';
+    this.root.appendChild(component);
   }
 
   public navigateTo(path: string) {
