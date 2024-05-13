@@ -29,6 +29,39 @@ const constants = {
       labelText: 'Date of birth',
       clueText: 'Date format: DD.MM.YYYY. You must be above 13 years old.',
     },
+    bilAddr: 'Billing address:',
+    shipAddr: 'Shipping address:',
+    checkboxDefault: 'save as default',
+    country: 'Country',
+    countries: ['United States of America', 'Canada'],
+    addressData: [
+      {
+        labelText: 'City',
+        clueText: 'Must contain at least one character and no special characters or numbers',
+        reg: /^[a-zA-Z\s]+$/,
+      },
+      {
+        labelText: 'Street',
+        clueText: 'Must contain at least one character',
+        reg: /^.+$/,
+      },
+      {
+        labelText: 'Postal code',
+        clueText: 'Format is 12345 or 12345-6789',
+        reg: /^\d{5}(?:-\d{4})?$/,
+      },
+    ],
+    postalCodes: {
+      'United States of America': {
+        clueText: 'Format is 12345 or 12345-6789',
+        reg: /^\d{5}(?:-\d{4})?$/,
+      },
+      'Canada': {
+        clueText: 'Format is A1B 2C3',
+        reg: /[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]/,
+      },
+    },
+    checkboxSameAddr: 'same as billing',
   },
 };
 export default constants;

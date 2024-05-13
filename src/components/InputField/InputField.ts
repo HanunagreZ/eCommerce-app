@@ -6,7 +6,7 @@ import Label from '../../ui-components/Label/Label';
 export default class InputField {
   private container: Div;
   private label: Label;
-  private clue: Div;
+  public clue: Div;
   public input: Input;
   public reg: RegExp;
 
@@ -30,15 +30,6 @@ export default class InputField {
 
   checkValidation(reg: RegExp): boolean {
     const isValid = reg.test(this.input.get().value);
-    // if (!isValid) {
-    //   this.input.get().classList.add('error');
-    //   this.clue.get().classList.add('error');
-    //   return false;
-    // } else {
-    //   this.input.get().classList.remove('error');
-    //   this.clue.get().classList.remove('error');
-    //   return true;
-    // }
     return this.addError(isValid);
   }
 
@@ -53,17 +44,4 @@ export default class InputField {
       return true;
     }
   }
-
-  // checkValidation(callback: (value: string) => boolean) {
-  //   const isValid = callback(this.input.get().value);
-  //   if (!isValid) {
-  //     this.input.get().classList.add('error');
-  //     this.clue.get().classList.add('error');
-  //     return false;
-  //   } else {
-  //     this.input.get().classList.remove('error');
-  //     this.clue.get().classList.remove('error');
-  //     return true;
-  //   }
-  // }
 }

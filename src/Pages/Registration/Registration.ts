@@ -3,16 +3,28 @@ import InputField from '../../components/InputField/InputField';
 import { IRegistrationData } from '../../types/interfaces';
 import constants from '../../types/constants';
 import Button from '../../ui-components/Button/Button';
-import { CheckAllInputs } from '../../utils/CheckInputs';
+import { CheckInputs } from '../../utils/CheckInputs';
 import Span from '../../ui-components/Span/Span';
 import Div from '../../ui-components/Div/Div';
 import { FormatDate } from '../../utils/FormatDate';
+import Input from '../../ui-components/Input/Input';
+import Label from '../../ui-components/Label/Label';
+import { Address } from './Address';
 
 export default class Registration {
   private form: HTMLFormElement;
   private inputFields: InputField[] = [];
   // private dateOfBirth: Input;
   private dateOfBirth: InputField;
+
+  private billAddrCheck: Input;
+
+  private billingAddressFields: Address;
+
+  private shippingAddressFields: Address;
+
+  private shipAddrCheck: Input;
+  private sameAddrCheck: Input;
 
   private button: Button;
   constructor(parentElement: HTMLElement) {
@@ -24,8 +36,18 @@ export default class Registration {
       constants.registration.dateOfBirth.labelText,
       constants.registration.dateOfBirth.clueText,
     );
+
+    this.billAddrCheck = new Input('', 'registration__address_checkbox');
+
+    this.billingAddressFields = new Address();
+
+    this.shippingAddressFields = new Address();
+
+    this.shipAddrCheck = new Input('', 'registration__address_checkbox');
+    this.sameAddrCheck = new Input('', 'registration__address_checkbox');
     this.button = this.button = new Button('Register', 'button');
     this.button.addListener((e: Event) => this.register(e));
+
     this.render(parentElement);
   }
   addInputs(data: IRegistrationData[]) {
@@ -48,13 +70,43 @@ export default class Registration {
     this.dateOfBirth.render(this.form);
     FormatDate(this.dateOfBirth.input.get());
 
+    new Span(constants.registration.bilAddr, 'registration__address', this.form);
+    this.billAddrCheck.get().setAttribute('type', 'checkbox');
+    this.billAddrCheck.render(this.form);
+    new Label(constants.registration.checkboxDefault, 'registration__address_label', this.form);
+
+    this.billingAddressFields.render(this.form);
+    this.billingAddressFields.getAddressIData().forEach((el) => this.inputFields.push(el));
+
+    const shipAddressWrapper = new Div('registration_address_title', this.form);
+    new Span(constants.registration.shipAddr, 'registration__address', shipAddressWrapper.get());
+
+    this.shipAddrCheck.get().setAttribute('type', 'checkbox');
+    this.shipAddrCheck.render(shipAddressWrapper.get());
+    new Label(constants.registration.checkboxDefault, 'registration__address_label', shipAddressWrapper.get());
+
+    this.sameAddrCheck.get().setAttribute('type', 'checkbox');
+    this.sameAddrCheck.render(shipAddressWrapper.get());
+    new Label(constants.registration.checkboxSameAddr, 'registration__address_label', shipAddressWrapper.get());
+
+    this.shippingAddressFields.render(this.form);
+    this.shippingAddressFields.getAddressIData().forEach((el) => this.inputFields.push(el));
+
     this.button.render(this.form);
 
     formWrapper.get().append(this.form);
   }
 
   checkAge(value: string): boolean {
-    if (value === '') return false;
+    if (
+      value === '' ||
+      Number(value[0]) > 3 ||
+      Number(value[3]) > 1 ||
+      Number(value.slice(0, 2)) > 31 ||
+      Number(value.slice(3, 5)) > 12 ||
+      Number(value.slice(6)) < 1900
+    )
+      return false;
     const dateElements = value
       .split('.')
       .map((el) => Number(el))
@@ -75,23 +127,23 @@ export default class Registration {
   }
 
   addAgeListener(): boolean {
-    const isValidAge =
-      this.dateOfBirth.addError(this.checkAge(this.dateOfBirth.input.get().value));
+    const isValidAge = this.dateOfBirth.addError(this.checkAge(this.dateOfBirth.input.get().value));
     this.dateOfBirth.input.removeListener(() =>
       this.dateOfBirth.addError(this.checkAge(this.dateOfBirth.input.get().value)),
     );
     this.dateOfBirth.input.addListener(() =>
       this.dateOfBirth.addError(this.checkAge(this.dateOfBirth.input.get().value)),
     );
-    console.log(isValidAge);
     return isValidAge;
   }
 
   register(e: Event) {
     e.preventDefault();
+
+    console.log(this.billAddrCheck.get().checked);
     let isValidForm = false;
     const isValidDate = this.addAgeListener();
-    isValidForm = CheckAllInputs(this.inputFields) && isValidDate;
+    isValidForm = CheckInputs(this.inputFields) && isValidDate;
     if (isValidForm) {
       const inputValues = this.inputFields?.map((el) => el.input.get().value);
 

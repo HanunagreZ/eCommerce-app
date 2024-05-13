@@ -1,6 +1,6 @@
 import InputField from '../components/InputField/InputField';
 
-export function CheckAllInputs(inputFields: InputField[]): boolean {
+export function CheckInputs(inputFields: InputField[]): boolean {
   let isAllValid = true;
   inputFields?.forEach((element) => {
     const isElementValid = element.checkValidation(element.reg);
