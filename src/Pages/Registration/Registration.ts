@@ -147,10 +147,10 @@ export default class Registration {
     if (isValidForm) {
       const inputValues = this.inputFields?.map((el) => el.input.get().value);
 
-      const [email, password] = inputValues;
+      // const [email, password] = inputValues;
 
       //send API request
-      console.log(email, password);
+      console.log(inputValues);
     }
   }
 }

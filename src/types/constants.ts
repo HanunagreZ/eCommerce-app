@@ -56,12 +56,29 @@ const constants = {
         clueText: 'Format is 12345 or 12345-6789',
         reg: /^\d{5}(?:-\d{4})?$/,
       },
-      'Canada': {
+      Canada: {
         clueText: 'Format is A1B 2C3',
         reg: /[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]/,
       },
     },
     checkboxSameAddr: 'same as billing',
+  },
+  login: {
+    formTitle: 'Log in',
+    haveAccount: 'Don`t have an account?',
+    loginLink: ' Sign up',
+    generalData: [
+      {
+        labelText: 'Email address',
+        clueText: 'A properly formatted email address (e.g., example@email.com)',
+        reg: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+      },
+      {
+        labelText: 'Password',
+        clueText: 'Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number',
+        reg: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
+      },
+    ],
   },
 };
 export default constants;
