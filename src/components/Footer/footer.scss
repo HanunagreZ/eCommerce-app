@@ -1,0 +1,29 @@
+@import '../../styles.scss';
+
+.footer {
+  height: 56px;
+  display: flex;
+  justify-content: space-between;
+  border-top: solid 1px rgb(155, 151, 148);
+  background-color: #fafafa;
+  width: 100%;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 110px;
+    height: 30px;
+    margin-left: 10px;
+  }
+}
+
+.footer__year {
+  font:
+    16px 'Poppins',
+    sans-serif;
+  color: #828282;
+  margin-right: 20px;
+}

@@ -1,1 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+.app {
+  width: 100vw;
+  height: calc(100vh - 134px);
+}
+
+.link {
+  color: #111111;
+  text-decoration: none;
+  font:
+    16px 'Poppins',
+    sans-serif;
+  transition: 0.3s;
+
+  &:hover {
+    color: #6e41e2;
+    transition: 0.3s;
+  }
+}

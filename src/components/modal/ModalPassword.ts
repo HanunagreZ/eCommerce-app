@@ -16,7 +16,7 @@ export default class ModalPassword {
   render(parentElement: HTMLElement) {
     const icon = document.createElement('img');
     icon.classList.add('modal__icon');
-    icon.src = 'assets/iconError.svg';
+    icon.src = 'assets/icons/iconError.svg';
     const title = new Span('Incorrect password!', 'modal__title', this.container.get());
     const description = new Span('Please use correct password', 'modal__description', this.container.get());
     const btn = new Button('Back', 'modal__btn', this.container.get());

@@ -1,5 +1,3 @@
-import './styles.scss';
+import app from './components/app';
 
-import Header from './components/Header/Header';
-
-new Header(document.body);
+app.render();

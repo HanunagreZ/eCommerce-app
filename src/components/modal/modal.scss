@@ -48,7 +48,7 @@
 }
 
 .modal__btn {
-  width: 79px;
+  width: 180px;
   height: 44px;
   border-radius: 4px;
   font-family: Poppins;
@@ -59,4 +59,11 @@
   color: #fff;
   background-color: #6e41e2;
   cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: #fafafa;
+    color: #6e41e2;
+    transition: 0.3s;
+  }
 }
