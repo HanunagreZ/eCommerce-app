@@ -1,3 +1,4 @@
+import './styles.scss';
 import Router from './pages/Router/Router';
 import routes from './pages/Router/routes';
 
