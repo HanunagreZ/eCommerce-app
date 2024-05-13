@@ -1,5 +1,3 @@
-// const input = document.querySelectorAll('.js-date')[0];
-
 const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 export function FormatDate(input: HTMLInputElement) {
@@ -32,4 +30,3 @@ export function FormatDate(input: HTMLInputElement) {
   });
 }
 
-// dateInputMask(input);
