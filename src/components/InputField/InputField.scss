@@ -1,13 +1,38 @@
+@import '../../styles.scss';
+
 .input-field {
-  margin: 0 auto;
+  margin: 24px auto;
   display: flex;
   flex-direction: column;
-  width: 94%;
+  width: 100%;
   max-width: 473px;
   gap: 5px;
+  font-family: Poppins;
+  font-style: Regular;
+}
 
-  .input-field-input {
-    height: 56px;
-    border-radius: 12px;
+.input-field-input {
+  height: 56px;
+  padding: 1% 2%;
+  border: 1px solid rgba(102, 102, 102, 0.35);
+  border-radius: 12px;
+
+  &.error {
+    border-color: red;
+  }
+  &:disabled {
+    color: rgba(102, 102, 102, 0.35);
+  }
+}
+
+.input-field-label {
+  font-size: 16px;
+}
+
+.input-field-clue {
+  font-size: 14px;
+  color: #666666;
+  &.error {
+    color: red;
   }
 }

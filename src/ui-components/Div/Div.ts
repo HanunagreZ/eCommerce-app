@@ -1,10 +1,10 @@
 export default class Div {
   private element: HTMLDivElement;
 
-  constructor(className: string, parentElement: HTMLElement) {
+  constructor(className: string, parentElement?: HTMLElement) {
     this.element = document.createElement('div');
     this.element.classList.add(className);
-    this.render(parentElement);
+    if (parentElement) this.render(parentElement);
   }
 
   get() {
