@@ -122,10 +122,10 @@ export default class Registration {
 
   register(e: Event) {
     e.preventDefault();
-
     let isValidForm = false;
     const isValidDate = this.addAgeListener();
     isValidForm = CheckInputs(this.inputFields) && isValidDate;
+
     if (isValidForm) {
       const inputValues = this.inputFields?.map((el) => el.input.get().value);
 

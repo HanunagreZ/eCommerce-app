@@ -3,6 +3,7 @@
 .footer {
   height: 56px;
   display: flex;
+  flex: 0 0 auto;
   justify-content: space-between;
   border-top: solid 1px rgb(155, 151, 148);
   background-color: #fafafa;

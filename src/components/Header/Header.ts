@@ -19,7 +19,7 @@ class Header {
     this.element = document.createElement('header');
     this.element.classList.add('header');
     this.logoContainer = new Div('header__logo', this.element);
-    this.logoLink = new Link('#', '', this.logoContainer.get());
+    this.logoLink = new Link('/', '', this.logoContainer.get());
     this.logoImg = document.createElement('img');
     this.logoImg.src = 'assets/testLogo.png';
     this.logoLink.get().append(this.logoImg);

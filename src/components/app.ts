@@ -1,8 +1,8 @@
 import '../styles.scss';
 import header from './Header/Header';
 import footer from './Footer/Footer';
-import Router from '../pages/Router/Router';
-import routes from '../pages/Router/routes';
+import Router from './Router/Router';
+import routes from './Router/routes';
 
 class App {
   private element: HTMLDivElement;

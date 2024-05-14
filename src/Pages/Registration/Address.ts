@@ -54,8 +54,4 @@ export class Address {
   getAddressData() {
     return this.addressData;
   }
-
-  // remove(){
-  //   this.country.
-  // }
 }

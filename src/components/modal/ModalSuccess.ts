@@ -24,9 +24,12 @@ export default class ModalSuccess {
     btn.get().addEventListener('click', () => {
       this.container.get().remove();
       this.background.get().remove();
+      location.href = '/';
     });
 
     this.container.get().append(icon, title.get(), description.get(), btn.get());
+
+    document.body.scrollIntoView();
     parentElement.append(this.background.get(), this.container.get());
   }
 }
