@@ -4,7 +4,7 @@ import { IRegistrationData } from '../../interfaces/interfaces';
 import Label from '../../ui-components/Label/Label';
 import Select from '../../ui-components/Select/Select';
 
-export class Address {
+export default class Address {
   private country: Select;
   private addressData: InputField[] = [];
 
@@ -34,7 +34,7 @@ export class Address {
     this.country.addListener(() => {
       this.changePostalCode();
     });
-    
+
     this.addInputs(constants.registration.addressData, parentElement);
   }
 

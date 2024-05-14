@@ -5,7 +5,8 @@ import { IRegistrationData } from '../../interfaces/interfaces';
 import Div from '../../ui-components/Div/Div';
 import Span from '../../ui-components/Span/Span';
 import Button from '../../ui-components/Button/Button';
-import { CheckInputs } from '../../utils/checkInputs';
+import Link from '../../ui-components/Link/Link';
+// import { CheckInputs } from '../../utils/checkInputs';
 
 export default class Login {
   private form: HTMLFormElement;
@@ -28,9 +29,9 @@ export default class Login {
   render() {
     const formWrapper = new Div('login__wrapper');
     new Span(constants.login.formTitle, 'login__title', this.form);
-    const isLogined = new Div('login__navigate-to-login', this.form);
-    isLogined.get().innerText = constants.registration.haveAccount;
-    //TODO add link Register
+    const haveAccount = new Div('login__navigate-to-reg', this.form);
+    haveAccount.get().innerText = constants.registration.haveAccount;
+    new Link('/registration', constants.login.regLink, haveAccount.get());
 
     this.addInputs(constants.login.generalData);
 
@@ -51,7 +52,7 @@ export default class Login {
     formWrapper.get().append(this.form);
     return formWrapper.get();
   }
-  
+
   login(e: Event) {
     e.preventDefault();
     // let isValidForm = false;

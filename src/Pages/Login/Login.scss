@@ -37,10 +37,14 @@
   color: #333333;
 }
 
-.login__navigate-to-login {
+.login__navigate-to-reg {
   font-style: Regular;
   font-size: 16px;
   color: #333333;
+
+  .link {
+    text-decoration: underline;
+  }
 }
 
 .login__password_view_btn {

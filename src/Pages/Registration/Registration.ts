@@ -9,9 +9,10 @@ import Div from '../../ui-components/Div/Div';
 import { FormatDate } from '../../utils/formatDate';
 import Input from '../../ui-components/Input/Input';
 import Label from '../../ui-components/Label/Label';
-import { Address } from './Address';
 import { CheckAge } from '../../utils/checkAge';
 import { IAddress } from '../../types/interfaces';
+import Address from './Address';
+import Link from '../../ui-components/Link/Link';
 
 export default class Registration {
   private form: HTMLFormElement;
@@ -57,7 +58,7 @@ export default class Registration {
     new Span(constants.registration.formTitle, 'registration__title', this.form);
     const isLogined = new Div('registration__navigate-to-login', this.form);
     isLogined.get().innerText = constants.registration.haveAccount;
-    //TODO add link Log in
+    new Link('/login', constants.registration.loginLink, isLogined.get());
     this.addInputs(constants.registration.generalData);
     this.dateOfBirth.render(this.form);
     FormatDate(this.dateOfBirth.input.get());

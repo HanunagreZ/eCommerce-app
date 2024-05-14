@@ -69,7 +69,7 @@ export const constants = {
   login: {
     formTitle: 'Log in',
     haveAccount: 'Don`t have an account?',
-    loginLink: ' Sign up',
+    regLink: ' Sign up',
     generalData: [
       {
         labelText: 'Email address',
