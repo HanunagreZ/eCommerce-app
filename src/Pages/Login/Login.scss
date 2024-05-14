@@ -1,0 +1,43 @@
+@import '../../styles.scss';
+.login__wrapper {
+  width: 96%;
+  max-width: 748px;
+  margin: 60px auto;
+  padding: 48px 0;
+  border: 1px solid rgb(0, 0, 0);
+}
+
+.login__form {
+  width: 96%;
+  max-width: 473px;
+  margin: 0 auto;
+  font-family: Poppins;
+  color: #666666;
+
+  .button {
+    width: 100%;
+    height: 44px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(110, 65, 226);
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:active {
+      position: relative;
+      top: 1px;
+    }
+  }
+}
+
+.login__title {
+  font-style: Medium;
+  font-size: 32px;
+  color: #333333;
+}
+
+.login__navigate-to-login {
+  font-style: Regular;
+  font-size: 16px;
+  color: #333333;
+}

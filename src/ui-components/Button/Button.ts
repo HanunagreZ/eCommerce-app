@@ -1,18 +1,19 @@
 export default class Button {
   private element: HTMLButtonElement;
 
-  constructor(text: string, className: string, parentElement: HTMLElement) {
+  //implement parentElement as optional parameter for creating element without rendering
+  constructor(text: string, className: string, parentElement?: HTMLElement) {
     this.element = document.createElement('button');
     this.element.classList.add(className);
     this.element.innerText = text;
-    this.render(parentElement);
+    if (parentElement) this.render(parentElement);
   }
 
   get() {
     return this.element;
   }
 
-  addListener(callback: () => void) {
+  addListener(callback: (e: Event) => void) {
     this.element.addEventListener('click', callback);
   }
 
