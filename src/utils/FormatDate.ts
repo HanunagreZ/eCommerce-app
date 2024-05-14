@@ -29,4 +29,3 @@ export function FormatDate(input: HTMLInputElement) {
     }
   });
 }
-
