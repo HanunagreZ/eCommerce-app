@@ -1,6 +1,8 @@
 import '../styles.scss';
 import header from './Header/Header';
 import footer from './Footer/Footer';
+import Router from '../pages/Router/Router';
+import routes from '../pages/Router/routes';
 
 class App {
   private element: HTMLDivElement;
@@ -13,7 +15,9 @@ class App {
     footer.render(document.body);
   }
 
-  render() {}
+  render() {
+    new Router(this.element, routes);
+  }
 }
 
 const app = new App();
