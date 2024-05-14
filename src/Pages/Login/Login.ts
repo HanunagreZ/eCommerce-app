@@ -1,11 +1,11 @@
 import './Login.scss';
 import InputField from '../../components/InputField/InputField';
-import constants from '../../types/constants';
-import { IRegistrationData } from '../../types/interfaces';
+import { constants } from '../../data/data';
+import { IRegistrationData } from '../../interfaces/interfaces';
 import Div from '../../ui-components/Div/Div';
 import Span from '../../ui-components/Span/Span';
 import Button from '../../ui-components/Button/Button';
-// import { CheckInputs } from '../../utils/CheckInputs';
+import { CheckInputs } from '../../utils/checkInputs';
 
 export default class Login {
   private form: HTMLFormElement;

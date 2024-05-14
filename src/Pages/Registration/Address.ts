@@ -1,6 +1,6 @@
 import InputField from '../../components/InputField/InputField';
-import constants from '../../types/constants';
-import { IRegistrationData } from '../../types/interfaces';
+import { constants } from '../../data/data';
+import { IRegistrationData } from '../../interfaces/interfaces';
 import Label from '../../ui-components/Label/Label';
 import Select from '../../ui-components/Select/Select';
 
@@ -31,8 +31,10 @@ export class Address {
       })
       .map((country) => this.country.get().append(country));
     this.country.render(parentElement);
-    this.country.addListener(() => this.changePostalCode());
-
+    this.country.addListener(() => {
+      this.changePostalCode();
+    });
+    
     this.addInputs(constants.registration.addressData, parentElement);
   }
 
@@ -52,8 +54,4 @@ export class Address {
   getAddressData() {
     return this.addressData;
   }
-
-  // remove(){
-  //   this.country.
-  // }
 }

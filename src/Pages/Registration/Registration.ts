@@ -1,17 +1,17 @@
 import './Registration.scss';
 import InputField from '../../components/InputField/InputField';
-import { IAddress, ICustomerRegistration, IRegistrationData } from '../../types/interfaces';
-import constants from '../../types/constants';
+import { ICustomerRegistration, IRegistrationData } from '../../interfaces/interfaces';
+import { constants } from '../../data/data';
 import Button from '../../ui-components/Button/Button';
-import { CheckInputs } from '../../utils/CheckInputs';
+import { CheckInputs } from '../../utils/checkInputs';
 import Span from '../../ui-components/Span/Span';
 import Div from '../../ui-components/Div/Div';
-import { FormatDate } from '../../utils/FormatDate';
+import { FormatDate } from '../../utils/formatDate';
 import Input from '../../ui-components/Input/Input';
 import Label from '../../ui-components/Label/Label';
 import { Address } from './Address';
-import { CheckAge } from '../../utils/CheckAge';
-// import api from '../../Api';
+import { CheckAge } from '../../utils/checkAge';
+import { IAddress } from '../../types/interfaces';
 
 export default class Registration {
   private form: HTMLFormElement;
@@ -125,7 +125,6 @@ export default class Registration {
 
   register(e: Event) {
     e.preventDefault();
-
     let isValidForm = false;
     const isValidDate = this.addAgeListener();
     isValidForm = CheckInputs(this.inputFields) && isValidDate;

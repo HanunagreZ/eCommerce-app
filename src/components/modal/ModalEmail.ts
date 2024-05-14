@@ -16,7 +16,7 @@ export default class ModalEmail {
   render(parentElement: HTMLElement) {
     const icon = document.createElement('img');
     icon.classList.add('modal__icon');
-    icon.src = 'assets/iconError.svg';
+    icon.src = 'assets/icons/iconError.svg';
     const title = new Span('This email is already in use', 'modal__title', this.container.get());
     const description = new Span('Please log in or use another email', 'modal__description', this.container.get());
     const btn = new Button('Back', 'modal__btn', this.container.get());
