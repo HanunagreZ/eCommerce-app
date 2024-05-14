@@ -1,10 +1,10 @@
 import Div from '../../ui-components/Div/Div';
 import './header.scss';
 import Link from '../../ui-components/Link/Link';
-import NavUnauth from './NavUnauth';
-import NavAuth from './NavAuth';
-import burger from './Burger';
-import basket from './Basket';
+import NavUnauth from './Nav/NavUnauth';
+import NavAuth from './Nav/NavAuth';
+import burger from './Burger/Burger';
+import basket from './Basket/Basket';
 
 class Header {
   private element: HTMLElement;

@@ -1,4 +1,4 @@
-import Span from '../../ui-components/Span/Span';
+import Span from '../../../ui-components/Span/Span';
 
 class Basket {
   private element: HTMLDivElement;

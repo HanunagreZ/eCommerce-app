@@ -2,7 +2,7 @@ import '../styles.scss';
 import header from './Header/Header';
 import footer from './Footer/Footer';
 import Router from './Router/Router';
-import routes from './Router/routes';
+import { routes } from '../data/routesData';
 
 class App {
   private element: HTMLDivElement;

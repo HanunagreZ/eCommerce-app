@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ICustomerRegistration } from './types/interfaces';
+import { ICustomerRegistration } from './interfaces/interfaces';
 
 class Api {
   private project_key = 'rs-ecommerce';

@@ -1,4 +1,4 @@
-const constants = {
+export const constants = {
   registration: {
     formTitle: 'Create an account',
     haveAccount: 'Already have an account?',
@@ -85,4 +85,3 @@ const constants = {
     buttonTitle: 'Log in',
   },
 };
-export default constants;

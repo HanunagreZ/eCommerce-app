@@ -1,6 +1,6 @@
-import Div from '../../ui-components/Div/Div';
-import NavUnauth from './NavUnauth';
-import NavAuth from './NavAuth';
+import Div from '../../../ui-components/Div/Div';
+import NavUnauth from '../Nav/NavUnauth';
+import NavAuth from '../Nav/NavAuth';
 
 class Burger {
   private element: HTMLDivElement;

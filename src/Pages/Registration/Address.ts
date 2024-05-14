@@ -1,6 +1,6 @@
 import InputField from '../../components/InputField/InputField';
-import constants from '../../types/constants';
-import { IRegistrationData } from '../../types/interfaces';
+import { constants } from '../../data/data';
+import { IRegistrationData } from '../../interfaces/interfaces';
 import Label from '../../ui-components/Label/Label';
 import Select from '../../ui-components/Select/Select';
 
