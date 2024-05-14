@@ -17,7 +17,7 @@ export interface ICustomerRegistration {
   billingAddresses: number[];
 }
 
-interface IAddress {
+export interface IAddress {
   country: string;
   streetName: string;
   postalCode: string;

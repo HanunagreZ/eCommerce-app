@@ -1,6 +1,6 @@
 import './Registration.scss';
 import InputField from '../../components/InputField/InputField';
-import { IRegistrationData } from '../../types/interfaces';
+import { IAddress, ICustomerRegistration, IRegistrationData } from '../../types/interfaces';
 import constants from '../../types/constants';
 import Button from '../../ui-components/Button/Button';
 import { CheckInputs } from '../../utils/CheckInputs';
@@ -11,6 +11,7 @@ import Input from '../../ui-components/Input/Input';
 import Label from '../../ui-components/Label/Label';
 import { Address } from './Address';
 import { CheckAge } from '../../utils/CheckAge';
+// import api from '../../Api';
 
 export default class Registration {
   private form: HTMLFormElement;
@@ -111,11 +112,13 @@ export default class Registration {
       this.billingAddressFields.getAddressData().forEach((el, i) => {
         el.input.get().value = addressData[i].input.get().value;
         el.input.get().disabled = true;
+        el.clue.get().classList.add('disabled');
       });
     } else {
       this.billingAddressFields.getCountry().get().disabled = false;
       this.billingAddressFields.getAddressData().forEach((el) => {
         el.input.get().disabled = false;
+        el.clue.get().classList.remove('disabled');
       });
     }
   }
@@ -126,11 +129,45 @@ export default class Registration {
     let isValidForm = false;
     const isValidDate = this.addAgeListener();
     isValidForm = CheckInputs(this.inputFields) && isValidDate;
+
+    console.log(this.inputFields[6].reg);
+    console.log(this.inputFields[9].reg);
     if (isValidForm) {
       const inputValues = this.inputFields?.map((el) => el.input.get().value);
+      const newDateOfBirth = this.dateOfBirth.input.get().value.split('.').reverse().join('-');
+      const newShippingAddress: IAddress = {
+        country:
+          constants.registration.postalCodes[
+            this.shippingAddressFields.getCountry().get().value as keyof typeof constants.registration.postalCodes
+          ].countryCode,
+        streetName: inputValues[5],
+        postalCode: inputValues[6],
+        city: inputValues[4],
+      };
 
-      //send API request
-      console.log(inputValues);
+      const newBillingAddress: IAddress = {
+        country:
+          constants.registration.postalCodes[
+            this.billingAddressFields.getCountry().get().value as keyof typeof constants.registration.postalCodes
+          ].countryCode,
+        streetName: inputValues[8],
+        postalCode: inputValues[9],
+        city: inputValues[7],
+      };
+      const requestData: ICustomerRegistration = {
+        email: inputValues[0],
+        password: inputValues[1],
+        firstName: inputValues[2],
+        lastName: inputValues[3],
+        dateOfBirth: newDateOfBirth,
+        addresses: [newShippingAddress, newBillingAddress],
+        defaultShippingAddress: this.shipAddrCheck.get().checked ? 0 : -1,
+        shippingAddresses: [0],
+        defaultBillingAddress: this.billAddrCheck.get().checked ? 1 : -1,
+        billingAddresses: [1],
+      };
+      console.log(requestData);
+      // api.createCustomer(requestData);
     }
   }
 }

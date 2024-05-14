@@ -1,4 +1,5 @@
 @import '../../styles.scss';
+
 .login__wrapper {
   width: 96%;
   max-width: 748px;
@@ -40,4 +41,18 @@
   font-style: Regular;
   font-size: 16px;
   color: #333333;
+}
+
+.login__password_view_btn {
+  position: relative;
+  left: calc(98% - 40px);
+  top: -95px;
+  width: 40px;
+  height: 40px;
+  background-image: url('./../../assets/passwordNotShow.svg');
+  cursor: pointer;
+
+  &.visible {
+    background-image: url('./../../assets/passwordShow.svg');
+  }
 }

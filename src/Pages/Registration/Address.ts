@@ -31,9 +31,7 @@ export class Address {
       })
       .map((country) => this.country.get().append(country));
     this.country.render(parentElement);
-    this.country.addListener(() => {
-      this.changePostalCode();
-    });
+    this.country.addListener(() => this.changePostalCode());
 
     this.addInputs(constants.registration.addressData, parentElement);
   }
