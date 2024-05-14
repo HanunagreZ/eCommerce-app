@@ -4,6 +4,7 @@ export default class Page404 {
     const header = document.createElement('h2');
     header.textContent = '404. Page Not Found';
     elem.appendChild(header);
+
     return elem;
   }
 }

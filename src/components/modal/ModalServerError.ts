@@ -16,7 +16,7 @@ export default class ModalServerError {
   render(parentElement: HTMLElement) {
     const icon = document.createElement('img');
     icon.classList.add('modal__icon');
-    icon.src = 'assets/iconAlert.svg';
+    icon.src = 'assets/icons/iconAlert.svg';
     const title = new Span('Something went wrong', 'modal__title', this.container.get());
     const description = new Span('Please try again', 'modal__description', this.container.get());
     const btn = new Button('Back', 'modal__btn', this.container.get());

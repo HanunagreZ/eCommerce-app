@@ -1,12 +1,14 @@
+import Div from '../../ui-components/Div/Div';
+import './Main.scss';
+
 export default class MainPage {
+  private element: Div;
+
+  constructor() {
+    this.element = new Div('main');
+  }
+
   render() {
-    const elem = document.createElement('div');
-    const header = document.createElement('h2');
-    const link = document.createElement('a');
-    link.textContent = 'TO Products ';
-    link.href = '/products';
-    header.textContent = 'Main Page';
-    elem.append(header, link);
-    return elem;
+    return this.element.get();
   }
 }

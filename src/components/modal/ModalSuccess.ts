@@ -16,7 +16,7 @@ export default class ModalSuccess {
   render(parentElement: HTMLElement) {
     const icon = document.createElement('img');
     icon.classList.add('modal__icon');
-    icon.src = 'assets/iconSuccess.svg';
+    icon.src = 'assets/icons/iconSuccess.svg';
     const title = new Span('Welcome!', 'modal__title', this.container.get());
     const description = new Span('Account successfully created', 'modal__description', this.container.get());
     const btn = new Button('Go to main page', 'modal__btn', this.container.get());
@@ -24,9 +24,12 @@ export default class ModalSuccess {
     btn.get().addEventListener('click', () => {
       this.container.get().remove();
       this.background.get().remove();
+      location.href = '/';
     });
 
     this.container.get().append(icon, title.get(), description.get(), btn.get());
+
+    document.body.scrollIntoView();
     parentElement.append(this.background.get(), this.container.get());
   }
 }

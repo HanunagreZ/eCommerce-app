@@ -1,4 +1,5 @@
-import IRoute from './types';
+import { IRoute } from '../../interfaces/interfaces';
+
 class Router {
   private root: HTMLElement;
   private routes: IRoute[];

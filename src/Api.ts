@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ICustomerRegistration } from './interfaces/interfaces';
 
 class Api {
   private project_key = 'rs-ecommerce';
@@ -8,7 +9,7 @@ class Api {
   private Auth_URL = 'https://auth.australia-southeast1.gcp.commercetools.com';
   private accessToken = '';
 
-  createCustomer(body: IRegForm) {
+  createCustomer(body: ICustomerRegistration) {
     axios
       .post(`${this.API_URL}/rs-ecommerce/customers`, body, {
         headers: {
@@ -48,10 +49,3 @@ class Api {
 
 const api = new Api();
 export default api;
-
-interface IRegForm {
-  email: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-}
