@@ -1,6 +1,6 @@
 import './Registration.scss';
 import InputField from '../../components/InputField/InputField';
-import { ICustomerRegistration, IRegistrationData } from '../../interfaces/interfaces';
+import { ICustomerRegistration, IRegistrationData, IAddress } from '../../interfaces/interfaces';
 import { constants } from '../../data/data';
 import Button from '../../ui-components/Button/Button';
 import { CheckInputs } from '../../utils/checkInputs';
@@ -10,7 +10,6 @@ import { FormatDate } from '../../utils/formatDate';
 import Input from '../../ui-components/Input/Input';
 import Label from '../../ui-components/Label/Label';
 import { CheckAge } from '../../utils/checkAge';
-// import { IAddress } from '../../types/interfaces';
 import Address from './Address';
 import Link from '../../ui-components/Link/Link';
 import api from '../../Api';
@@ -55,6 +54,7 @@ export default class Registration {
   }
 
   render() {
+    api.obtainAccessToken();
     const formWrapper = new Div('registration__wrapper');
     this.renderGeneralData();
     this.renderShippingAddress();
@@ -117,7 +117,7 @@ export default class Registration {
     label.setAttribute('for', id);
     return { chekbox, label };
   }
-  
+
   addAgeListener(): boolean {
     const isValidAge = this.dateOfBirth.addError(CheckAge(this.dateOfBirth.input.get().value));
     this.dateOfBirth.input.removeListener(() =>
@@ -166,45 +166,43 @@ export default class Registration {
     return isValidForm;
   }
 
-  async register(e: Event) {
+  register(e: Event) {
     e.preventDefault();
     if (this.validateForm()) {
       const inputValues = this.inputFields?.map((el) => el.input.get().value);
       const newDateOfBirth = this.dateOfBirth.input.get().value.split('.').reverse().join('-');
-      // const newShippingAddress: IAddress = {
-      //   country:
-      //     constants.registration.postalCodes[
-      //       this.shippingAddressFields.getCountry().get().value as keyof typeof constants.registration.postalCodes
-      //     ].countryCode,
-      //   streetName: inputValues[5],
-      //   postalCode: inputValues[6],
-      //   city: inputValues[4],
-      // };
-
-      // const newBillingAddress: IAddress = {
-      //   country:
-      //     constants.registration.postalCodes[
-      //       this.billingAddressFields.getCountry().get().value as keyof typeof constants.registration.postalCodes
-      //     ].countryCode,
-      //   streetName: inputValues[8],
-      //   postalCode: inputValues[9],
-      //   city: inputValues[7],
-      // };
+      const newShippingAddress: IAddress = {
+        country:
+          constants.registration.postalCodes[
+            this.shippingAddressFields.getCountry().get().value as keyof typeof constants.registration.postalCodes
+          ].countryCode,
+        streetName: inputValues[5],
+        postalCode: inputValues[6],
+        city: inputValues[4],
+      };
+      const newBillingAddress: IAddress = {
+        country:
+          constants.registration.postalCodes[
+            this.billingAddressFields.getCountry().get().value as keyof typeof constants.registration.postalCodes
+          ].countryCode,
+        streetName: inputValues[8],
+        postalCode: inputValues[9],
+        city: inputValues[7],
+      };
+      const billingAddressIndex = JSON.stringify(newBillingAddress) === JSON.stringify(newShippingAddress) ? 0 : 1;
       const requestData: ICustomerRegistration = {
         email: inputValues[0],
         password: inputValues[1],
         firstName: inputValues[2],
         lastName: inputValues[3],
         dateOfBirth: newDateOfBirth,
-        // addresses: [newShippingAddress, newBillingAddress],
-        // defaultShippingAddress: this.shipAddrCheck.get().checked ? 0 : -1,
-        // shippingAddresses: [0],
-        // defaultBillingAddress: this.billAddrCheck.get().checked ? 1 : -1,
-        // billingAddresses: [1],
+        addresses: billingAddressIndex ? [newShippingAddress, newBillingAddress] : [newShippingAddress],
+        defaultShippingAddress: this.shipAddrCheck.get().checked ? 0 : null,
+        shippingAddresses: [0],
+        defaultBillingAddress: this.billAddrCheck.get().checked ? billingAddressIndex : null,
+        billingAddresses: [billingAddressIndex],
       };
-      // console.log(requestData);
-      await api.obtainAccessToken();
-      await api.createCustomer(requestData);
+      api.createCustomer(requestData);
     }
   }
 }

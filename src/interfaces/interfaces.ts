@@ -10,14 +10,14 @@ export interface ICustomerRegistration {
   firstName: string;
   lastName: string;
   dateOfBirth: string;
-  // addresses: IAddress[];
-  // defaultShippingAddress: number;
-  // shippingAddresses: number[];
-  // defaultBillingAddress: number;
-  // billingAddresses: number[];
+  addresses: IAddress[];
+  defaultShippingAddress: number | null;
+  shippingAddresses: number[];
+  defaultBillingAddress: number | null;
+  billingAddresses: number[];
 }
 
-interface IAddress {
+export interface IAddress {
   country: string;
   streetName: string;
   postalCode: string;
