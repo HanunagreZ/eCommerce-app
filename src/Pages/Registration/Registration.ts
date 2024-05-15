@@ -10,10 +10,10 @@ import { FormatDate } from '../../utils/formatDate';
 import Input from '../../ui-components/Input/Input';
 import Label from '../../ui-components/Label/Label';
 import { CheckAge } from '../../utils/checkAge';
-import { IAddress } from '../../types/interfaces';
+// import { IAddress } from '../../types/interfaces';
 import Address from './Address';
 import Link from '../../ui-components/Link/Link';
-// import api from '../../Api';
+import api from '../../Api';
 
 export const registrationError = {
   count: 0,
@@ -33,22 +33,16 @@ export default class Registration {
   constructor() {
     this.form = document.createElement('form');
     this.form.classList.add('registration__form');
-
     this.dateOfBirth = new InputField(
       constants.registration.dateOfBirth.labelText,
       constants.registration.dateOfBirth.clueText,
     );
-
     this.shipAddrCheck = new Input('', 'registration__address_checkbox');
-
     this.shippingAddressFields = new Address();
-
     this.billingAddressFields = new Address();
-
     this.billAddrCheck = new Input('', 'registration__address_checkbox');
     this.sameAddrCheck = new Input('', 'registration__address_checkbox');
     this.sameAddrCheck.addListener(() => this.fillBillingAddress());
-
     this.button = this.button = new Button(constants.registration.buttonTitle, 'button');
     this.button.addListener((e: Event) => this.register(e));
   }
@@ -80,13 +74,16 @@ export default class Registration {
     this.dateOfBirth.render(this.form);
     FormatDate(this.dateOfBirth.input.get());
   }
+
   renderShippingAddress() {
     const shippingAddressWrapper = new Div('registration__address_title', this.form);
     new Span(constants.registration.shippingAddr, 'registration__address', shippingAddressWrapper.get());
-    this.shipAddrCheck.get().setAttribute('type', 'checkbox');
-    this.shipAddrCheck.render(shippingAddressWrapper.get());
-    new Label(constants.registration.checkboxDefault, 'registration__address_label', shippingAddressWrapper.get());
-
+    const shippingCheck = this.createCheckbox(
+      this.shipAddrCheck.get(),
+      'shipping_address',
+      constants.registration.checkboxDefault,
+    );
+    shippingAddressWrapper.get().append(shippingCheck.chekbox, shippingCheck.label);
     this.shippingAddressFields.render(this.form);
     this.shippingAddressFields.getCountry().addListener(() => this.fillBillingAddress());
     this.shippingAddressFields.getAddressData().forEach((el) => {
@@ -98,19 +95,29 @@ export default class Registration {
   renderBillingAddress() {
     const billAddressWrapper = new Div('registration__address_title', this.form);
     new Span(constants.registration.billingAddr, 'registration__address', billAddressWrapper.get());
-
-    this.billAddrCheck.get().setAttribute('type', 'checkbox');
-    this.billAddrCheck.render(billAddressWrapper.get());
-    new Label(constants.registration.checkboxDefault, 'registration__address_label', billAddressWrapper.get());
-
-    this.sameAddrCheck.get().setAttribute('type', 'checkbox');
-    this.sameAddrCheck.render(billAddressWrapper.get());
-    new Label(constants.registration.checkboxSameAddr, 'registration__address_label', billAddressWrapper.get());
-
+    const billingCheck = this.createCheckbox(
+      this.billAddrCheck.get(),
+      'billing_address',
+      constants.registration.checkboxDefault,
+    );
+    const sameCheck = this.createCheckbox(
+      this.sameAddrCheck.get(),
+      'same_address',
+      constants.registration.checkboxSameAddr,
+    );
+    billAddressWrapper.get().append(billingCheck.chekbox, billingCheck.label, sameCheck.chekbox, sameCheck.label);
     this.billingAddressFields.render(this.form);
     this.billingAddressFields.getAddressData().forEach((el) => this.inputFields.push(el));
   }
 
+  createCheckbox(chekbox: HTMLInputElement, id: string, labelText: string) {
+    chekbox.setAttribute('type', 'checkbox');
+    chekbox.setAttribute('id', id);
+    const label = new Label(labelText, 'registration__address_label').get();
+    label.setAttribute('for', id);
+    return { chekbox, label };
+  }
+  
   addAgeListener(): boolean {
     const isValidAge = this.dateOfBirth.addError(CheckAge(this.dateOfBirth.input.get().value));
     this.dateOfBirth.input.removeListener(() =>
@@ -159,45 +166,45 @@ export default class Registration {
     return isValidForm;
   }
 
-  register(e: Event) {
+  async register(e: Event) {
     e.preventDefault();
     if (this.validateForm()) {
       const inputValues = this.inputFields?.map((el) => el.input.get().value);
       const newDateOfBirth = this.dateOfBirth.input.get().value.split('.').reverse().join('-');
-      const newShippingAddress: IAddress = {
-        country:
-          constants.registration.postalCodes[
-            this.shippingAddressFields.getCountry().get().value as keyof typeof constants.registration.postalCodes
-          ].countryCode,
-        streetName: inputValues[5],
-        postalCode: inputValues[6],
-        city: inputValues[4],
-      };
+      // const newShippingAddress: IAddress = {
+      //   country:
+      //     constants.registration.postalCodes[
+      //       this.shippingAddressFields.getCountry().get().value as keyof typeof constants.registration.postalCodes
+      //     ].countryCode,
+      //   streetName: inputValues[5],
+      //   postalCode: inputValues[6],
+      //   city: inputValues[4],
+      // };
 
-      const newBillingAddress: IAddress = {
-        country:
-          constants.registration.postalCodes[
-            this.billingAddressFields.getCountry().get().value as keyof typeof constants.registration.postalCodes
-          ].countryCode,
-        streetName: inputValues[8],
-        postalCode: inputValues[9],
-        city: inputValues[7],
-      };
+      // const newBillingAddress: IAddress = {
+      //   country:
+      //     constants.registration.postalCodes[
+      //       this.billingAddressFields.getCountry().get().value as keyof typeof constants.registration.postalCodes
+      //     ].countryCode,
+      //   streetName: inputValues[8],
+      //   postalCode: inputValues[9],
+      //   city: inputValues[7],
+      // };
       const requestData: ICustomerRegistration = {
         email: inputValues[0],
         password: inputValues[1],
         firstName: inputValues[2],
         lastName: inputValues[3],
         dateOfBirth: newDateOfBirth,
-        addresses: [newShippingAddress, newBillingAddress],
-        defaultShippingAddress: this.shipAddrCheck.get().checked ? 0 : -1,
-        shippingAddresses: [0],
-        defaultBillingAddress: this.billAddrCheck.get().checked ? 1 : -1,
-        billingAddresses: [1],
+        // addresses: [newShippingAddress, newBillingAddress],
+        // defaultShippingAddress: this.shipAddrCheck.get().checked ? 0 : -1,
+        // shippingAddresses: [0],
+        // defaultBillingAddress: this.billAddrCheck.get().checked ? 1 : -1,
+        // billingAddresses: [1],
       };
-      console.log(requestData);
-      // api.obtainAccessToken();
-      // api.createCustomer(requestData);
+      // console.log(requestData);
+      await api.obtainAccessToken();
+      await api.createCustomer(requestData);
     }
   }
 }
