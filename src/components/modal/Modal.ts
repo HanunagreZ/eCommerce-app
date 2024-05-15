@@ -33,6 +33,8 @@ export default class Modal {
     });
 
     this.container.get().append(icon, title.get(), description.get(), btn.get());
+
+    document.body.scrollIntoView();
     parentElement.append(this.background.get(), this.container.get());
   }
 }
