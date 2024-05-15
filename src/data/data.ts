@@ -85,3 +85,42 @@ export const constants = {
     buttonTitle: 'Log in',
   },
 };
+
+export const modalProps = {
+  modalEmail: {
+    icon: 'assets/icons/iconError.svg',
+    title: 'This email is already in use',
+    description: 'Please log in or use another email',
+    btn: 'Back',
+    addEvent: () => {
+      console.log('Test');
+    },
+  },
+  modalPassword: {
+    icon: 'assets/icons/iconError.svg',
+    title: 'Incorrect password!',
+    description: 'Please use correct password',
+    btn: 'Back',
+    addEvent: () => {
+      console.log('Test2');
+    },
+  },
+  modalServerError: {
+    icon: 'assets/icons/iconAlert.svg',
+    title: 'Something went wrong',
+    description: 'Please try again',
+    btn: 'Back',
+    addEvent: () => {
+      console.log('Test3');
+    },
+  },
+  modalSuccess: {
+    icon: 'assets/icons/iconSuccess.svg',
+    title: 'Welcome!',
+    description: 'Account successfully created',
+    btn: 'Go to main page',
+    addEvent: () => {
+      location.href = '/';
+    },
+  },
+};
