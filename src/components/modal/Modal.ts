@@ -22,9 +22,9 @@ export default class Modal {
     const icon = document.createElement('img');
     icon.classList.add('modal__icon');
     icon.src = this.props.icon;
-    const title = new Span(this.props.title, 'modal__title', this.container.get());
-    const description = new Span(this.props.description, 'modal__description', this.container.get());
-    const btn = new Button(this.props.btn, 'modal__btn', this.container.get());
+    const title = new Span(this.props.title, 'modal__title');
+    const description = new Span(this.props.description, 'modal__description');
+    const btn = new Button(this.props.btn, 'modal__btn');
 
     btn.get().addEventListener('click', () => {
       this.container.get().remove();
