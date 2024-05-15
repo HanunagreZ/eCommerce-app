@@ -43,7 +43,7 @@ export default class Registration {
     this.sameAddrCheck = new Input('', 'registration__address_checkbox');
     this.sameAddrCheck.addListener(() => this.fillBillingAddress());
     this.button = this.button = new Button(constants.registration.buttonTitle, 'button');
-    this.button.addListener((e: Event) => this.register(e));
+    this.button.addListener((e) => this.register(e));
   }
 
   addInputs(data: IRegistrationData[]) {
@@ -166,8 +166,8 @@ export default class Registration {
     return isValidForm;
   }
 
-  register(e: Event) {
-    e.preventDefault();
+  register(e: Event | undefined) {
+    e?.preventDefault();
     if (this.validateForm()) {
       const inputValues = this.inputFields?.map((el) => el.input.get().value);
       const newDateOfBirth = this.dateOfBirth.input.get().value.split('.').reverse().join('-');

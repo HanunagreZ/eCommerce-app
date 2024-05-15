@@ -16,7 +16,7 @@ export default class Login {
     this.form = document.createElement('form');
     this.form.classList.add('login__form');
     this.button = new Button(constants.login.buttonTitle, 'button');
-    this.button.addListener((e: Event) => this.login(e));
+    this.button.addListener((e) => this.login(e));
   }
 
   addInputs(data: IRegistrationData[]) {
@@ -53,8 +53,8 @@ export default class Login {
     return formWrapper.get();
   }
 
-  login(e: Event) {
-    e.preventDefault();
+  login(e: Event | undefined) {
+    e?.preventDefault();
     // let isValidForm = false;
     // // const inputFields = [this.loginField, this.passwordField];
     // // isValidForm = CheckInputs(this.inputFields);
