@@ -1,0 +1,92 @@
+@import '../../styles.scss';
+
+.wrapper__404 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px auto;
+}
+
+.header__404 {
+  font-size: 10rem;
+  margin: 0;
+}
+
+.subheader__404 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.info__404 {
+  font-weight: 600;
+}
+
+.registration__wrapper {
+  width: 96%;
+  max-width: 748px;
+  margin: 40px auto;
+  padding: 48px 0;
+  border: 1px solid rgb(0, 0, 0);
+}
+
+.button__404 {
+  width: 270px;
+  height: 44px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(110, 65, 226);
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+}
+
+.registration__title {
+  font-style: Medium;
+  font-size: 32px;
+  color: #333333;
+}
+
+.registration__navigate-to-login {
+  font-style: Regular;
+  font-size: 16px;
+  color: #333333;
+}
+
+.registration__address {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.registration__address_title {
+  display: flex;
+}
+
+.registration__address_checkbox {
+  width: 20px;
+  height: 20px;
+  margin: 0 2% 0 5%;
+  cursor: pointer;
+}
+
+.registration__address_label {
+  font-size: 14px;
+}
+
+.registration__country_label {
+  display: block;
+  margin-top: 24px;
+}
+
+.registration__country {
+  display: block;
+  width: 100%;
+  height: 67px;
+  margin: 5px 0;
+  padding: 1% 2%;
+  border: 1px solid rgba(102, 102, 102, 0.35);
+  border-radius: 12px;
+}
