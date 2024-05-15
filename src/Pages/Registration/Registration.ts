@@ -13,6 +13,11 @@ import { CheckAge } from '../../utils/checkAge';
 import { IAddress } from '../../types/interfaces';
 import Address from './Address';
 import Link from '../../ui-components/Link/Link';
+// import api from '../../Api';
+
+export const registrationError = {
+  count: 0,
+};
 
 export default class Registration {
   private form: HTMLFormElement;
@@ -47,12 +52,14 @@ export default class Registration {
     this.button = this.button = new Button(constants.registration.buttonTitle, 'button');
     this.button.addListener((e: Event) => this.register(e));
   }
+
   addInputs(data: IRegistrationData[]) {
     data.forEach((el) => {
       const field = new InputField(el.labelText, el.clueText, el.reg, this.form);
       this.inputFields.push(field);
     });
   }
+
   render() {
     const formWrapper = new Div('registration__wrapper');
     new Span(constants.registration.formTitle, 'registration__title', this.form);
@@ -114,6 +121,9 @@ export default class Registration {
         el.input.get().value = addressData[i].input.get().value;
         el.input.get().disabled = true;
         el.clue.get().classList.add('disabled');
+        this.shippingAddressFields.getCountry().addListener(() => {
+          this.billingAddressFields.changePostalCode();
+        });
       });
     } else {
       this.billingAddressFields.getCountry().get().disabled = false;
@@ -121,18 +131,29 @@ export default class Registration {
         el.input.get().disabled = false;
         el.clue.get().classList.remove('disabled');
       });
+      this.shippingAddressFields.getCountry().removeListener(() => {
+        this.billingAddressFields.changePostalCode();
+      });
     }
+  }
+
+  validateForm() {
+    registrationError.count = 0;
+    let isValidForm = false;
+    const isValidGeneralData = CheckInputs(this.inputFields.slice(0, 4)); 
+    const isValidDate = this.addAgeListener();
+    if (!isValidDate && registrationError.count === 0) {
+      this.dateOfBirth.get().scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'start' });
+      registrationError.count = 1;
+    }
+    const isValidAddresses = CheckInputs(this.inputFields.slice(4));
+    isValidForm = isValidGeneralData && isValidDate && isValidAddresses;
+    return isValidForm;
   }
 
   register(e: Event) {
     e.preventDefault();
-    let isValidForm = false;
-    const isValidDate = this.addAgeListener();
-    isValidForm = CheckInputs(this.inputFields) && isValidDate;
-
-    console.log(this.inputFields[6].reg);
-    console.log(this.inputFields[9].reg);
-    if (isValidForm) {
+    if (this.validateForm()) {
       const inputValues = this.inputFields?.map((el) => el.input.get().value);
       const newDateOfBirth = this.dateOfBirth.input.get().value.split('.').reverse().join('-');
       const newShippingAddress: IAddress = {
@@ -167,6 +188,7 @@ export default class Registration {
         billingAddresses: [1],
       };
       console.log(requestData);
+      // api.obtainAccessToken();
       // api.createCustomer(requestData);
     }
   }
