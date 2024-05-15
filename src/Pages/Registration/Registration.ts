@@ -62,18 +62,30 @@ export default class Registration {
 
   render() {
     const formWrapper = new Div('registration__wrapper');
+    this.renderGeneralData();
+    this.renderShippingAddress();
+    this.renderBillingAddress();
+    this.button.render(this.form);
+    formWrapper.get().append(this.form);
+    return formWrapper.get();
+  }
+
+  renderGeneralData() {
     new Span(constants.registration.formTitle, 'registration__title', this.form);
     const isLogined = new Div('registration__navigate-to-login', this.form);
     isLogined.get().innerText = constants.registration.haveAccount;
     new Link('/login', constants.registration.loginLink, isLogined.get());
     this.addInputs(constants.registration.generalData);
+
     this.dateOfBirth.render(this.form);
     FormatDate(this.dateOfBirth.input.get());
-
-    new Span(constants.registration.shippingAddr, 'registration__address', this.form);
+  }
+  renderShippingAddress() {
+    const shippingAddressWrapper = new Div('registration__address_title', this.form);
+    new Span(constants.registration.shippingAddr, 'registration__address', shippingAddressWrapper.get());
     this.shipAddrCheck.get().setAttribute('type', 'checkbox');
-    this.shipAddrCheck.render(this.form);
-    new Label(constants.registration.checkboxDefault, 'registration__address_label', this.form);
+    this.shipAddrCheck.render(shippingAddressWrapper.get());
+    new Label(constants.registration.checkboxDefault, 'registration__address_label', shippingAddressWrapper.get());
 
     this.shippingAddressFields.render(this.form);
     this.shippingAddressFields.getCountry().addListener(() => this.fillBillingAddress());
@@ -81,7 +93,9 @@ export default class Registration {
       this.inputFields.push(el);
       el.input.addListener(() => this.fillBillingAddress());
     });
+  }
 
+  renderBillingAddress() {
     const billAddressWrapper = new Div('registration__address_title', this.form);
     new Span(constants.registration.billingAddr, 'registration__address', billAddressWrapper.get());
 
@@ -95,12 +109,6 @@ export default class Registration {
 
     this.billingAddressFields.render(this.form);
     this.billingAddressFields.getAddressData().forEach((el) => this.inputFields.push(el));
-
-    this.button.render(this.form);
-
-    formWrapper.get().append(this.form);
-
-    return formWrapper.get();
   }
 
   addAgeListener(): boolean {
@@ -140,7 +148,7 @@ export default class Registration {
   validateForm() {
     registrationError.count = 0;
     let isValidForm = false;
-    const isValidGeneralData = CheckInputs(this.inputFields.slice(0, 4)); 
+    const isValidGeneralData = CheckInputs(this.inputFields.slice(0, 4));
     const isValidDate = this.addAgeListener();
     if (!isValidDate && registrationError.count === 0) {
       this.dateOfBirth.get().scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'start' });
