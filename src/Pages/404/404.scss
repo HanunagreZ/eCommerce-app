@@ -1,0 +1,64 @@
+@import '../../styles.scss';
+
+.wrapper__404 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px auto;
+}
+
+.title__404 {
+  margin: 0;
+  padding-top: 20px;
+  font-size: 200px;
+  line-height: 180px;
+  letter-spacing: 10px;
+  transition: all 0.5s;
+  @media (max-width: 768px) {
+    font-size: 170px;
+  }
+  @media (max-width: 500px) {
+    font-size: 140px;
+  }
+}
+
+.description__404 {
+  margin: 0;
+  font-size: 40px;
+  letter-spacing: 2px;
+  @media (max-width: 500px) {
+    font-size: 32px;
+  }
+}
+
+.info__404 {
+  padding: 20px;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-align: center;
+  @media (max-width: 500px) {
+    font-size: 24px;
+  }
+}
+
+.button__404 {
+  width: 270px;
+  height: 44px;
+  border: 0;
+  border-radius: 5px;
+  background-color: rgb(110, 65, 226);
+  color: rgb(255, 255, 255);
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.4s;
+
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+
+  &:hover {
+    background-color: rgb(85, 31, 223);
+  }
+}
