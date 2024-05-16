@@ -10,7 +10,6 @@ class Burger {
   private popup: Div;
   private navUnauthPopup: NavUnauth;
   private navAuthPopup: NavAuth;
-  private state: number;
 
   constructor() {
     this.element = document.createElement('div');
@@ -28,7 +27,6 @@ class Burger {
     this.clickHamburger();
     this.navUnauthPopup = new NavUnauth('header__nav_popup');
     this.navAuthPopup = new NavAuth('header__nav_popup');
-    this.state = 0;
   }
 
   get() {
@@ -48,22 +46,13 @@ class Burger {
     this.element.append(this.burgerLine1, this.burgerLine2, this.burgerLine3);
     parentElement.append(this.element);
   }
-
-  reRenderPopupNav() {
-    if (this.state === 0) {
+  renderPopupNav() {
+    if (localStorage.getItem('userName')) {
+      this.navUnauthPopup?.get().remove();
+      this.navAuthPopup.render(this.popup.get());
+    } else {
+      this.navAuthPopup?.get().remove();
       this.navUnauthPopup.render(this.popup.get());
-      this.state = 1;
-      return;
-    }
-    if (this.state === 1) {
-      this.navUnauthPopup.get().replaceWith(this.navAuthPopup.get());
-      this.state = 2;
-      return;
-    }
-    if (this.state === 2) {
-      this.navAuthPopup.get().replaceWith(this.navUnauthPopup.get());
-      this.state = 1;
-      return;
     }
   }
 }

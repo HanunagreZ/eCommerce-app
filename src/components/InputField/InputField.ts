@@ -44,4 +44,8 @@ export default class InputField {
       return true;
     }
   }
+
+  get() {
+    return this.container.get();
+  }
 }

@@ -18,7 +18,7 @@ export default class NavAuth {
     this.element.append(list);
     this.aboutLink = new Link('#', 'About us', new Li(list).get());
     this.catalogLink = new Link('#', 'Catalog', new Li(list).get());
-    this.userLink = new Link('#', 'User', new Li(list).get());
+    this.userLink = new Link('#', String(localStorage.getItem('userName')), new Li(list).get());
     this.logOutBtn = new Button('Log out', 'header__btn', this.element);
     this.logOut();
   }
@@ -29,7 +29,9 @@ export default class NavAuth {
 
   logOut() {
     this.logOutBtn.get().addEventListener('click', () => {
-      header.reRenderNav();
+      header.renderNav();
+      localStorage.clear();
+      location.href = '/';
     });
   }
 

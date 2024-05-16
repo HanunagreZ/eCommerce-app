@@ -11,9 +11,9 @@ export interface ICustomerRegistration {
   lastName: string;
   dateOfBirth: string;
   addresses: IAddress[];
-  defaultShippingAddress: number | null;
+  defaultShippingAddress: number;
   shippingAddresses: number[];
-  defaultBillingAddress: number | null;
+  defaultBillingAddress: number;
   billingAddresses: number[];
 }
 
@@ -22,17 +22,4 @@ export interface IAddress {
   streetName: string;
   postalCode: string;
   city: string;
-}
-
-export interface IRoute {
-  path: string;
-  component: HTMLElement;
-}
-
-export interface IModalProps {
-  icon: string;
-  title: string;
-  description: string;
-  btn: string;
-  addEvent: () => void;
 }
