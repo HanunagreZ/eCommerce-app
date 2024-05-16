@@ -28,3 +28,11 @@ export interface IRoute {
   path: string;
   component: HTMLElement;
 }
+
+export interface IModalProps {
+  icon: string;
+  title: string;
+  description: string;
+  btn: string;
+  addEvent: () => void;
+}

@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { ICustomerRegistration } from './interfaces/interfaces';
+import Modal from './components/modal/Modal';
+import { modalProps } from './data/data';
 
 class Api {
   private project_key = 'rs-ecommerce';
@@ -17,11 +19,13 @@ class Api {
         },
       })
       .then(function (response) {
+        new Modal(modalProps.modalSuccess);
         console.log(response);
+        localStorage.setItem('userName', response.data.customer.firstName);
       })
       .catch(function (error) {
         if (error.response.data.message === 'There is already an existing customer with the provided email.') {
-          console.log('This email is already in use');
+          new Modal(modalProps.modalEmail);
         }
       });
   }
@@ -45,7 +49,28 @@ class Api {
         console.log(error);
       });
   }
+
+  obtainRefreshToken() {
+    axios
+      .post(
+        `${this.Auth_URL}/oauth/${this.project_key}/customers/token`,
+
+        {},
+        {
+          headers: {
+            Authorization: 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==',
+          },
+        },
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch(function (error: Error) {
+        console.log(error);
+      });
+  }
 }
 
 const api = new Api();
+
 export default api;

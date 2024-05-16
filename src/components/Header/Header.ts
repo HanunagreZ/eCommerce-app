@@ -13,7 +13,6 @@ class Header {
   private logoImg: HTMLImageElement;
   private navAuth: NavAuth;
   private navUnauth: NavUnauth;
-  private state: number;
 
   constructor() {
     this.element = document.createElement('header');
@@ -25,35 +24,24 @@ class Header {
     this.logoLink.get().append(this.logoImg);
     this.navAuth = new NavAuth('header__nav');
     this.navUnauth = new NavUnauth('header__nav');
-    this.state = 0;
   }
 
   render(parentElement: HTMLElement) {
-    this.reRenderNav();
+    this.renderNav();
     basket.render(this.element);
     burger.render(this.element);
     parentElement.append(this.element);
   }
 
-  reRenderNav() {
-    if (this.state === 0) {
+  renderNav() {
+    if (localStorage.getItem('userName')) {
+      this.navUnauth?.get().remove();
+      this.navAuth.render(this.element);
+    } else {
+      this.navAuth?.get().remove();
       this.navUnauth.render(this.element);
-      burger.reRenderPopupNav();
-      this.state = 1;
-      return;
     }
-    if (this.state === 1) {
-      this.navUnauth.get().replaceWith(this.navAuth.get());
-      burger.reRenderPopupNav();
-      this.state = 2;
-      return;
-    }
-    if (this.state === 2) {
-      this.navAuth.get().replaceWith(this.navUnauth.get());
-      this.state = 1;
-      burger.reRenderPopupNav();
-      return;
-    }
+    burger.renderPopupNav();
   }
 }
 
