@@ -6,7 +6,7 @@ import Div from '../../ui-components/Div/Div';
 import Span from '../../ui-components/Span/Span';
 import Button from '../../ui-components/Button/Button';
 import Link from '../../ui-components/Link/Link';
-// import { CheckInputs } from '../../utils/checkInputs';
+import { CheckInputs } from '../../utils/checkInputs';
 
 export default class Login {
   private form: HTMLFormElement;
@@ -55,13 +55,12 @@ export default class Login {
 
   login(e: Event | undefined) {
     e?.preventDefault();
-    // let isValidForm = false;
-    // // const inputFields = [this.loginField, this.passwordField];
-    // // isValidForm = CheckInputs(this.inputFields);
-    // if (isValidForm) {
-    const inputValues = this.inputFields?.map((el) => el.input.get().value);
+    let isValidForm = false;
+    isValidForm = CheckInputs(this.inputFields);
+    if (isValidForm) {
+      const inputValues = this.inputFields?.map((el) => el.input.get().value);
 
-    console.log(inputValues);
-    //}
+      console.log(inputValues);
+    }
   }
 }

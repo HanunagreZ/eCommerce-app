@@ -12,7 +12,7 @@ export const constants = {
       {
         labelText: 'Password',
         clueText: 'Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number',
-        reg: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
+        reg: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/,
       },
       {
         labelText: 'First name',
