@@ -7,18 +7,28 @@
   margin: 40px auto;
 }
 
-.header__404 {
+.title__404 {
   margin: 0;
   padding-top: 20px;
   font-size: 200px;
   line-height: 180px;
   letter-spacing: 10px;
+  transition: all 0.5s;
+  @media (max-width: 768px) {
+    font-size: 170px;
+  }
+  @media (max-width: 500px) {
+    font-size: 140px;
+  }
 }
 
-.subheader__404 {
+.description__404 {
   margin: 0;
   font-size: 40px;
   letter-spacing: 2px;
+  @media (max-width: 500px) {
+    font-size: 32px;
+  }
 }
 
 .info__404 {
@@ -27,6 +37,9 @@
   font-weight: 600;
   letter-spacing: 1px;
   text-align: center;
+  @media (max-width: 500px) {
+    font-size: 24px;
+  }
 }
 
 .button__404 {

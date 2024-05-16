@@ -12,10 +12,10 @@ export default class Page404 {
   constructor() {
     this.container = new Div('wrapper__404');
     this.pageHeader = document.createElement('h2');
-    this.pageHeader.classList.add('header__404');
+    this.pageHeader.classList.add('title__404');
     this.pageHeader.textContent = '404';
     this.pageSubHeader = document.createElement('h3');
-    this.pageSubHeader.classList.add('subheader__404');
+    this.pageSubHeader.classList.add('description__404');
     this.pageSubHeader.textContent = 'Page not found';
     this.pageInfo = document.createElement('p');
     this.pageInfo.classList.add('info__404');
