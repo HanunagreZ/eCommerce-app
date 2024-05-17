@@ -19,15 +19,3 @@ export const routes: IRoute[] = [
   // { path: '/about', component: '<h1>About Us Page</h1>' },
   { path: '/404 ', component: new Page404().render() },
 ];
-
-export const routesRefresh: IRoute[] = [
-  { path: '/', component: new MainPage().render() },
-  { path: '/registration', component: new Registration().render() },
-  { path: '/login', component: new MainPage().render() },
-  // { path: '/products', component: new ProductsPage().render() },
-  // { path: '/products[id]', component: '<h1>Single Product Page</h1>' },
-  // { path: '/profile', component: '<h1>Profile Page</h1>' },
-  // { path: '/basket', component: '<h1>Basket Page</h1>' },
-  // { path: '/about', component: '<h1>About Us Page</h1>' },
-  { path: '/404 ', component: new Page404().render() },
-];

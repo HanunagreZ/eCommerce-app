@@ -2,9 +2,6 @@ import axios from 'axios';
 import { ICustomerRegistration, ICustomerLogin } from './interfaces/interfaces';
 import Modal from './components/modal/Modal';
 import { modalProps } from './data/data';
-import Router from './components/Router/Router';
-import app from './components/App';
-import { routes, routesRefresh } from './data/routesData';
 
 class Api {
   private project_key = 'rs-ecommerce';
@@ -13,20 +10,6 @@ class Api {
   private API_URL = 'https://api.australia-southeast1.gcp.commercetools.com';
   private Auth_URL = 'https://auth.australia-southeast1.gcp.commercetools.com';
   private accessToken = '';
-
-  /*function getUserAccount() {
-    return axios.get('/user/12345');
-  }
-  
-  function getUserPermissions() {
-    return axios.get('/user/12345/permissions');
-  }
-  
-  Promise.all([getUserAccount(), getUserPermissions()])
-    .then(function (results) {
-      const acct = results[0];
-      const perm = results[1];
-    });*/
 
   createCustomer(payload: ICustomerRegistration) {
     const token = localStorage.getItem('accessToken');
@@ -129,11 +112,9 @@ class Api {
   isRefreshCoockieExist() {
     if (localStorage.getItem('refreshToken')) {
       console.log('Рефреш токен есть');
-      new Router(app.get(), routesRefresh);
       return;
     } else {
       console.log('Рефреш токена нет');
-      new Router(app.get(), routes);
       this.getAccessToken();
       //localStorage.removeItem('userName');
     }
