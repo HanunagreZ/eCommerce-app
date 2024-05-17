@@ -2,6 +2,7 @@ import axios, { AxiosError } from 'axios';
 import { ICustomerRegistration, ICustomerLogin } from './interfaces/interfaces';
 import Modal from './components/modal/Modal';
 import { modalProps } from './data/data';
+import Loading from './components/Loading/Loading';
 
 class Api {
   private project_key = 'rs-ecommerce';
@@ -56,6 +57,7 @@ class Api {
   }
 
   async createCustomer(payload: ICustomerRegistration) {
+    const loading = new Loading();
     try {
       const token = localStorage.getItem('accessToken');
       console.log(token);
@@ -67,6 +69,7 @@ class Api {
       });
 
       localStorage.setItem('userName', response.data.customer.firstName);
+      loading.remove();
       new Modal(modalProps.modalSuccess);
       console.log('Зарегистрировали пользователя');
 
@@ -80,6 +83,7 @@ class Api {
       console.error(error);
       if (error instanceof AxiosError) {
         if (error.response?.data.message === 'There is already an existing customer with the provided email.') {
+          loading.remove();
           new Modal(modalProps.modalEmail);
         }
       }
@@ -87,6 +91,7 @@ class Api {
   }
 
   async login(payload: ICustomerLogin) {
+    const loading = new Loading();
     try {
       const token = localStorage.getItem('accessToken');
 
@@ -99,11 +104,13 @@ class Api {
 
       await this.obtainTokens(payload);
       localStorage.setItem('userName', response.data.customer.firstName);
+      loading.remove();
       location.href = '/';
     } catch (error) {
       console.error(error);
       if (error instanceof AxiosError) {
         if (error.response?.data.message === 'Account with the given credentials not found.') {
+          loading.remove();
           new Modal(modalProps.modalCredentialsNotFound);
         }
       }
