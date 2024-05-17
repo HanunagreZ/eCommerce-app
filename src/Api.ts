@@ -96,7 +96,6 @@ class Api {
         }, 2000);
         return response;
       })
-      .then((response) => {})
       .catch(function (error) {
         if (error.response.data.message === 'Account with the given credentials not found.') {
           new Modal(modalProps.modalCredentialsNotFound);
