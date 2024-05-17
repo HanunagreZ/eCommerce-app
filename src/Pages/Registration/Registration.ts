@@ -54,7 +54,6 @@ export default class Registration {
   }
 
   render() {
-    api.obtainAccessToken();
     const formWrapper = new Div('registration__wrapper');
     this.renderGeneralData();
     this.renderShippingAddress();

@@ -17,6 +17,11 @@ export interface ICustomerRegistration {
   billingAddresses: number[];
 }
 
+export interface ICustomerLogin {
+  email: string;
+  password: string;
+}
+
 export interface IAddress {
   country: string;
   streetName: string;

@@ -26,6 +26,13 @@ class Router {
     const { component } = matchedRoute;
     this.root.innerHTML = '';
     this.root.appendChild(component);
+    if (
+      (pathname === '/login' && localStorage.getItem('userName')) ||
+      (pathname === '/registration' && localStorage.getItem('userName'))
+    ) {
+      this.navigateTo('/');
+    }
+    console.log(pathname);
   }
 
   public navigateTo(path: string) {

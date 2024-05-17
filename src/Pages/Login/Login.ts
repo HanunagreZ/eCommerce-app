@@ -7,6 +7,7 @@ import Span from '../../ui-components/Span/Span';
 import Button from '../../ui-components/Button/Button';
 import Link from '../../ui-components/Link/Link';
 import { CheckInputs } from '../../utils/checkInputs';
+import api from '../../Api';
 
 export default class Login {
   private form: HTMLFormElement;
@@ -61,6 +62,13 @@ export default class Login {
       const inputValues = this.inputFields?.map((el) => el.input.get().value);
 
       console.log(inputValues);
+
+      const payload = {
+        email: inputValues[0],
+        password: inputValues[1],
+      };
+
+      api.login(payload);
     }
   }
 }

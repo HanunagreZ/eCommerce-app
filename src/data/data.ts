@@ -1,4 +1,3 @@
-import api from '../Api';
 import header from '../components/Header/Header';
 
 export const constants = {
@@ -99,6 +98,15 @@ export const modalProps = {
       console.log('Test');
     },
   },
+  modalCredentialsNotFound: {
+    icon: 'assets/icons/iconError.svg',
+    title: 'Customer account with the given credentials not found',
+    description: 'Use correct account data or sign up',
+    btn: 'Back',
+    addEvent: () => {
+      console.log('Test');
+    },
+  },
   modalPassword: {
     icon: 'assets/icons/iconError.svg',
     title: 'Incorrect password!',
@@ -125,7 +133,6 @@ export const modalProps = {
     addEvent: () => {
       location.href = '/';
       header.renderNav();
-      api.obtainRefreshToken();
     },
   },
 };
