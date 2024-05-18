@@ -5,6 +5,7 @@ import NavUnauth from './Nav/NavUnauth';
 import NavAuth from './Nav/NavAuth';
 import burger from './Burger/Burger';
 import basket from './Basket/Basket';
+import userState from '../../states/UserState';
 
 class Header {
   private element: HTMLElement;
@@ -34,7 +35,7 @@ class Header {
   }
 
   renderNav() {
-    if (localStorage.getItem('userName')) {
+    if (userState.getUserName()) {
       this.navUnauth?.get().remove();
       this.navAuth.render(this.element);
     } else {

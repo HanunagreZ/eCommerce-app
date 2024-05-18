@@ -2,6 +2,7 @@ import Link from '../../../ui-components/Link/Link';
 import Li from '../../../ui-components/Li/Li';
 import Button from '../../../ui-components/Button/Button';
 import header from '../Header';
+import userState from '../../../states/UserState';
 
 export default class NavAuth {
   private element: HTMLElement;
@@ -18,7 +19,7 @@ export default class NavAuth {
     this.element.append(list);
     this.aboutLink = new Link('#', 'About us', new Li(list).get());
     this.catalogLink = new Link('#', 'Catalog', new Li(list).get());
-    this.userLink = new Link('#', String(localStorage.getItem('userName')), new Li(list).get());
+    this.userLink = new Link('#', String(userState.getUserName()), new Li(list).get());
     this.logOutBtn = new Button('Log out', 'header__btn', this.element);
     this.logOut();
   }
@@ -30,9 +31,10 @@ export default class NavAuth {
   logOut() {
     this.logOutBtn.get().addEventListener('click', () => {
       header.renderNav();
-      localStorage.removeItem('userName');
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
+      userState.removeState();
+      // localStorage.removeItem('userName');
+      // localStorage.removeItem('accessToken');
+      // localStorage.removeItem('refreshToken');
       location.href = '/';
     });
   }

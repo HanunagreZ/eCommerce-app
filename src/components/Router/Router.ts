@@ -1,4 +1,5 @@
 import { IRoute } from '../../interfaces/interfaces';
+import userState from '../../states/UserState';
 
 class Router {
   private root: HTMLElement;
@@ -27,8 +28,8 @@ class Router {
     this.root.innerHTML = '';
     this.root.appendChild(component);
     if (
-      (pathname === '/login' && localStorage.getItem('userName')) ||
-      (pathname === '/registration' && localStorage.getItem('userName'))
+      (pathname === '/login' && userState.getUserName()) ||
+      (pathname === '/registration' && userState.getUserName())
     ) {
       this.navigateTo('/');
     }

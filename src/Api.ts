@@ -2,6 +2,7 @@ import axios, { AxiosError } from 'axios';
 import { ICustomerRegistration, ICustomerLogin } from './interfaces/interfaces';
 import Modal from './components/modal/Modal';
 import { modalProps } from './data/data';
+import userState from './states/UserState';
 
 class Api {
   async getAccessToken() {
@@ -16,7 +17,7 @@ class Api {
         },
       );
       console.log('Получили обычный токен');
-      localStorage.setItem('accessToken', response.data.access_token);
+      userState.setAccessToken(response.data.access_token);
     } catch (error) {
       console.error(error);
       if (error instanceof AxiosError) {
@@ -36,10 +37,9 @@ class Api {
           },
         },
       );
-
       console.log('Получили персональные токены');
-      localStorage.setItem('refreshToken', response.data.refresh_token);
-      localStorage.setItem('accessToken', response.data.access_token);
+      userState.setRefreshToken(response.data.refresh_token);
+      userState.setAccessToken(response.data.access_token);
     } catch (error) {
       console.error(error);
       if (error instanceof AxiosError) {
@@ -50,25 +50,22 @@ class Api {
 
   async createCustomer(payload: ICustomerRegistration) {
     try {
-      const token = localStorage.getItem('accessToken');
-      console.log(token);
-
+      const token = userState.getAccessToken();
       const response = await axios.post(`${process.env.API_URL}/rs-ecommerce/customers`, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      localStorage.setItem('userName', response.data.customer.firstName);
+      userState.setUserName(response.data.customer.firstName);
       new Modal(modalProps.modalSuccess);
       console.log('Зарегистрировали пользователя');
 
-      const payload2 = {
+      const payloadForLogin = {
         email: payload.email,
         password: payload.password,
       };
 
-      await this.obtainTokens(payload2);
+      await this.obtainTokens(payloadForLogin);
     } catch (error) {
       console.error(error);
       if (error instanceof AxiosError) {
@@ -81,8 +78,7 @@ class Api {
 
   async login(payload: ICustomerLogin) {
     try {
-      const token = localStorage.getItem('accessToken');
-
+      const token = userState.getAccessToken();
       const response = await axios.post(`${process.env.API_URL}/${process.env.PROJECT_KEY}/login`, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -91,7 +87,7 @@ class Api {
       });
 
       await this.obtainTokens(payload);
-      localStorage.setItem('userName', response.data.customer.firstName);
+      userState.setUserName(response.data.customer.firstName);
       location.href = '/';
     } catch (error) {
       console.error(error);
@@ -104,13 +100,13 @@ class Api {
   }
 
   async isRefreshTokenExist() {
-    if (localStorage.getItem('refreshToken')) {
+    if (userState.getRefreshToken()) {
       console.log('Рефреш токен есть');
       return;
     } else {
       console.log('Рефреш токена нет');
       this.getAccessToken();
-      localStorage.removeItem('userName');
+      userState.removeUserName();
     }
   }
 

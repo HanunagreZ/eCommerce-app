@@ -10,7 +10,7 @@ class App {
   constructor() {
     this.element = document.createElement('div');
     this.element.classList.add('app');
-    this.element.style.backgroundImage = 'url(assets/background.svg)';
+    this.element.style.backgroundImage = 'url(assets/background.svg)';    
   }
 
   get() {
