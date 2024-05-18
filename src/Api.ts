@@ -4,17 +4,10 @@ import Modal from './components/modal/Modal';
 import { modalProps } from './data/data';
 
 class Api {
-  private project_key = 'rs-ecommerce';
-  private client_id = '2pvElnJONW2_md23HkzBb6v-';
-  private secret = 'HTMoUsX6-87FhggEb11hD15mWcbvsYCe';
-  private API_URL = 'https://api.australia-southeast1.gcp.commercetools.com';
-  private Auth_URL = 'https://auth.australia-southeast1.gcp.commercetools.com';
-  private accessToken = '';
-
   async getAccessToken() {
     try {
       const response = await axios.post(
-        `${this.Auth_URL}/oauth/token?grant_type=client_credentials`,
+        `${process.env.AUTH_URL}/oauth/token?grant_type=client_credentials`,
         {},
         {
           headers: {
@@ -35,7 +28,7 @@ class Api {
   async obtainTokens(payload: ICustomerLogin) {
     try {
       const response = await axios.post(
-        `${this.Auth_URL}/oauth/${this.project_key}/customers/token?grant_type=password&username=${payload.email}&password=${payload.password}`,
+        `${process.env.AUTH_URL}/oauth/${process.env.PROJECT_KEY}/customers/token?grant_type=password&username=${payload.email}&password=${payload.password}`,
         {},
         {
           headers: {
@@ -60,7 +53,7 @@ class Api {
       const token = localStorage.getItem('accessToken');
       console.log(token);
 
-      const response = await axios.post(`${this.API_URL}/rs-ecommerce/customers`, payload, {
+      const response = await axios.post(`${process.env.API_URL}/rs-ecommerce/customers`, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -90,7 +83,7 @@ class Api {
     try {
       const token = localStorage.getItem('accessToken');
 
-      const response = await axios.post(`${this.API_URL}/${this.project_key}/login`, payload, {
+      const response = await axios.post(`${process.env.API_URL}/${process.env.PROJECT_KEY}/login`, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           Connection: 'keep-alive',
