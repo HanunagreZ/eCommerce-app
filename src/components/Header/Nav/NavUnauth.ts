@@ -1,6 +1,7 @@
 import Link from '../../../ui-components/Link/Link';
 import Li from '../../../ui-components/Li/Li';
 import Button from '../../../ui-components/Button/Button';
+import router from '../../..';
 
 export default class NavUnauth {
   private element: HTMLElement;
@@ -17,8 +18,7 @@ export default class NavUnauth {
     this.element.append(list);
     this.aboutLink = new Link('#', 'About us', new Li(list).get());
 
-    this.aboutLink.get().addEventListener('click', () => {
-    });
+    this.aboutLink.get().addEventListener('click', () => {});
 
     this.catalogLink = new Link('#', 'Catalog', new Li(list).get());
     this.signInLink = new Link('/login', 'Sign in', new Li(list).get());
@@ -32,7 +32,7 @@ export default class NavUnauth {
 
   signUp() {
     this.signUpBtn.get().addEventListener('click', () => {
-      location.href = '/registration';
+      router.navigateTo('/registration');
     });
   }
 

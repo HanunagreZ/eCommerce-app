@@ -1,6 +1,7 @@
 import Div from '../../../ui-components/Div/Div';
 import NavUnauth from '../Nav/NavUnauth';
 import NavAuth from '../Nav/NavAuth';
+import userState from '../../../states/UserState';
 
 class Burger {
   private element: HTMLDivElement;
@@ -8,8 +9,8 @@ class Burger {
   private burgerLine2: HTMLImageElement;
   private burgerLine3: HTMLImageElement;
   private popup: Div;
+  private navPopupDiv: Div;
   private navUnauthPopup: NavUnauth;
-  private navAuthPopup: NavAuth;
 
   constructor() {
     this.element = document.createElement('div');
@@ -25,8 +26,8 @@ class Burger {
     this.burgerLine3.classList.add('header__burger-line3');
     this.popup = new Div('burger__popup', this.element);
     this.clickHamburger();
+    this.navPopupDiv = new Div('header__nav_popupDiv', this.popup.get());
     this.navUnauthPopup = new NavUnauth('header__nav_popup');
-    this.navAuthPopup = new NavAuth('header__nav_popup');
   }
 
   get() {
@@ -47,12 +48,11 @@ class Burger {
     parentElement.append(this.element);
   }
   renderPopupNav() {
-    if (localStorage.getItem('userName')) {
-      this.navUnauthPopup?.get().remove();
-      this.navAuthPopup.render(this.popup.get());
+    if (userState.getUserName()) {
+      const navAuthPopup = new NavAuth('header__nav_popup');
+      this.popup.get().children[0].replaceWith(navAuthPopup.get());
     } else {
-      this.navAuthPopup?.get().remove();
-      this.navUnauthPopup.render(this.popup.get());
+      this.popup.get().children[0].replaceWith(this.navUnauthPopup.get());
     }
   }
 }

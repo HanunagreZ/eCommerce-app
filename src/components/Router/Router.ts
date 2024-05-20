@@ -1,5 +1,6 @@
 import { IRoute } from '../../interfaces/interfaces';
 import userState from '../../states/UserState';
+// import app from '../App';
 
 class Router {
   private root: HTMLElement;
@@ -10,13 +11,14 @@ class Router {
     this.routes = routeList;
     window.addEventListener('popstate', this.route.bind(this));
     this.route();
+    this.handleLinkClicks();
   }
 
   private route() {
     const { pathname } = window.location;
     const matchedRoute = this.routes.find((route) => route.path === pathname);
     if (!matchedRoute) {
-      this.navigateTo('/404');
+      // this.navigateTo('/404');
       const page404 = this.routes.find((route) => route.path.includes('404'));
       if (page404) {
         this.root.innerHTML = '';
@@ -33,7 +35,6 @@ class Router {
     ) {
       this.navigateTo('/');
     }
-    console.log(pathname);
   }
 
   public navigateTo(path: string) {
@@ -41,6 +42,18 @@ class Router {
       window.history.pushState({}, '', path);
       this.route();
     }
+  }
+  private handleLinkClicks() {
+    document.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      if (target.tagName === 'A' && target.hasAttribute('href')) {
+        const href = target.getAttribute('href');
+        if (href && href.startsWith('/')) {
+          event.preventDefault();
+          this.navigateTo(href);
+        }
+      }
+    });
   }
 }
 

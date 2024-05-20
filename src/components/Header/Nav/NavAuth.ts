@@ -3,6 +3,8 @@ import Li from '../../../ui-components/Li/Li';
 import Button from '../../../ui-components/Button/Button';
 import header from '../Header';
 import userState from '../../../states/UserState';
+import router from '../../..';
+import api from '../../../Api';
 
 export default class NavAuth {
   private element: HTMLElement;
@@ -30,9 +32,10 @@ export default class NavAuth {
 
   logOut() {
     this.logOutBtn.get().addEventListener('click', () => {
-      header.renderNav();
       userState.removeState();
-      location.href = '/';
+      header.renderNav();
+      api.getAccessToken();
+      router.navigateTo('/');
     });
   }
 

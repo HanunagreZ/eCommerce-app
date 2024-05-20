@@ -1,4 +1,5 @@
 import header from '../components/Header/Header';
+import router from '..';
 
 export const constants = {
   registration: {
@@ -65,7 +66,7 @@ export const constants = {
         countryCode: 'CA',
       },
     },
-    checkboxSameAddr: 'same as billing',
+    checkboxSameAddr: 'same as shipping',
     buttonTitle: 'Register',
   },
   login: {
@@ -86,6 +87,11 @@ export const constants = {
     ],
     buttonTitle: 'Log in',
   },
+  404: {
+    pageTitle: 'Page not found',
+    pageText: 'Oops! The page you looking for does not exist',
+    buttonTitle: 'Return to main',
+  },
 };
 
 export const modalProps = {
@@ -94,36 +100,28 @@ export const modalProps = {
     title: 'This email is already in use',
     description: 'Please log in or use another email',
     btn: 'Back',
-    addEvent: () => {
-      console.log('Test');
-    },
+    addEvent: () => {},
   },
   modalCredentialsNotFound: {
     icon: 'assets/icons/iconError.svg',
     title: 'Customer account with the given credentials not found',
     description: 'Use correct account data or sign up',
     btn: 'Back',
-    addEvent: () => {
-      console.log('Test');
-    },
+    addEvent: () => {},
   },
   modalPassword: {
     icon: 'assets/icons/iconError.svg',
     title: 'Incorrect password!',
     description: 'Please use correct password',
     btn: 'Back',
-    addEvent: () => {
-      console.log('Test2');
-    },
+    addEvent: () => {},
   },
   modalServerError: {
     icon: 'assets/icons/iconAlert.svg',
     title: 'Something went wrong',
     description: 'Please try again',
     btn: 'Back',
-    addEvent: () => {
-      console.log('Test3');
-    },
+    addEvent: () => {},
   },
   modalSuccess: {
     icon: 'assets/icons/iconSuccess.svg',
@@ -131,7 +129,7 @@ export const modalProps = {
     description: 'Account successfully created',
     btn: 'Go to main page',
     addEvent: () => {
-      location.href = '/';
+      router.navigateTo('/');
       header.renderNav();
     },
   },

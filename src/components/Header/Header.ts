@@ -6,14 +6,15 @@ import NavAuth from './Nav/NavAuth';
 import burger from './Burger/Burger';
 import basket from './Basket/Basket';
 import userState from '../../states/UserState';
+import router from '../..';
 
 class Header {
   private element: HTMLElement;
   private logoContainer: Div;
   private logoLink: Link;
   private logoImg: HTMLImageElement;
-  private navAuth: NavAuth;
-  private navUnauth: NavUnauth;
+  private navDiv: Div;
+  private navUnAuth: NavUnauth;
 
   constructor() {
     this.element = document.createElement('header');
@@ -22,12 +23,17 @@ class Header {
     this.logoLink = new Link('/', '', this.logoContainer.get());
     this.logoImg = document.createElement('img');
     this.logoImg.src = 'assets/testLogo.png';
+    this.logoImg.addEventListener('click', (e) => {
+      e.preventDefault();
+      router.navigateTo('/');
+    });
     this.logoLink.get().append(this.logoImg);
-    this.navAuth = new NavAuth('header__nav');
-    this.navUnauth = new NavUnauth('header__nav');
+    this.navDiv = new Div('header__navDiv');
+    this.navUnAuth = new NavUnauth('header__nav');
   }
 
   render(parentElement: HTMLElement) {
+    this.navDiv.render(this.element);
     this.renderNav();
     basket.render(this.element);
     burger.render(this.element);
@@ -36,11 +42,10 @@ class Header {
 
   renderNav() {
     if (userState.getUserName()) {
-      this.navUnauth?.get().remove();
-      this.navAuth.render(this.element);
+      const navAuth = new NavAuth('header__nav');
+      this.element.children[1].replaceWith(navAuth.get());
     } else {
-      this.navAuth?.get().remove();
-      this.navUnauth.render(this.element);
+      this.element.children[1].replaceWith(this.navUnAuth.get());
     }
     burger.renderPopupNav();
   }

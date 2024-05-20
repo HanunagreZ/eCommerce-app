@@ -1,5 +1,5 @@
 class UserState {
-  setAccessToken(data: string) { 
+  setAccessToken(data: string) {
     localStorage.setItem('accessToken', data);
   }
   getAccessToken(): string | null {
