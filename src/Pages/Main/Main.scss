@@ -1,0 +1,10 @@
+@import '../../styles.scss';
+
+.main {
+  height: calc(100vh - 134px);
+  width: 100%;
+
+  /* Временное решение для проверки */
+  text-align: center;
+  font-size: 22px;
+}
