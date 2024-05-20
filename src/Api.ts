@@ -17,7 +17,6 @@ class Api {
           },
         },
       );
-      console.log('Получили обычный токен');
       userState.setAccessToken(response.data.access_token);
     } catch (error) {
       console.error(error);
@@ -38,7 +37,6 @@ class Api {
           },
         },
       );
-      console.log('Получили персональные токены');
       userState.setRefreshToken(response.data.refresh_token);
       userState.setAccessToken(response.data.access_token);
     } catch (error) {
@@ -61,7 +59,6 @@ class Api {
       userState.setUserName(response.data.customer.firstName);
       loading.remove();
       new Modal(modalProps.modalSuccess);
-      console.log('Зарегистрировали пользователя');
 
       const payloadForLogin = {
         email: payload.email,
@@ -108,14 +105,12 @@ class Api {
 
   async isRefreshTokenExist() {
     if (userState.getRefreshToken()) {
-      console.log('Рефреш токен есть');
       return;
     } else {
-      console.log('Рефреш токена нет');
       this.getAccessToken();
       userState.removeUserName();
     }
-  } 
+  }
 }
 const api = new Api();
 
