@@ -1,5 +1,6 @@
 import { IRoute } from '../../interfaces/interfaces';
 import userState from '../../states/UserState';
+// import app from '../App';
 
 class Router {
   private root: HTMLElement;
