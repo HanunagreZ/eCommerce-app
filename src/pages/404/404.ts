@@ -1,6 +1,7 @@
 import './404.scss';
 import Div from '../../ui-components/Div/Div';
 import Button from '../../ui-components/Button/Button';
+import router from '../..';
 
 export default class Page404 {
   private container: Div;
@@ -21,7 +22,7 @@ export default class Page404 {
     this.pageInfo.classList.add('info__404');
     this.pageInfo.textContent = 'Oops!, the page you looking for does not exist';
     this.button = new Button('Return to main', 'button__404');
-    this.button.get().onclick = () => (window.location.href = '/');
+    this.button.get().onclick = () => router.navigateTo('/');
   }
 
   render() {

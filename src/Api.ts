@@ -5,6 +5,9 @@ import { modalProps } from './data/data';
 import userState from './states/UserState';
 import Loading from './components/Loading/Loading';
 
+import router from '.';
+import header from './components/Header/Header';
+
 class Api {
   async getAccessToken() {
     try {
@@ -91,7 +94,8 @@ class Api {
       await this.obtainTokens(payload);
       userState.setUserName(response.data.customer.firstName);
       loading.remove();
-      location.href = '/';
+      header.renderNav();
+      router.navigateTo('/');
     } catch (error) {
       console.error(error);
       if (error instanceof AxiosError) {
