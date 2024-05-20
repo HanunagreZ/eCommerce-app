@@ -87,7 +87,6 @@ class Api {
       const response = await axios.post(`${process.env.API_URL}/${process.env.PROJECT_KEY}/login`, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
-          Connection: 'keep-alive',
         },
       });
 
