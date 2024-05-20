@@ -87,6 +87,11 @@ export const constants = {
     ],
     buttonTitle: 'Log in',
   },
+  404: {
+    pageTitle: 'Page not found',
+    pageText: 'Oops! The page you looking for does not exist',
+    buttonTitle: 'Return to main',
+  },
 };
 
 export const modalProps = {
