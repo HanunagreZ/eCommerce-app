@@ -20,7 +20,7 @@ export default class Page404 {
     this.pageSubHeader.textContent = 'Page not found';
     this.pageInfo = document.createElement('p');
     this.pageInfo.classList.add('info__404');
-    this.pageInfo.textContent = 'Oops!, the page you looking for does not exist';
+    this.pageInfo.textContent = 'Oops! The page you looking for does not exist';
     this.button = new Button('Return to main', 'button__404');
     this.button.get().onclick = () => router.navigateTo('/');
   }
