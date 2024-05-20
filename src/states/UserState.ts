@@ -1,12 +1,13 @@
 class UserState {
-  setAccessToken(data: string) {
-    document.cookie = `accessToken=${data}`;
+  setAccessToken(data: string) { 
+    localStorage.setItem('accessToken', data);
   }
   getAccessToken(): string | null {
-    return this.getCookie('accessToken');
+    const accessToken = localStorage.getItem('accessToken');
+    return accessToken;
   }
   removeAccessToken() {
-    document.cookie = 'accessToken=accessToken; max-age=0';
+    localStorage.removeItem('accessToken');
   }
   setRefreshToken(data: string) {
     document.cookie = `refreshToken=${data}`;
@@ -18,13 +19,14 @@ class UserState {
     document.cookie = 'refreshToken=refreshToken; max-age=0';
   }
   setUserName(data: string) {
-    document.cookie = `userName=${data}`;
+    localStorage.setItem('userName', data);
   }
-  getUserName() {
-    return this.getCookie('userName');
+  getUserName(): string | null {
+    const userName = localStorage.getItem('userName');
+    return userName;
   }
   removeUserName() {
-    document.cookie = 'userName=userName; max-age=0';
+    localStorage.removeItem('userName');
   }
   removeState() {
     this.removeAccessToken();

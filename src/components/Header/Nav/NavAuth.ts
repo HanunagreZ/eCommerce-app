@@ -32,9 +32,6 @@ export default class NavAuth {
     this.logOutBtn.get().addEventListener('click', () => {
       header.renderNav();
       userState.removeState();
-      // localStorage.removeItem('userName');
-      // localStorage.removeItem('accessToken');
-      // localStorage.removeItem('refreshToken');
       location.href = '/';
     });
   }
