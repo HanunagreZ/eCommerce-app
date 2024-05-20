@@ -202,6 +202,11 @@ export default class Registration {
         billingAddresses: [billingAddressIndex],
       };
       api.createCustomer(requestData);
+      this.inputFields?.map((el) => (el.input.get().value = ''));
+      this.dateOfBirth.input.get().value = '';
+      this.shipAddrCheck.get().checked = false;
+      this.billAddrCheck.get().checked = false;
+      this.sameAddrCheck.get().checked = false;
     }
   }
 }

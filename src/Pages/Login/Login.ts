@@ -61,14 +61,13 @@ export default class Login {
     if (isValidForm) {
       const inputValues = this.inputFields?.map((el) => el.input.get().value);
 
-      console.log(inputValues);
-
       const payload = {
         email: inputValues[0],
         password: inputValues[1],
       };
 
       api.login(payload);
+      this.inputFields?.map((el) => (el.input.get().value = ''));
     }
   }
 }

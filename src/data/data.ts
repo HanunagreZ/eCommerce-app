@@ -66,7 +66,7 @@ export const constants = {
         countryCode: 'CA',
       },
     },
-    checkboxSameAddr: 'same as billing',
+    checkboxSameAddr: 'same as shipping',
     buttonTitle: 'Register',
   },
   login: {
