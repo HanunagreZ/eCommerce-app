@@ -35,7 +35,6 @@ class Router {
     ) {
       this.navigateTo('/');
     }
-    console.log(pathname);
   }
 
   public navigateTo(path: string) {
