@@ -9,6 +9,7 @@ export default class MainPage {
   }
 
   render() {
+    this.element.get().innerText = 'Main Page';
     return this.element.get();
   }
 }
