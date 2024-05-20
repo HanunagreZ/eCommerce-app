@@ -3,6 +3,7 @@ import { ICustomerRegistration, ICustomerLogin } from './interfaces/interfaces';
 import Modal from './components/modal/Modal';
 import { modalProps } from './data/data';
 import userState from './states/UserState';
+import Loading from './components/Loading/Loading';
 
 class Api {
   async getAccessToken() {
@@ -49,6 +50,7 @@ class Api {
   }
 
   async createCustomer(payload: ICustomerRegistration) {
+    const loading = new Loading();
     try {
       const token = userState.getAccessToken();
       const response = await axios.post(`${process.env.API_URL}/rs-ecommerce/customers`, payload, {
@@ -57,6 +59,7 @@ class Api {
         },
       });
       userState.setUserName(response.data.customer.firstName);
+      loading.remove();
       new Modal(modalProps.modalSuccess);
       console.log('Зарегистрировали пользователя');
 
@@ -70,6 +73,7 @@ class Api {
       console.error(error);
       if (error instanceof AxiosError) {
         if (error.response?.data.message === 'There is already an existing customer with the provided email.') {
+          loading.remove();
           new Modal(modalProps.modalEmail);
         }
       }
@@ -77,6 +81,7 @@ class Api {
   }
 
   async login(payload: ICustomerLogin) {
+    const loading = new Loading();
     try {
       const token = userState.getAccessToken();
       const response = await axios.post(`${process.env.API_URL}/${process.env.PROJECT_KEY}/login`, payload, {
@@ -88,11 +93,13 @@ class Api {
 
       await this.obtainTokens(payload);
       userState.setUserName(response.data.customer.firstName);
+      loading.remove();
       location.href = '/';
     } catch (error) {
       console.error(error);
       if (error instanceof AxiosError) {
         if (error.response?.data.message === 'Account with the given credentials not found.') {
+          loading.remove();
           new Modal(modalProps.modalCredentialsNotFound);
         }
       }
