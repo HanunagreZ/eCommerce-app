@@ -69,7 +69,7 @@
   .main__image--starwars {
     width: 240px;
     height: 240px;
-    margin: 59px 19px 56px 0;
+    align-self: center;
   }
 
   .main__block--starwars {
@@ -78,8 +78,68 @@
     justify-content: space-between;
     padding: 20px;
     background-color: #fff;
-    width: 394px;
-    height: 212px;
+    width: 370px;
+    height: 180px;
+    border-radius: 8px;
+    margin-left: 50px;
+    margin-top: 50px;
+    align-self: flex-start;
+
+    .adBlock__title {
+      text-align: start;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .adBlock__description {
+      width: 100%;
+      font-size: 16px;
+      text-align: start;
+      line-height: 24px;
+    }
+
+    .adBlock__btn {
+      width: 140px;
+      height: 44px;
+      border-radius: 4px;
+      font-size: 16px;
+      text-align: center;
+      color: #6e41e2;
+      background-color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+      border-color: #6e41e2;
+
+      &:hover {
+        background-color: #6e41e2;
+        color: #fff;
+        transition: 0.3s;
+      }
+    }
+  }
+}
+
+.main__adBlock--anime {
+  height: 400px;
+  flex-basis: 50%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #b9bbde;
+
+  .main__image--anime {
+    width: 230px;
+    height: 230px;
+    align-self: center;
+  }
+
+  .main__block--anime {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #fff;
+    width: 330px;
+    height: 150px;
     border-radius: 8px;
     margin-left: 50px;
     margin-top: 50px;
@@ -119,62 +179,80 @@
   }
 }
 
-.main__adBlock--anime {
-  height: 400px;
-  flex-basis: 50%;
-  display: flex;
-  justify-content: space-between;
-  background-color: #b9bbde;
+@media screen and (max-width: 1420px) {
+  .main__adBlock--spiderman {
+    flex-direction: column;
+    height: auto;
 
-  .main__image--anime {
-    width: 230px;
-    height: 230px;
-    margin: 35px 0 35px 0;
+    .main__block--spiderman {
+      width: 668px;
+      height: 164px;
+      align-self: center;
+      margin-top: 30px;
+      margin-left: 0;
+
+      .adBlock__description {
+        width: 100%;
+      }
+    }
+
+    .main__image--spiderman {
+      width: 500px;
+      height: 362px;
+      align-self: center;
+      margin: 0;
+    }
   }
 
-  .main__block--anime {
-    display: flex;
+  .main__adBlock--starwars,
+  .main__adBlock--anime {
+    flex-basis: 100%;
+  }
+}
+
+@media screen and (max-width: 765px) {
+  .main__imageContainer {
+    height: 100px;
+  }
+
+  .main__adBlock--spiderman {
     flex-direction: column;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: #fff;
-    width: 330px;
-    height: 164px;
-    border-radius: 8px;
-    margin-left: 50px;
-    margin-top: 50px;
-    align-self: flex-start;
+    height: auto;
 
-    .adBlock__title {
-      text-align: start;
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .adBlock__description {
+    .main__block--spiderman {
       width: 300px;
-      font-size: 16px;
-      text-align: start;
-      line-height: 24px;
+      height: 206px;
     }
 
-    .adBlock__btn {
-      width: 140px;
-      height: 44px;
-      border-radius: 4px;
-      font-size: 16px;
-      text-align: center;
-      color: #6e41e2;
-      background-color: #fff;
-      cursor: pointer;
-      transition: 0.3s;
-      border-color: #6e41e2;
+    .main__image--spiderman {
+      width: 323px;
+      height: 234px;
+    }
+  }
 
-      &:hover {
-        background-color: #6e41e2;
-        color: #fff;
-        transition: 0.3s;
-      }
+  .main__adBlock--starwars {
+    flex-direction: column-reverse;
+    height: 550px;
+
+    .main__block--starwars {
+      margin: 0;
+      align-self: center;
+      width: 300px;
+      height: 212px;
+      margin-bottom: 30px;
+    }
+  }
+
+  .main__adBlock--anime {
+    flex-direction: column-reverse;
+    height: 550px;
+
+    .main__block--anime {
+      margin: 0;
+      align-self: center;
+      width: 300px;
+      height: 180px;
+      margin-bottom: 30px;
     }
   }
 }

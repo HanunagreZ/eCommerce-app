@@ -1,7 +1,7 @@
 import Button from '../../ui-components/Button/Button';
 import Span from '../../ui-components/Span/Span';
 import Div from '../../ui-components/Div/Div';
-import './mainAdBlock.scss';
+import './MainAdBlock.scss';
 import { IMainAdBlockProps } from '../../interfaces/interfaces';
 
 export default class MainAdBlock {
