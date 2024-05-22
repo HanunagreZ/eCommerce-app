@@ -41,3 +41,9 @@ export interface IModalProps {
   btn: string;
   addEvent: () => void;
 }
+
+export interface IProductCard {
+  imgSrc: string;
+  name: string;
+  price: string;
+}

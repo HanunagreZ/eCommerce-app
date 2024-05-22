@@ -2,6 +2,8 @@ import Link from '../../../ui-components/Link/Link';
 import Li from '../../../ui-components/Li/Li';
 import Button from '../../../ui-components/Button/Button';
 import router from '../../..';
+import api from '../../../Api';
+import { loadingDecorator } from '../../../utils/loadingDecorator';
 
 export default class NavUnauth {
   private element: HTMLElement;
@@ -21,6 +23,11 @@ export default class NavUnauth {
     this.aboutLink.get().addEventListener('click', () => {});
 
     this.catalogLink = new Link('#', 'Catalog', new Li(list).get());
+    // this.catalogLink.get().addEventListener('click', async () => {
+    //   // await this.visitCatalog();
+    //   loadingDecorator(this.visitCatalog);
+    // });
+
     this.signInLink = new Link('/login', 'Sign in', new Li(list).get());
     this.signUpBtn = new Button('Sign up', 'header__btn', this.element);
     this.signUp();
@@ -36,6 +43,10 @@ export default class NavUnauth {
     });
   }
 
+  // async visitCatalog() {
+  //   const re = await api.queryProducts();
+  //   console.log(re);
+  // }
   render(parentElement: HTMLElement) {
     parentElement.append(this.element);
   }

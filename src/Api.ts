@@ -114,6 +114,26 @@ class Api {
       userState.removeUserName();
     }
   }
+
+  async queryProducts() {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/products`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      result = response.data.results;
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+      result = error;
+      console.log(error);
+    }
+    return result;
+  }
 }
 const api = new Api();
 
