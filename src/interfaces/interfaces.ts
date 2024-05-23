@@ -41,3 +41,14 @@ export interface IModalProps {
   btn: string;
   addEvent: () => void;
 }
+
+export interface IMainAdBlockProps {
+  containerClass: string;
+  image: string;
+  imageClass: string;
+  blockClass: string;
+  title: string;
+  description: string;
+  btn: string;
+  addEvent: () => void;
+}
