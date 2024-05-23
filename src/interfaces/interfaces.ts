@@ -44,6 +44,7 @@ export interface IModalProps {
 
 export interface IProductCard {
   imgSrc: string;
+  category: string;
   name: string;
   price: string;
 }
