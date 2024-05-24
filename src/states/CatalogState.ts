@@ -2,8 +2,8 @@ import api from '../Api';
 import { IProductCard } from '../interfaces/interfaces';
 
 class CatalogState {
-  async getProductsData() {
-    const products = await api.queryProducts();
+  async getProductsData(page: number) {
+    const products = await api.getProductsForPage(page);
     const categories = await api.getAllCategories();
     console.log(products);
     const productsData: IProductCard[] = products.map(
@@ -30,7 +30,12 @@ class CatalogState {
       },
     );
     return productsData;
-  } 
+  }
+
+  async getProductsCount() {
+    const allProducts = await api.queryProducts();
+    return allProducts.length;
+  }
 }
 
 const catalogState = new CatalogState();

@@ -2,8 +2,6 @@ import Link from '../../../ui-components/Link/Link';
 import Li from '../../../ui-components/Li/Li';
 import Button from '../../../ui-components/Button/Button';
 import router from '../../..';
-import { catalog } from '../../../Pages/Catalog/Catalog';
-import Loading from '../../Loading/Loading';
 
 export default class NavUnauth {
   private element: HTMLElement;
@@ -29,14 +27,8 @@ export default class NavUnauth {
     this.catalogLink.get().addEventListener('click', async () => {
       //TODO go to Catalog Page
       // /********* */
-
-      const loading = new Loading();
-      await catalog.renderProducts();
-      loading.remove();
-
       // await loadingDecorator(catalog.renderProducts);
       // document.querySelector('.main')?.append(c);
-
       /**********/
     });
     this.signInLink = new Link('/login', 'Sign in', new Li(list).get());
