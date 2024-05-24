@@ -52,3 +52,8 @@ export interface IMainAdBlockProps {
   btn: string;
   addEvent: () => void;
 }
+
+export interface IBreadcrumbsProps {
+  href: string[];
+  text: string[];
+}

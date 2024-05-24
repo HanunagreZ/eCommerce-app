@@ -173,3 +173,30 @@ export const mainAdBlock = {
     },
   },
 };
+
+export const breadProps = {
+  category: {
+    href: ['/', '/products'],
+    text: ['Funko', 'Category'],
+  },
+  pop: {
+    href: ['/', '/products', '/products/pop'],
+    text: ['Funko', 'Category', 'Pop!'],
+  },
+  accessories: {
+    href: ['/', '/products', '/products/accessories'],
+    text: ['Funko', 'Category', 'Accessories!'],
+  },
+  anime: {
+    href: ['/', '/products', '/products/pop/anime'],
+    text: ['Funko', 'Category', 'Pop!', 'Anime'],
+  },
+  starwars: {
+    href: ['/', '/products', '/products/pop/starwars'],
+    text: ['Funko', 'Category', 'Pop!', 'Star Wars'],
+  },
+  marvel: {
+    href: ['/', '/products', '/products/pop/marvel'],
+    text: ['Funko', 'Category', 'Pop!', 'Marvel'],
+  },
+};
