@@ -46,5 +46,6 @@ export interface IProductCard {
   imgSrc: string;
   category: string;
   name: string;
-  price: string;
+  price: number;
+  discountedPrice?: number;
 }

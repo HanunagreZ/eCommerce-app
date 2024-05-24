@@ -4,7 +4,7 @@ import Div from '../../ui-components/Div/Div';
 import Input from '../../ui-components/Input/Input';
 import Select from '../../ui-components/Select/Select';
 import Span from '../../ui-components/Span/Span';
-import { Product } from './Product';
+import { ProductCard } from './ProductCard';
 import Img from '../../ui-components/Img/Img';
 import { ProductsForPage } from '../../data/constants';
 import Loading from '../../components/Loading/Loading';
@@ -17,8 +17,8 @@ export default class Catalog {
   private search: Input;
   private cardsWrapper: Div;
   private pageNavigation: Div;
-  activePage: number;
-  pagesCount: number;
+  private activePage: number;
+  private pagesCount: number;
 
   constructor() {
     this.breadcrumb = new Div('catalog__breadcrumb');
@@ -53,7 +53,7 @@ export default class Catalog {
     this.cardsWrapper.get().innerHTML = '';
     const products = await catalogState.getProductsData(page);
     products.map((data) => {
-      new Product(data, this.cardsWrapper.get());
+      new ProductCard(data, this.cardsWrapper.get());
     });
     await this.renderPageNavigation(page);
   }

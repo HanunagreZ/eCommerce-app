@@ -1,7 +1,7 @@
 import Loading from '../components/Loading/Loading';
 
-export async function loadingDecorator(func: () => void) {
+export async function loadingDecorator(callback: () => void) {
   const loading = new Loading();
-  await func();
+  await callback();
   loading.remove();
 }

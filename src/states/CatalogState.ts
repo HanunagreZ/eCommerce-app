@@ -10,13 +10,20 @@ class CatalogState {
       (el: {
         masterData: {
           current: {
+            masterVariant: {
+              prices: { discounted: { value: { centAmount: number } }; value: { centAmount: number } }[];
+              images: { url: string }[];
+            };
             categories: { id: string }[];
-            masterVariant: { images: { url: string }[]; prices: { value: { centAmount: number } }[] };
             name: { [x: string]: string };
           };
         };
       }) => {
         let categoryName = '';
+        const discountedPrice =
+          el.masterData.current.masterVariant.prices[0].discounted !== undefined
+            ? el.masterData.current.masterVariant.prices[0].discounted.value.centAmount
+            : 0;
         categories.forEach((categoryItem: { id: string; name: { [x: string]: string } }) => {
           if (categoryItem.id === el.masterData.current.categories[0].id)
             categoryName = categoryItem.name['en-US' as keyof typeof categoryItem.name];
@@ -25,7 +32,8 @@ class CatalogState {
           imgSrc: el.masterData.current.masterVariant.images[0].url,
           category: categoryName,
           name: el.masterData.current.name['en-US' as keyof typeof el.masterData.current.name],
-          price: `$ ${(el.masterData.current.masterVariant.prices[0].value.centAmount / 100).toFixed(2)}`,
+          price: el.masterData.current.masterVariant.prices[0].value.centAmount,
+          discountedPrice: discountedPrice,
         };
       },
     );
