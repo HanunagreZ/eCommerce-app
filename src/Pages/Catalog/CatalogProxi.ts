@@ -12,13 +12,13 @@ class CatalogProxy {
   async renderCatalog(page: number, filter: FilterEndpoints | undefined) {
     let result;
     if (filter === undefined) {
-      result = await this.catalogState.getProductsData(page);    
+      result = await this.catalogState.getProductsData(page);
       this.isfilterActive = false;
     } else {
       result = await this.catalogState.getFilteredData(page, filter);
       this.isfilterActive = true;
     }
-    
+
     return result;
   }
 }

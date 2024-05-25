@@ -136,6 +136,6 @@ export const modalProps = {
 };
 
 export const catalogTitles = {
-all: 'Show all',
-cardBtn: 'Add to card',
-}
+  all: 'Show all',
+  cardBtn: 'Add to card',
+};
