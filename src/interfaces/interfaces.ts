@@ -49,3 +49,24 @@ export interface IProductCard {
   price: number;
   discountedPrice?: number;
 }
+export interface IProductResponseData {
+  masterData: {
+    current: {
+      masterVariant: {
+        prices: { discounted: { value: { centAmount: number } }; value: { centAmount: number } }[];
+        images: { url: string }[];
+      };
+      categories: { id: string }[];
+      name: { [x: string]: string };
+    };
+  };
+}
+
+export interface IFilteredProductResponseData {
+  masterVariant: {
+    prices: { discounted: { value: { centAmount: number } }; value: { centAmount: number } }[];
+    images: { url: string }[];
+  };
+  categories: { id: string }[];
+  name: { [x: string]: string };
+}

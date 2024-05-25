@@ -1,3 +1,4 @@
+import { catalogTitles } from '../../data/data';
 import { IProductCard } from '../../interfaces/interfaces';
 import Button from '../../ui-components/Button/Button';
 import Div from '../../ui-components/Div/Div';
@@ -27,7 +28,7 @@ export class ProductCard {
     } else {
       new Span(`$${(productData.price / 100).toFixed(2)}`, 'catalog__product-price', priceContainer.get());
     }
-    new Button('Add to cart', 'catalog__card-btn', card.get());
+    new Button(catalogTitles.cardBtn, 'catalog__card-btn', card.get());
     return card.get();
   }
 }

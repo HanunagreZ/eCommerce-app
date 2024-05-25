@@ -7,6 +7,8 @@ import Loading from './components/Loading/Loading';
 
 import router from '.';
 import header from './components/Header/Header';
+import { ProductsForPage } from './data/constants';
+import { FilterEndpoints } from './data/productsEndpoints';
 
 class Api {
   async getAccessToken() {
@@ -139,7 +141,8 @@ class Api {
     try {
       const accessToken = userState.getAccessToken();
       const response = await axios.get(
-        `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=8&offset=${(page - 1) * 8}`,
+        // `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}&${ProductsEndpoints.marvel}`,
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -147,7 +150,30 @@ class Api {
         },
       );
 
-      result = response.data.results;
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+      console.log(error);
+    }
+    return result;
+  }
+
+  async filterProducts(page: number, filter: FilterEndpoints) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        // `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}&${ProductsEndpoints.marvel}`,
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections/search?filter=${filter}&limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      result = response.data;
     } catch (error) {
       console.error(error);
       result = error;
@@ -195,3 +221,8 @@ class Api {
 const api = new Api();
 
 export default api;
+
+//?where=%28key%3D%22ackbar%22%29
+
+//filter
+//{{host}}/{{project-key}}/product-projections/search?filter=productType.id:"8ec0960c-cbfe-412a-bf93-4675105932d7"
