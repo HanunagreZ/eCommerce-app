@@ -114,6 +114,122 @@ class Api {
       userState.removeUserName();
     }
   }
+
+  async queryProducts() {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=100`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      result = response.data.results;
+    } catch (error) {
+      console.error(error);
+      result = error;
+      console.log(error);
+    }
+    return result;
+  }
+
+  async queryProductsForPage(page = 1) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=8&offset=${(page - 1) * 8}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      result = response.data.results;
+    } catch (error) {
+      console.error(error);
+      result = error;
+      console.log(error);
+    }
+    return result;
+  }
+
+  async getAllCategories() {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/categories`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      result = response.data.results;
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  async getCategory(id: string) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/categories/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      result = response.data.name['en-US' as keyof typeof response.data.name];
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  async getProductsByCategoryId(id: string) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/categories/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      result = response.data.name['en-US' as keyof typeof response.data.name];
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  async getExtendedProducts() {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections?limit=200&expand=categories[*].ancestors[*]`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      result = response.data.results;
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
 }
 const api = new Api();
 
