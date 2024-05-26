@@ -70,3 +70,36 @@ export interface IFilteredProductResponseData {
   categories: { id: string }[];
   name: { [x: string]: string };
 }
+
+export interface IMainAdBlockProps {
+  containerClass: string;
+  image: string;
+  imageClass: string;
+  blockClass: string;
+  title: string;
+  description: string;
+  btn: string;
+  addEvent: () => void;
+}
+
+export interface Product {
+  categories: {
+    id: string;
+    obj: {
+      ancestors: {
+        id: string;
+        obj: {
+          slug: {
+            'en-US': string;
+          };
+          orderHint: number;
+        };
+      }[];
+      slug: {
+        'en-US': string;
+      };
+      orderHint: number;
+    };
+  }[];
+  slug: { 'en-US': string };
+}

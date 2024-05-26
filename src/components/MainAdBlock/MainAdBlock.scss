@@ -1,0 +1,258 @@
+@import '../../styles.scss';
+
+.main__adBlock--spiderman {
+  height: 530px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  .main__image--spiderman {
+    width: 700px;
+    height: 470px;
+    margin: 30px 60px 30px 0;
+  }
+
+  .main__block--spiderman {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #fff;
+    width: 394px;
+    height: 212px;
+    border-radius: 8px;
+    margin-left: 50px;
+    margin-bottom: 50px;
+    align-self: flex-end;
+
+    .adBlock__title {
+      text-align: start;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .adBlock__description {
+      width: 300px;
+      font-size: 16px;
+      text-align: start;
+      line-height: 24px;
+    }
+
+    .adBlock__btn {
+      width: 140px;
+      height: 44px;
+      border-radius: 4px;
+      font-size: 16px;
+      text-align: center;
+      color: #6e41e2;
+      background-color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+      border-color: #6e41e2;
+
+      &:hover {
+        background-color: #6e41e2;
+        color: #fff;
+        transition: 0.3s;
+      }
+    }
+  }
+}
+
+.main__adBlock--starwars {
+  height: 400px;
+  flex-basis: 50%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #eac57d;
+
+  .main__image--starwars {
+    width: 240px;
+    height: 240px;
+    align-self: center;
+  }
+
+  .main__block--starwars {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #fff;
+    width: 370px;
+    height: 180px;
+    border-radius: 8px;
+    margin-left: 50px;
+    margin-top: 50px;
+    align-self: flex-start;
+
+    .adBlock__title {
+      text-align: start;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .adBlock__description {
+      width: 100%;
+      font-size: 16px;
+      text-align: start;
+      line-height: 24px;
+    }
+
+    .adBlock__btn {
+      width: 140px;
+      height: 44px;
+      border-radius: 4px;
+      font-size: 16px;
+      text-align: center;
+      color: #6e41e2;
+      background-color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+      border-color: #6e41e2;
+
+      &:hover {
+        background-color: #6e41e2;
+        color: #fff;
+        transition: 0.3s;
+      }
+    }
+  }
+}
+
+.main__adBlock--anime {
+  height: 400px;
+  flex-basis: 50%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #b9bbde;
+
+  .main__image--anime {
+    width: 230px;
+    height: 230px;
+    align-self: center;
+  }
+
+  .main__block--anime {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #fff;
+    width: 330px;
+    height: 150px;
+    border-radius: 8px;
+    margin-left: 50px;
+    margin-top: 50px;
+    align-self: flex-start;
+
+    .adBlock__title {
+      text-align: start;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .adBlock__description {
+      width: 300px;
+      font-size: 16px;
+      text-align: start;
+      line-height: 24px;
+    }
+
+    .adBlock__btn {
+      width: 140px;
+      height: 44px;
+      border-radius: 4px;
+      font-size: 16px;
+      text-align: center;
+      color: #6e41e2;
+      background-color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+      border-color: #6e41e2;
+
+      &:hover {
+        background-color: #6e41e2;
+        color: #fff;
+        transition: 0.3s;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1420px) {
+  .main__adBlock--spiderman {
+    flex-direction: column;
+    height: auto;
+
+    .main__block--spiderman {
+      width: 668px;
+      height: 164px;
+      align-self: center;
+      margin-top: 30px;
+      margin-left: 0;
+
+      .adBlock__description {
+        width: 100%;
+      }
+    }
+
+    .main__image--spiderman {
+      width: 500px;
+      height: 362px;
+      align-self: center;
+      margin: 0;
+    }
+  }
+
+  .main__adBlock--starwars,
+  .main__adBlock--anime {
+    flex-basis: 100%;
+  }
+}
+
+@media screen and (max-width: 765px) {
+  .main__imageContainer {
+    height: 100px;
+  }
+
+  .main__adBlock--spiderman {
+    flex-direction: column;
+    height: auto;
+
+    .main__block--spiderman {
+      width: 300px;
+      height: 206px;
+    }
+
+    .main__image--spiderman {
+      width: 323px;
+      height: 234px;
+    }
+  }
+
+  .main__adBlock--starwars {
+    flex-direction: column-reverse;
+    height: 550px;
+
+    .main__block--starwars {
+      margin: 0;
+      align-self: center;
+      width: 300px;
+      height: 212px;
+      margin-bottom: 30px;
+    }
+  }
+
+  .main__adBlock--anime {
+    flex-direction: column-reverse;
+    height: 550px;
+
+    .main__block--anime {
+      margin: 0;
+      align-self: center;
+      width: 300px;
+      height: 180px;
+      margin-bottom: 30px;
+    }
+  }
+}

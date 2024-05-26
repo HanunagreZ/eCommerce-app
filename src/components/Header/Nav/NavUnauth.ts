@@ -2,6 +2,7 @@ import Link from '../../../ui-components/Link/Link';
 import Li from '../../../ui-components/Li/Li';
 import Button from '../../../ui-components/Button/Button';
 import router from '../../..';
+import DropDown from './DropDown';
 
 export default class NavUnauth {
   private element: HTMLElement;
@@ -9,6 +10,9 @@ export default class NavUnauth {
   private catalogLink: Link;
   private signInLink: Link;
   private signUpBtn: Button;
+  private dropDown: DropDown;
+  private dropDownLi: Li;
+  private arrow: HTMLImageElement;
 
   constructor(className: string) {
     this.element = document.createElement('nav');
@@ -17,27 +21,31 @@ export default class NavUnauth {
     list.classList.add('header__nav-list');
     this.element.append(list);
     this.aboutLink = new Link('#', 'About us', new Li(list).get());
-
-    this.aboutLink.get().addEventListener('click', async () => {
-      /*********** */
-      /************ */
-    });
-
-    this.catalogLink = new Link('/catalog', 'Catalog', new Li(list).get());
-    this.catalogLink.get().addEventListener('click', async () => {
-      //TODO go to Catalog Page
-      // /********* */
-      // await loadingDecorator(catalog.renderProducts);
-      // document.querySelector('.main')?.append(c);
-      /**********/
-    });
+    this.dropDownLi = new Li(list);
+    this.dropDown = new DropDown();
+    this.catalogLink = new Link('#', 'Catalog', this.dropDownLi.get());
+    this.catalogLink.get().classList.add('catalog__link');
+    this.arrow = document.createElement('img');
+    this.arrow.src = 'assets/icons/arrow-down.svg';
+    this.arrow.classList.add('header__dropdown-arrow-up');
+    this.dropDown.render(this.dropDownLi.get());
+    this.dropDownLi.get().append(this.arrow);
     this.signInLink = new Link('/login', 'Sign in', new Li(list).get());
     this.signUpBtn = new Button('Sign up', 'header__btn', this.element);
+    this.catalogExpand();
     this.signUp();
   }
 
   get() {
     return this.element;
+  }
+
+  catalogExpand() {
+    this.catalogLink.get().addEventListener('click', (e) => {
+      e.preventDefault();
+      this.dropDown.get().classList.toggle('header__dropdown_active');
+      this.arrow.classList.toggle('header__dropdown-arrow-down');
+    });
   }
 
   signUp() {

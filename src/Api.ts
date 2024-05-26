@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { ICustomerRegistration, ICustomerLogin } from './interfaces/interfaces';
-import Modal from './components/modal/Modal';
+import Modal from './components/Modal/Modal';
 import { modalProps } from './data/data';
 import userState from './states/UserState';
 import Loading from './components/Loading/Loading';
@@ -8,7 +8,7 @@ import Loading from './components/Loading/Loading';
 import router from '.';
 import header from './components/Header/Header';
 import { ProductsForPage } from './data/constants';
-import { FilterEndpoints } from './data/productsEndpoints';
+import { TypeEndpoints } from './data/productsEndpoints';
 
 class Api {
   async getAccessToken() {
@@ -142,6 +142,9 @@ class Api {
       const accessToken = userState.getAccessToken();
       const response = await axios.get(
         // `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}&${ProductsEndpoints.marvel}`,
+
+        // `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections?limit=200&expand=categories[*].ancestors[*]`,
+
         `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
         {
           headers: {
@@ -159,13 +162,13 @@ class Api {
     return result;
   }
 
-  async filterProducts(page: number, filter: FilterEndpoints) {
+  async filterProducts(page: number, filter: TypeEndpoints) {
     let result;
     try {
       const accessToken = userState.getAccessToken();
       const response = await axios.get(
-        // `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}&${ProductsEndpoints.marvel}`,
-        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections/search?filter=${filter}&limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
+        // `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections?limit=200&expand=categories[*].ancestors[*]`,
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections/search?${filter}&limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -214,6 +217,29 @@ class Api {
     } catch (error) {
       console.error(error);
       result = error;
+    }
+    return result;
+  }
+
+  async getExample(page = 1) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        // `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}&${ProductsEndpoints.marvel}`,
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+      console.log(error);
     }
     return result;
   }

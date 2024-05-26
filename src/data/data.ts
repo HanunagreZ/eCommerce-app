@@ -138,4 +138,46 @@ export const modalProps = {
 export const catalogTitles = {
   all: 'Show all',
   cardBtn: 'Add to card',
+  // sortingTitle: 'Sort by',
+  sortingOptions: ['Sort by', 'Price', 'Name'],
+  // filterTitle: 'Series',
+  filterOptions: ['Series', 'Marvel', 'Star Wars', 'Anime'],
+};
+export const mainAdBlock = {
+  marvel: {
+    containerClass: 'main__adBlock--spiderman',
+    image: 'assets/main/spiderman.svg',
+    imageClass: 'main__image--spiderman',
+    blockClass: 'main__block--spiderman',
+    title: 'CONNECT ON THE WEB',
+    description: 'Collect New Achievements for Your Gaming Set with New Releases from Spider-Man 2.',
+    btn: 'See collection',
+    addEvent: () => {
+      router.navigateTo('/products');
+    },
+  },
+  starwars: {
+    containerClass: 'main__adBlock--starwars',
+    image: 'assets/main/starwarsObiwan.svg',
+    imageClass: 'main__image--starwars',
+    blockClass: 'main__block--starwars',
+    title: 'STAR WARS',
+    description: 'Welcome This Exclusive Inu to Take Her Rightful Place in Your Inuyasha Collection.',
+    btn: 'See collection',
+    addEvent: () => {
+      router.navigateTo('/products');
+    },
+  },
+  anime: {
+    containerClass: 'main__adBlock--anime',
+    image: 'assets/main/inuyasha.svg',
+    imageClass: 'main__image--anime',
+    blockClass: 'main__block--anime',
+    title: 'ANIME',
+    description: 'Unleash the power of your soul.',
+    btn: 'See collection',
+    addEvent: () => {
+      router.navigateTo('/products');
+    },
+  },
 };
