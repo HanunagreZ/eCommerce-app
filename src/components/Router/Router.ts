@@ -1,39 +1,61 @@
 import { IRoute } from '../../interfaces/interfaces';
 import userState from '../../states/UserState';
+import Loading from '../Loading/Loading';
+// import Loading from '../Loading/Loading';
 // import app from '../App';
 
 class Router {
   private root: HTMLElement;
   private routes: IRoute[];
+  // private routesMap: Map;
 
   constructor(root: HTMLElement, routeList: IRoute[]) {
     this.root = root;
     this.routes = routeList;
+
+    // this.routesMap = new Map();
     window.addEventListener('popstate', this.route.bind(this));
     this.route();
     this.handleLinkClicks();
   }
+  public getRotes() {
+    return this.routes;
+  }
+
+  public addRoute(route: IRoute) {
+    this.routes.push(route);
+  }
 
   private route() {
     const { pathname } = window.location;
-    const matchedRoute = this.routes.find((route) => route.path === pathname);
-    if (!matchedRoute) {
-      // this.navigateTo('/404');
-      const page404 = this.routes.find((route) => route.path.includes('404'));
-      if (page404) {
-        this.root.innerHTML = '';
-        this.root.appendChild(page404.component);
+    const executeRouting = () => {
+      const matchedRoute = this.routes.find((route) => route.path === pathname);
+      if (!matchedRoute) {
+        const page404 = this.routes.find((route) => route.path.includes('404'));
+        if (page404) {
+          this.root.innerHTML = '';
+          this.root.appendChild(page404.component);
+        }
+        return;
       }
-      return;
-    }
-    const { component } = matchedRoute;
-    this.root.innerHTML = '';
-    this.root.appendChild(component);
-    if (
-      (pathname === '/login' && userState.getUserName()) ||
-      (pathname === '/registration' && userState.getUserName())
-    ) {
-      this.navigateTo('/');
+      const { component } = matchedRoute;
+      this.root.innerHTML = '';
+      this.root.appendChild(component);
+      if (
+        (pathname === '/login' && userState.getUserName()) ||
+        (pathname === '/registration' && userState.getUserName())
+      ) {
+        this.navigateTo('/');
+      }
+    };
+    if (pathname.includes('/products')) {
+      const loader = new Loading();
+      setTimeout(() => {
+        executeRouting();
+        loader.remove();
+      }, 2000);
+    } else {
+      executeRouting();
     }
   }
 
@@ -43,6 +65,7 @@ class Router {
       this.route();
     }
   }
+
   private handleLinkClicks() {
     document.addEventListener('click', (event) => {
       const target = event.target as HTMLElement;
