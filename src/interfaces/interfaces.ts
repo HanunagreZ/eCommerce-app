@@ -42,6 +42,43 @@ export interface IModalProps {
   addEvent: () => void;
 }
 
+<<<<<<< v/feature/routing-sprint3
+export interface ProductInfo {
+  category: string;
+  header: string;
+  price: string;
+  description: string;
+  imgUrl: string;
+}
+
+export interface Product {
+  categories: {
+    id: string;
+    obj: {
+      ancestors: {
+        id: string;
+        obj: {
+          slug: {
+            'en-US': string;
+          };
+          orderHint: number;
+        };
+      }[];
+      name: { 'en-US': string };
+      slug: {
+        'en-US': string;
+      };
+
+      orderHint: number;
+    };
+  }[];
+  masterVariant: {
+    images: { url: string }[];
+  };
+  name: { 'en-US': string };
+  description: { 'en-US': string };
+  slug: { 'en-US': string };
+=======
 export interface IMainAdBlockProps {
   containerClass: string;
   image: string;
@@ -51,4 +88,5 @@ export interface IMainAdBlockProps {
   description: string;
   btn: string;
   addEvent: () => void;
+>>>>>>> release/catalog-product-profile
 }
