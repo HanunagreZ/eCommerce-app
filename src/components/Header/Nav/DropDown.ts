@@ -1,4 +1,4 @@
-import { catalog } from '../../../Pages/Catalog/Catalog';
+import { catalog } from '../../../Pages/Products/Products';
 import { TypeEndpoints } from '../../../data/productsEndpoints';
 import Li from '../../../ui-components/Li/Li';
 import Link from '../../../ui-components/Link/Link';

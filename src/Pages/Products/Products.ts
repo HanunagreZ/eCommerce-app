@@ -1,4 +1,4 @@
-import './Catalog.scss';
+import './Products.scss';
 import catalogState from '../../states/CatalogState';
 import Div from '../../ui-components/Div/Div';
 import Input from '../../ui-components/Input/Input';
