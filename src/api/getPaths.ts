@@ -1,43 +1,7 @@
 import api from '../Api';
 import ProductPage from '../Pages/Product/Product';
 import { IRoute } from '../interfaces/interfaces';
-
-interface ProductInfo {
-  category: string;
-  header: string;
-  price: string;
-  description: string;
-  imgUrl: string;
-}
-
-interface Product {
-  categories: {
-    id: string;
-    obj: {
-      ancestors: {
-        id: string;
-        obj: {
-          slug: {
-            'en-US': string;
-          };
-          orderHint: number;
-        };
-      }[];
-      name: { 'en-US': string };
-      slug: {
-        'en-US': string;
-      };
-
-      orderHint: number;
-    };
-  }[];
-  masterVariant: {
-    images: { url: string }[];
-  };
-  name: { 'en-US': string };
-  description: { 'en-US': string };
-  slug: { 'en-US': string };
-}
+import { Product, ProductInfo } from '../interfaces/interfaces';
 
 async function getPaths() {
   const newRoutes: IRoute[] = [];
@@ -96,11 +60,5 @@ async function getPaths() {
   console.log(newRoutes);
   return newRoutes;
 }
-
-// getPaths().then((data) =>
-//   data.forEach((route) => {
-//     router.addRoute(route);
-//   }),
-// );
 
 export default getPaths;
