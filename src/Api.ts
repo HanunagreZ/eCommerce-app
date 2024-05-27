@@ -16,7 +16,7 @@ class Api {
         {},
         {
           headers: {
-            Authorization: 'Basic MnB2RWxuSk9OVzJfbWQyM0hrekJiNnYtOkhUTW9Vc1g2LTg3RmhnZ0ViMTFoRDE1bVdjYnZzWUNl',
+            Authorization: 'Basic V05TYU9QOUtJVlhhenVyNEFzRnhfeHdvOm1nSk1idTc2QXFSb05KZUE5MGVxQWo4ZHMzQlVKSWN4',
           },
         },
       );
@@ -36,7 +36,7 @@ class Api {
         {},
         {
           headers: {
-            Authorization: 'Basic MnB2RWxuSk9OVzJfbWQyM0hrekJiNnYtOkhUTW9Vc1g2LTg3RmhnZ0ViMTFoRDE1bVdjYnZzWUNl',
+            Authorization: 'Basic V05TYU9QOUtJVlhhenVyNEFzRnhfeHdvOm1nSk1idTc2QXFSb05KZUE5MGVxQWo4ZHMzQlVKSWN4',
           },
         },
       );
@@ -175,24 +175,6 @@ class Api {
   }
 
   async getCategory(id: string) {
-    let result;
-    try {
-      const accessToken = userState.getAccessToken();
-      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/categories/${id}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      result = response.data.name['en-US' as keyof typeof response.data.name];
-      console.log(result);
-    } catch (error) {
-      console.error(error);
-      result = error;
-    }
-    return result;
-  }
-
-  async getProductsByCategoryId(id: string) {
     let result;
     try {
       const accessToken = userState.getAccessToken();

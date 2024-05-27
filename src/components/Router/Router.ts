@@ -1,6 +1,7 @@
 import { IRoute } from '../../interfaces/interfaces';
 import userState from '../../states/UserState';
 import Loading from '../Loading/Loading';
+import getPaths from '../../api/getPaths';
 // import Loading from '../Loading/Loading';
 // import app from '../App';
 
@@ -17,6 +18,11 @@ class Router {
     window.addEventListener('popstate', this.route.bind(this));
     this.route();
     this.handleLinkClicks();
+    getPaths().then((data) =>
+      data.forEach((route) => {
+        this.addRoute(route);
+      }),
+    );
   }
   public getRotes() {
     return this.routes;
@@ -53,7 +59,7 @@ class Router {
       setTimeout(() => {
         executeRouting();
         loader.remove();
-      }, 2000);
+      }, 250);
     } else {
       executeRouting();
     }
