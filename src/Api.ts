@@ -8,7 +8,6 @@ import Loading from './components/Loading/Loading';
 import router from '.';
 import header from './components/Header/Header';
 import { ProductsForPage } from './data/constants';
-import { TypeEndpoints } from './data/productsEndpoints';
 
 class Api {
   async getAccessToken() {
@@ -18,7 +17,7 @@ class Api {
         {},
         {
           headers: {
-            Authorization: 'Basic MnB2RWxuSk9OVzJfbWQyM0hrekJiNnYtOkhUTW9Vc1g2LTg3RmhnZ0ViMTFoRDE1bVdjYnZzWUNl',
+            Authorization: 'Basic V05TYU9QOUtJVlhhenVyNEFzRnhfeHdvOm1nSk1idTc2QXFSb05KZUE5MGVxQWo4ZHMzQlVKSWN4',
           },
         },
       );
@@ -38,7 +37,7 @@ class Api {
         {},
         {
           headers: {
-            Authorization: 'Basic MnB2RWxuSk9OVzJfbWQyM0hrekJiNnYtOkhUTW9Vc1g2LTg3RmhnZ0ViMTFoRDE1bVdjYnZzWUNl',
+            Authorization: 'Basic V05TYU9QOUtJVlhhenVyNEFzRnhfeHdvOm1nSk1idTc2QXFSb05KZUE5MGVxQWo4ZHMzQlVKSWN4',
           },
         },
       );
@@ -162,13 +161,12 @@ class Api {
     return result;
   }
 
-  async filterProducts(page: number, filter: TypeEndpoints) {
+  async getSelectedProducts(page: number, filter: string, sorting: string) {
     let result;
     try {
       const accessToken = userState.getAccessToken();
       const response = await axios.get(
-        // `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections?limit=200&expand=categories[*].ancestors[*]`,
-        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections/search?${filter}&limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections/search?${filter}&${sorting}&limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -217,29 +215,6 @@ class Api {
     } catch (error) {
       console.error(error);
       result = error;
-    }
-    return result;
-  }
-
-  async getExample(page = 1) {
-    let result;
-    try {
-      const accessToken = userState.getAccessToken();
-      const response = await axios.get(
-        // `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}&${ProductsEndpoints.marvel}`,
-        `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-
-      result = response.data;
-    } catch (error) {
-      console.error(error);
-      result = error;
-      console.log(error);
     }
     return result;
   }

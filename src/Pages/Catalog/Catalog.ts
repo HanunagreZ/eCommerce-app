@@ -8,8 +8,7 @@ import { ProductCard } from './ProductCard';
 import Img from '../../ui-components/Img/Img';
 import { ProductsForPage } from '../../data/constants';
 import Loading from '../../components/Loading/Loading';
-// import catalogProxy from './CatalogProxi';
-import { TypeEndpoints } from '../../data/productsEndpoints';
+import { SortEndpoints, TypeEndpoints } from '../../data/productsEndpoints';
 import { catalogTitles } from '../../data/data';
 
 export default class Catalog {
@@ -23,25 +22,31 @@ export default class Catalog {
   private pageNavigation: Div;
   public activePage: number;
   private pagesCount: number;
-  public activeType: TypeEndpoints;
-  private subCategoriesFilter: string | undefined;
+  public activeType: string;
+  activeSorting: string;
 
   constructor() {
     this.breadcrumb = new Div('catalog__breadcrumb');
-
     this.filterSearch = new Div('catalog__filter-search');
     this.sorting = new Select('catalog__sorting');
+    this.activeSorting = '';
+    this.sorting.addListener(async () => {
+      await this.sortProducts();
+    });
     this.filter = new Select('catalog__filter');
+    this.filter.addListener(async () => {
+      await this.filterByCategory();
+    });
     this.showAll = new Span(catalogTitles.all, 'catalog__show-all');
+    this.showAll.get().addEventListener('click', async () => {
+      await this.showProducts(TypeEndpoints.pop);
+    });
     this.search = new Input('', 'catalog__search');
     this.cardsWrapper = new Div('catalog__cards-wrapper');
     this.pageNavigation = new Div('catalog__page-navigation');
     this.activePage = 1;
     this.pagesCount = 0;
     this.activeType = TypeEndpoints.all;
-
-    this.subCategoriesFilter = undefined;
-
     this.pageNavigation.get().addEventListener('click', (e) => this.switchPages(e, this.pagesCount));
   }
 
@@ -49,27 +54,17 @@ export default class Catalog {
     const container = new Div('catalog__container');
     this.breadcrumb.get().innerText = 'Catalog/Pop!';
     const productsContainer = new Div('catalog__products');
-    // const filterSearch = new Div('catalog__filter-search');
-
-    // this.showAll.get().addEventListener('click', async () => {
-    //   // this.activeFilter = FilterEndpoints.marvel;
-    //   this.activeType = TypeEndpoints.pop;
-    //   const loading = new Loading();
-
-    //   await this.renderProducts(this.activePage, this.activeType);
-
-    //   loading.remove();
-    // });
-    // filterSearch.get().append(this.sorting.get(), this.filter.get(), this.showAll.get(), this.search.get());
     productsContainer.get().append(this.filterSearch.get(), this.cardsWrapper.get());
     container.get().append(this.breadcrumb.get(), productsContainer.get(), this.pageNavigation.get());
     return container.get();
   }
 
-  async showProducts(typeEndpoint: TypeEndpoints) {
+  async showProducts(typeEndpoint: string) {
+    this.activeSorting = '';
+    this.activePage = 1;
     this.activeType = typeEndpoint;
     await this.renderFilterSearch();
-    await this.renderProducts(this.activePage, this.activeType);
+    await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
   }
 
   async renderFilterSearch() {
@@ -79,7 +74,7 @@ export default class Catalog {
     this.sorting.get().innerHTML = '';
     this.search.render(this.filterSearch.get());
     this.renderOptions(this.sorting.get(), catalogTitles.sortingOptions);
-    if ((this.activeType === TypeEndpoints.pop)) {
+    if (this.activeType !== TypeEndpoints.accessories) {
       this.filter.get().innerHTML = '';
       this.renderOptions(this.filter.get(), catalogTitles.filterOptions);
       filterWrapper.get().append(this.filter.get(), this.showAll.get());
@@ -96,11 +91,9 @@ export default class Catalog {
       .map((option) => parentElement.append(option));
   }
 
-  async renderProducts(page: number, filter: TypeEndpoints) {
+  async renderProducts(page: number, filter: string, sorting: string) {
     this.cardsWrapper.get().innerHTML = '';
-    // const products = await catalogProxy.renderCatalog(page, filter);
-
-    const products = await catalogState.getFilteredData(page, filter);
+    const products = await catalogState.getSelectedData(page, filter, sorting);
     products.map((data) => {
       new ProductCard(data, this.cardsWrapper.get());
     });
@@ -113,7 +106,6 @@ export default class Catalog {
     console.log(productsCount);
     this.pagesCount = Math.ceil(productsCount / ProductsForPage);
     new Img('catalog__pages-prev', './../../assets/icons/iconPrev.svg', 'Back', this.pageNavigation.get());
-
     for (let i = 1; i <= this.pagesCount; i++) {
       const page = new Span(String(i), 'catalog__page-number', this.pageNavigation.get());
       if (i === activePage) {
@@ -131,7 +123,7 @@ export default class Catalog {
       if (clickedElement.closest('span')) {
         this.activePage = Number(clickedElement.innerText);
         const loading = new Loading();
-        await this.renderProducts(this.activePage, this.activeType);
+        await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
         loading.remove();
       }
     }
@@ -142,7 +134,7 @@ export default class Catalog {
     ) {
       this.activePage--;
       const loading = new Loading();
-      await this.renderProducts(this.activePage, this.activeType);
+      await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
       loading.remove();
     }
     if (
@@ -152,9 +144,50 @@ export default class Catalog {
     ) {
       this.activePage++;
       const loading = new Loading();
-      await this.renderProducts(this.activePage, this.activeType);
+      await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
       loading.remove();
     }
+  }
+
+  async filterByCategory() {
+    switch (this.filter.get().value) {
+      case catalogTitles.filterOptions[0]:
+        break;
+      case catalogTitles.filterOptions[1]:
+        await this.showFilteredProducts(TypeEndpoints.marvel);
+        break;
+      case catalogTitles.filterOptions[2]:
+        await this.showFilteredProducts(TypeEndpoints.starwars);
+        break;
+      case catalogTitles.filterOptions[3]:
+        await this.showFilteredProducts(TypeEndpoints.anime);
+        break;
+    }
+  }
+
+  async showFilteredProducts(filter: string) {
+    this.activePage = 1;
+    this.activeType = filter;
+    await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
+  }
+
+  async sortProducts() {
+    switch (this.sorting.get().value) {
+      case catalogTitles.sortingOptions[0]:
+        break;
+      case catalogTitles.sortingOptions[1]:
+        await this.showSortingProducts(SortEndpoints.nameAZ);
+        break;
+      case catalogTitles.sortingOptions[2]:
+        await this.showSortingProducts(SortEndpoints.nameZA);
+        break;
+    }
+  }
+
+  async showSortingProducts(sortEndpoint: string) {
+    this.activePage = 1;
+    this.activeSorting = sortEndpoint;
+    await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
   }
 }
 

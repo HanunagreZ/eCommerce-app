@@ -1,12 +1,15 @@
-export enum TypeEndpoints {
-  all = '',
-  pop = 'filter=productType.id:"8ec0960c-cbfe-412a-bf93-4675105932d7"',
-  accessories = 'filter=productType.id:"d9b983ba-7662-4b35-98bf-ee03b01a4a97"',
-  // marvel = 'masterData.current.categories[0].id:"cb0f9315-4738-41de-bdd5-92be6ca24d99"',
-}
+export const TypeEndpoints = {
+  all: '',
+  pop: 'filter=productType.id:"96743fc0-b9e5-49b7-8a40-7d6ca919a901"',
+  accessories: 'filter=productType.id:"f04d2c67-32ca-4fe3-8ec6-567f489cf89c"',
+  marvel: 'filter=categories.id:"8f0fffa0-9968-4c1b-af89-d4bcc62d58ad"',
+  starwars: 'filter=categories.id:"546f23ab-9349-43a0-867a-cef1027e6f4e"',
+  anime: 'filter=categories.id:"e05a4e72-e27c-43c3-b224-0871adecb928"',
+};
 
-export enum SortEndPoints {
-  
+export enum SortEndpoints {
+  nameAZ = 'sort=name.en-us asc',
+  nameZA = 'sort=name.en-us desc',
+  PriceLowToHigh = 'asc',
+  PriceHightoLow = 'desc',
 }
-//pop = 'where=productType%28id%3D%228ec0960c-cbfe-412a-bf93-4675105932d7%22%29',
-//accessories = 'where=productType%28id%3D%22d9b983ba-7662-4b35-98bf-ee03b01a4a97',
