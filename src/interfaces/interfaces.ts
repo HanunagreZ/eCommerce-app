@@ -42,6 +42,7 @@ export interface IModalProps {
   addEvent: () => void;
 }
 
+<<<<<<< v/feature/routing-sprint3
 export interface ProductInfo {
   category: string;
   header: string;
@@ -77,4 +78,15 @@ export interface Product {
   name: { 'en-US': string };
   description: { 'en-US': string };
   slug: { 'en-US': string };
+=======
+export interface IMainAdBlockProps {
+  containerClass: string;
+  image: string;
+  imageClass: string;
+  blockClass: string;
+  title: string;
+  description: string;
+  btn: string;
+  addEvent: () => void;
+>>>>>>> release/catalog-product-profile
 }

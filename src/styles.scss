@@ -16,7 +16,7 @@ body {
   display: flex;
   flex-grow: 1;
   min-height: calc(100vh - 134px);
-  //height: 100%;
+  justify-content: center;
 }
 
 .link {

@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { ICustomerRegistration, ICustomerLogin } from './interfaces/interfaces';
-import Modal from './components/modal/Modal';
+import Modal from './components/Modal/Modal';
 import { modalProps } from './data/data';
 import userState from './states/UserState';
 import Loading from './components/Loading/Loading';
