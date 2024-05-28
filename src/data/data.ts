@@ -141,6 +141,7 @@ export const catalogTitles = {
   sortingOptions: ['Sort by', 'Name: A - Z', 'Name: Z - A', 'Price Low To High', 'Price High to Low'],
   filterOptions: ['Series', 'Marvel', 'Star Wars', 'Anime'],
 };
+
 export const mainAdBlock = {
   marvel: {
     containerClass: 'main__adBlock--spiderman',
@@ -177,5 +178,32 @@ export const mainAdBlock = {
     addEvent: () => {
       router.navigateTo('/catalog/pop/anime');
     },
+  },
+};
+
+export const breadProps = {
+  category: {
+    href: ['/', '/catalog'],
+    text: ['Funko', 'Catalog'],
+  },
+  pop: {
+    href: ['/', '/catalog', '/catalog/pop'],
+    text: ['Funko', 'Catalog', 'Pop!'],
+  },
+  accessories: {
+    href: ['/', '/catalog', '/catalog/accessories'],
+    text: ['Funko', 'Catalog', 'Accessories'],
+  },
+  anime: {
+    href: ['/', '/catalog', '/catalog/pop', '/catalog/pop/anime'],
+    text: ['Funko', 'Catalog', 'Pop!', 'Anime'],
+  },
+  starwars: {
+    href: ['/', '/catalog', '/catalog/pop', '/catalog/pop/starwars'],
+    text: ['Funko', 'Catalog', 'Pop!', 'Star Wars'],
+  },
+  marvel: {
+    href: ['/', '/catalog', '/catalog/pop', '/catalog/pop/marvel'],
+    text: ['Funko', 'Catalog', 'Pop!', 'Marvel'],
   },
 };

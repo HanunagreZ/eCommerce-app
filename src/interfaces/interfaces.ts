@@ -119,24 +119,7 @@ export interface IMainAdBlockProps {
   addEvent: () => void;
 }
 
-// export interface Product {
-//   categories: {
-//     id: string;
-//     obj: {
-//       ancestors: {
-//         id: string;
-//         obj: {
-//           slug: {
-//             'en-US': string;
-//           };
-//           orderHint: number;
-//         };
-//       }[];
-//       slug: {
-//         'en-US': string;
-//       };
-//       orderHint: number;
-//     };
-//   }[];
-//   slug: { 'en-US': string };
-// }
+export interface IBreadcrumbsProps {
+  href: string[];
+  text: string[];
+}

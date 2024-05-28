@@ -12,8 +12,11 @@ import { SortEndpoints, TypeEndpoints } from '../../data/productsEndpoints';
 import { catalogTitles } from '../../data/data';
 import router from '../..';
 
+import { breadProps } from '../../data/data';
+import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
+
 export default class Catalog {
-  private breadcrumb: Div;
+  private breadcrumbs: Div;
   private filterSearch: Div;
   private sorting: Select;
   private filter: Select;
@@ -27,7 +30,7 @@ export default class Catalog {
   activeSorting: string;
 
   constructor() {
-    this.breadcrumb = new Div('catalog__breadcrumb');
+    this.breadcrumbs = new Div('catalog__breadcrumb');
     this.filterSearch = new Div('catalog__filter-search');
     this.sorting = new Select('catalog__sorting');
     this.activeSorting = '';
@@ -42,7 +45,7 @@ export default class Catalog {
       } else {
         router.navigateTo(`catalog/pop/${field}`);
       }
-      // await this.filterByCategory();
+      //await this.filterByCategory();
     });
     this.showAll = new Span(catalogTitles.all, 'catalog__show-all');
     this.showAll.get().addEventListener('click', async () => {
@@ -59,10 +62,14 @@ export default class Catalog {
 
   render() {
     const container = new Div('catalog__container');
-    this.breadcrumb.get().innerText = 'Catalog/Pop!';
+
+    //breadcrumb.get().innerText = 'Catalog/Pop!';
+    //breadcrumbs.render(breadProps, container.get());
+
     const productsContainer = new Div('catalog__products');
     productsContainer.get().append(this.filterSearch.get(), this.cardsWrapper.get());
-    container.get().append(this.breadcrumb.get(), productsContainer.get(), this.pageNavigation.get());
+    //container.get().append(productsContainer.get(), this.pageNavigation.get());
+    container.get().append(this.breadcrumbs.get(), productsContainer.get(), this.pageNavigation.get());
     return container.get();
   }
 
@@ -70,6 +77,7 @@ export default class Catalog {
     this.activeSorting = '';
     this.activePage = 1;
     this.activeType = typeEndpoint;
+    this.setBreadCrumbs(typeEndpoint);
     await this.renderFilterSearch();
     await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
   }
@@ -201,6 +209,29 @@ export default class Catalog {
     this.activePage = 1;
     this.activeSorting = sortEndpoint;
     await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
+  }
+
+  setBreadCrumbs(TypeEndpoint: string) {
+    switch (TypeEndpoint) {
+      case TypeEndpoints.all:
+        this.breadcrumbs = new Breadcrumbs().render(breadProps.category, this.breadcrumbs.get());
+        break;
+      case TypeEndpoints.pop:
+        this.breadcrumbs = new Breadcrumbs().render(breadProps.pop, this.breadcrumbs.get());
+        break;
+      case TypeEndpoints.accessories:
+        this.breadcrumbs = new Breadcrumbs().render(breadProps.accessories, this.breadcrumbs.get());
+        break;
+      case TypeEndpoints.anime:
+        this.breadcrumbs = new Breadcrumbs().render(breadProps.anime, this.breadcrumbs.get());
+        break;
+      case TypeEndpoints.marvel:
+        this.breadcrumbs = new Breadcrumbs().render(breadProps.marvel, this.breadcrumbs.get());
+        break;
+      case TypeEndpoints.starwars:
+        this.breadcrumbs = new Breadcrumbs().render(breadProps.starwars, this.breadcrumbs.get());
+        break;
+    }
   }
 }
 

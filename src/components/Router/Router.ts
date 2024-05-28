@@ -55,6 +55,8 @@ class Router {
       }
     };
     if (pathname.includes('/catalog')) {
+      /* 😎 костыль 🤙 */
+      window.scrollTo(0, 0);
       const loader = new Loading();
       setTimeout(() => {
         executeRouting();
