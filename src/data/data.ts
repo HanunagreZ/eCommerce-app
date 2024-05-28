@@ -151,7 +151,7 @@ export const mainAdBlock = {
     description: 'Collect New Achievements for Your Gaming Set with New Releases from Spider-Man 2.',
     btn: 'See collection',
     addEvent: () => {
-      router.navigateTo('/products');
+      router.navigateTo('/catalog/pop/marvel');
     },
   },
   starwars: {
@@ -163,7 +163,7 @@ export const mainAdBlock = {
     description: 'Welcome This Exclusive Inu to Take Her Rightful Place in Your Inuyasha Collection.',
     btn: 'See collection',
     addEvent: () => {
-      router.navigateTo('/products');
+      router.navigateTo('/catalog/pop/starwars');
     },
   },
   anime: {
@@ -175,7 +175,7 @@ export const mainAdBlock = {
     description: 'Unleash the power of your soul.',
     btn: 'See collection',
     addEvent: () => {
-      router.navigateTo('/products');
+      router.navigateTo('/catalog/pop/anime');
     },
   },
 };

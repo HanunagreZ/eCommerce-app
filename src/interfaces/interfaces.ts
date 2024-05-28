@@ -31,7 +31,7 @@ export interface IAddress {
 
 export interface IRoute {
   path: string;
-  component: HTMLElement;
+  component: HTMLElement | HTMLDivElement;
 }
 
 export interface IModalProps {

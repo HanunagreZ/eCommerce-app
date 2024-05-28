@@ -33,6 +33,7 @@ class Router {
   }
 
   private route() {
+    console.log(this.routes);
     const { pathname } = window.location;
     const executeRouting = () => {
       const matchedRoute = this.routes.find((route) => route.path === pathname);
@@ -54,7 +55,7 @@ class Router {
         this.navigateTo('/');
       }
     };
-    if (pathname.includes('/products')) {
+    if (pathname.includes('/catalog')) {
       const loader = new Loading();
       setTimeout(() => {
         executeRouting();
