@@ -28,7 +28,7 @@ export class ProductCard {
     } else {
       new Span(`$${(productData.price / 100).toFixed(2)}`, 'catalog__product-price', priceContainer.get());
     }
-    new Button(catalogTitles.cardBtn, 'catalog__card-btn', card.get());
+    new Button(catalogTitles.cartBtn, 'catalog__cart-btn', card.get());
     return card.get();
   }
 }

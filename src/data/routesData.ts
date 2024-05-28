@@ -4,7 +4,7 @@ import MainPage from '../Pages/Main/Main';
 //import ProductsPage from '../../pages/Products/Products';
 import Login from '../pages/Login/Login';
 import Registration from '../pages/Registration/Registration';
-import { catalog } from '../Pages/Products/Products';
+import { catalog } from '../Pages/Products/Catalog';
 // import Catalog from '../Pages/Catalog/Catalog';
 
 // Сюда импортируются вьюшки страниц, и прописываются в "component"

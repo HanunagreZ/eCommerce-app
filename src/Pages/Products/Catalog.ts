@@ -1,4 +1,4 @@
-import './Products.scss';
+import './Catalog.scss';
 import catalogState from '../../states/CatalogState';
 import Div from '../../ui-components/Div/Div';
 import Input from '../../ui-components/Input/Input';
@@ -64,11 +64,14 @@ export default class Catalog {
     this.activeSorting = '';
     this.activePage = 1;
     this.activeType = typeEndpoint;
-    await this.renderFilterSearch();
+    const entries = Object.entries(TypeEndpoints).find((el) => el[1] === typeEndpoint);
+    const categoryKey = entries ? entries[0] : 'all';
+
+    await this.renderFilterSearch(categoryKey);
     await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
   }
 
-  async renderFilterSearch() {
+  async renderFilterSearch(categoryKey?: string) {
     this.filterSearch.get().innerHTML = '';
     const filterWrapper = new Div('catalog__ffilter-wrapper', this.filterSearch.get());
     filterWrapper.get().append(this.sorting.get());
@@ -77,7 +80,7 @@ export default class Catalog {
     this.renderOptions(this.sorting.get(), catalogTitles.sortingOptions);
     if (this.activeType !== TypeEndpoints.accessories) {
       this.filter.get().innerHTML = '';
-      this.renderOptions(this.filter.get(), catalogTitles.filterOptions);
+      this.renderOptions(this.filter.get(), catalogTitles.filterOptions, categoryKey);
       filterWrapper.get().append(this.filter.get(), this.showAll.get());
     }
   }
@@ -93,11 +96,19 @@ export default class Catalog {
     this.filterSearch.get().append(searchForm);
   }
 
-  renderOptions(parentElement: HTMLElement, options: string[]) {
+  renderOptions(parentElement: HTMLElement, options: string[], categoryKey?: string) {
     options
-      .map((option) => {
+      .map((option, i) => {
         const sortOption = document.createElement('option');
         sortOption.innerText = option;
+        if (i === 0) {
+          sortOption.disabled = true;
+          sortOption.selected = true;
+          sortOption.hidden = true;
+        }
+        if (categoryKey === option.replaceAll(' ', '').toLowerCase()) {
+          sortOption.selected = true;
+        }
         return sortOption;
       })
       .map((option) => parentElement.append(option));

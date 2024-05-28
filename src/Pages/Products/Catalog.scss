@@ -29,7 +29,7 @@
 .catalog__sorting,
 .catalog__filter,
 .catalog__show-all {
-  width: 180px;
+  width: 185px;
   height: 30px;
   margin: 0 20px 10px 0;
   font-size: 16px;
@@ -51,6 +51,7 @@
 }
 
 .catalog__show-all {
+  white-space: nowrap;
   border: none;
 }
 .catalog__search-form {
@@ -73,7 +74,6 @@
   height: 24px;
   background: none;
   background-image: url('../../assets/icons/iconSearch.svg');
-
   border: none;
   cursor: pointer;
 }
@@ -97,13 +97,20 @@
   gap: 10px;
   border-radius: 15px;
   background-color: #ffffff;
+  cursor: pointer;
+
+  &:hover {
+    .catalog__card-img {
+      transform: scale(1.15);
+    }
+  }
 }
 .catalog__card-img {
   transition: transform 0.2s;
 
-  &:hover {
-    transform: scale(1.2);
-  }
+  // &:hover {
+  //   transform: scale(1.2);
+  // }
 }
 
 .catalog__product-category {
@@ -130,7 +137,7 @@
   }
 }
 
-.catalog__card-btn {
+.catalog__cart-btn {
   padding: 13px 0;
   background-color: rgb(110, 65, 226, 0.16);
   font-size: 16px;

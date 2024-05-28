@@ -7,9 +7,9 @@ export const TypeEndpoints = {
   anime: 'filter=categories.id:"e05a4e72-e27c-43c3-b224-0871adecb928"',
 };
 
-export enum SortEndpoints {
-  nameAZ = 'sort=name.en-us asc',
-  nameZA = 'sort=name.en-us desc',
-  PriceLowToHigh = 'sort=price asc',
-  PriceHightoLow = 'sort=price desc',
-}
+export const SortEndpoints = {
+  nameAZ: 'sort=name.en-us asc',
+  nameZA: 'sort=name.en-us desc',
+  PriceLowToHigh: 'sort=price asc',
+  PriceHightoLow: 'sort=price desc',
+};
