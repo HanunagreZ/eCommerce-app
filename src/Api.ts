@@ -141,12 +141,14 @@ class Api {
       const accessToken = userState.getAccessToken();
       const response = await axios.get(
         `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
+
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         },
       );
+      
       result = response.data;
     } catch (error) {
       console.error(error);
