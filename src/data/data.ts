@@ -151,7 +151,7 @@ export const mainAdBlock = {
     description: 'Collect New Achievements for Your Gaming Set with New Releases from Spider-Man 2.',
     btn: 'See collection',
     addEvent: () => {
-      router.navigateTo('/products');
+      router.navigateTo('/catalog/pop/marvel');
     },
   },
   starwars: {
@@ -163,7 +163,7 @@ export const mainAdBlock = {
     description: 'Welcome This Exclusive Inu to Take Her Rightful Place in Your Inuyasha Collection.',
     btn: 'See collection',
     addEvent: () => {
-      router.navigateTo('/products');
+      router.navigateTo('/catalog/pop/starwars');
     },
   },
   anime: {
@@ -175,7 +175,34 @@ export const mainAdBlock = {
     description: 'Unleash the power of your soul.',
     btn: 'See collection',
     addEvent: () => {
-      router.navigateTo('/products');
+      router.navigateTo('/catalog/pop/anime');
     },
+  },
+};
+
+export const breadProps = {
+  category: {
+    href: ['/', '/catalog'],
+    text: ['Funko', 'Catalog'],
+  },
+  pop: {
+    href: ['/', '/catalog', '/catalog/pop'],
+    text: ['Funko', 'Catalog', 'Pop!'],
+  },
+  accessories: {
+    href: ['/', '/catalog', '/catalog/accessories'],
+    text: ['Funko', 'Catalog', 'Accessories'],
+  },
+  anime: {
+    href: ['/', '/catalog', '/catalog/pop', '/catalog/pop/anime'],
+    text: ['Funko', 'Catalog', 'Pop!', 'Anime'],
+  },
+  starwars: {
+    href: ['/', '/catalog', '/catalog/pop', '/catalog/pop/starwars'],
+    text: ['Funko', 'Catalog', 'Pop!', 'Star Wars'],
+  },
+  marvel: {
+    href: ['/', '/catalog', '/catalog/pop', '/catalog/pop/marvel'],
+    text: ['Funko', 'Catalog', 'Pop!', 'Marvel'],
   },
 };

@@ -1,0 +1,28 @@
+@import '../../styles.scss';
+
+.breadcrumbs__list {
+  display: flex;
+  height: 25px;
+  padding: 15px 0 20px 0;
+  gap: 5px;
+  margin: 0;
+
+  li {
+    & ::after {
+      content: '/';
+      margin-left: 5px;
+    }
+
+    &:last-child {
+      & ::after {
+        content: '';
+      }
+    }
+  }
+}
+
+.breadcrumbs {
+  margin: 0 3%;
+  width: 100%;
+  max-width: 1360px;
+}

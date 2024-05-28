@@ -54,7 +54,9 @@ class Router {
         this.navigateTo('/');
       }
     };
-    if (pathname.includes('/products')) {
+    if (pathname.includes('/catalog')) {
+      /* 😎 костыль 🤙 */
+      window.scrollTo(0, 0);
       const loader = new Loading();
       setTimeout(() => {
         executeRouting();

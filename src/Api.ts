@@ -148,7 +148,7 @@ class Api {
           },
         },
       );
-      
+
       result = response.data;
     } catch (error) {
       console.error(error);

@@ -30,15 +30,15 @@ async function getPaths() {
       }
     }
     if (productPath[0] !== '/') {
-      productPath = '/products' + '/' + productPath;
+      productPath = '/catalog' + '/' + productPath;
     }
     if (subCategory.length !== 0) {
-      subCategory = '/products' + '/' + subCategory;
+      subCategory = '/catalog' + '/' + subCategory;
     }
     if (!subCategoryPaths.includes(subCategory) && subCategory.length !== 0) {
       subCategoryPaths.push(subCategory);
     }
-    category = '/products' + category;
+    category = '/catalog' + category;
     if (!categoriesPaths.includes(category)) {
       categoriesPaths.push(category);
     }
@@ -57,7 +57,6 @@ async function getPaths() {
     const route: IRoute = { path: productPath, component: page };
     newRoutes.push(route);
   });
-  console.log(newRoutes);
   return newRoutes;
 }
 

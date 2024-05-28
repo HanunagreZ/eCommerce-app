@@ -31,7 +31,7 @@ export interface IAddress {
 
 export interface IRoute {
   path: string;
-  component: HTMLElement;
+  component: HTMLElement | HTMLDivElement;
 }
 
 export interface IModalProps {
@@ -117,4 +117,9 @@ export interface IMainAdBlockProps {
   description: string;
   btn: string;
   addEvent: () => void;
+}
+
+export interface IBreadcrumbsProps {
+  href: string[];
+  text: string[];
 }
