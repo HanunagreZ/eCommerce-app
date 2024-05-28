@@ -135,6 +135,13 @@ export const modalProps = {
   },
 };
 
+export const catalogTitles = {
+  all: 'Show all',
+  cardBtn: 'Add to card',
+  sortingOptions: ['Sort by', 'Name: A - Z', 'Name: Z - A', 'Price Low To High', 'Price High to Low'],
+  filterOptions: ['Series', 'Marvel', 'Star Wars', 'Anime'],
+};
+
 export const mainAdBlock = {
   marvel: {
     containerClass: 'main__adBlock--spiderman',
@@ -145,7 +152,7 @@ export const mainAdBlock = {
     description: 'Collect New Achievements for Your Gaming Set with New Releases from Spider-Man 2.',
     btn: 'See collection',
     addEvent: () => {
-      router.navigateTo('/products');
+      router.navigateTo('/catalog/pop/marvel');
     },
   },
   starwars: {
@@ -157,7 +164,7 @@ export const mainAdBlock = {
     description: 'Welcome This Exclusive Inu to Take Her Rightful Place in Your Inuyasha Collection.',
     btn: 'See collection',
     addEvent: () => {
-      router.navigateTo('/products');
+      router.navigateTo('/catalog/pop/starwars');
     },
   },
   anime: {
@@ -169,34 +176,34 @@ export const mainAdBlock = {
     description: 'Unleash the power of your soul.',
     btn: 'See collection',
     addEvent: () => {
-      router.navigateTo('/products');
+      router.navigateTo('/catalog/pop/anime');
     },
   },
 };
 
 export const breadProps = {
   category: {
-    href: ['/', '/products'],
-    text: ['Funko', 'Category'],
+    href: ['/', '/catalog'],
+    text: ['Funko', 'Catalog'],
   },
   pop: {
-    href: ['/', '/products', '/products/pop'],
-    text: ['Funko', 'Category', 'Pop!'],
+    href: ['/', '/catalog', '/catalog/pop'],
+    text: ['Funko', 'Catalog', 'Pop!'],
   },
   accessories: {
-    href: ['/', '/products', '/products/accessories'],
-    text: ['Funko', 'Category', 'Accessories'],
+    href: ['/', '/catalog', '/catalog/accessories'],
+    text: ['Funko', 'Catalog', 'Accessories'],
   },
   anime: {
-    href: ['/', '/products', '/products/pop', '/products/pop/anime'],
-    text: ['Funko', 'Category', 'Pop!', 'Anime'],
+    href: ['/', '/catalog', '/catalog/pop', '/catalog/pop/anime'],
+    text: ['Funko', 'Catalog', 'Pop!', 'Anime'],
   },
   starwars: {
-    href: ['/', '/products', '/products/pop', '/products/pop/starwars'],
-    text: ['Funko', 'Category', 'Pop!', 'Star Wars'],
+    href: ['/', '/catalog', '/catalog/pop', '/catalog/pop/starwars'],
+    text: ['Funko', 'Catalog', 'Pop!', 'Star Wars'],
   },
   marvel: {
-    href: ['/', '/products', '/products/pop', '/products/pop/marvel'],
-    text: ['Funko', 'Category', 'Pop!', 'Marvel'],
+    href: ['/', '/catalog', '/catalog/pop', '/catalog/pop/marvel'],
+    text: ['Funko', 'Catalog', 'Pop!', 'Marvel'],
   },
 };

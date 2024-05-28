@@ -7,6 +7,7 @@ import Loading from './components/Loading/Loading';
 
 import router from '.';
 import header from './components/Header/Header';
+import { ProductsForPage } from './data/constants';
 
 class Api {
   async getAccessToken() {
@@ -113,6 +114,127 @@ class Api {
       this.getAccessToken();
       userState.removeUserName();
     }
+  }
+
+  async queryProducts() {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=100`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      result = response.data.results;
+    } catch (error) {
+      console.error(error);
+      result = error;
+      console.log(error);
+    }
+    return result;
+  }
+
+  async getProductsForPage(page = 1) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
+
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+      console.log(error);
+    }
+    return result;
+  }
+
+  async getSelectedProducts(page: number, filter: string, sorting: string) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections/search?${filter}&${sorting}&limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+      console.log(error);
+    }
+    return result;
+  }
+
+  async getAllCategories() {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/categories`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      result = response.data.results;
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  async getCategory(id: string) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/categories/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      result = response.data.name['en-US' as keyof typeof response.data.name];
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  async getExtendedProducts() {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections?limit=200&expand=categories[*].ancestors[*]`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      result = response.data.results;
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
   }
 }
 const api = new Api();

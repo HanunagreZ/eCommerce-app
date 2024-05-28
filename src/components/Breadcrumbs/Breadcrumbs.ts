@@ -4,7 +4,7 @@ import Li from '../../ui-components/Li/Li';
 import Link from '../../ui-components/Link/Link';
 import './Breadcrumbs.scss';
 
-class Breadcrumbs {
+export default class Breadcrumbs {
   private element: Div;
   private breadNav: HTMLElement;
   private breadList: HTMLUListElement;
@@ -22,13 +22,10 @@ class Breadcrumbs {
   render(props: IBreadcrumbsProps, parentElement: HTMLElement) {
     for (let i = 0; i < props.href.length; i++) {
       const li = new Li(this.breadList);
-      const link = new Link(props.href[i], props.text[i], li.get());
-      console.log(link);
+      new Link(props.href[i], props.text[i], li.get());
     }
 
     parentElement.append(this.element.get());
+    return this.element;
   }
 }
-
-const breadcrumbs = new Breadcrumbs();
-export default breadcrumbs;
