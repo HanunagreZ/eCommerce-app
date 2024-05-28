@@ -148,7 +148,7 @@ class Api {
           },
         },
       );
-      
+
       result = response.data;
     } catch (error) {
       console.error(error);
@@ -240,4 +240,3 @@ class Api {
 const api = new Api();
 
 export default api;
-

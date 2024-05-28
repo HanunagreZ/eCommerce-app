@@ -33,7 +33,6 @@ class Router {
   }
 
   private route() {
-    console.log(this.routes);
     const { pathname } = window.location;
     const executeRouting = () => {
       const matchedRoute = this.routes.find((route) => route.path === pathname);

@@ -57,7 +57,6 @@ async function getPaths() {
     const route: IRoute = { path: productPath, component: page };
     newRoutes.push(route);
   });
-  console.log(newRoutes);
   return newRoutes;
 }
 
