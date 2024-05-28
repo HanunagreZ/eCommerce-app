@@ -13,7 +13,7 @@
   "rules": {
     "no-plusplus": "off",
     "no-console": "off",
-    "max-len": ["warn", { "code": 160 }],
+    "max-len": ["warn", { "code": 200 }],
     "indent": [
       "warn",
       2,

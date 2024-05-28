@@ -42,7 +42,35 @@ export interface IModalProps {
   addEvent: () => void;
 }
 
-<<<<<<< v/feature/routing-sprint3
+export interface IProductCard {
+  imgSrc: string;
+  category: string;
+  name: string;
+  price: number;
+  discountedPrice?: number;
+}
+export interface IProductResponseData {
+  masterData: {
+    current: {
+      masterVariant: {
+        prices: { discounted: { value: { centAmount: number } }; value: { centAmount: number } }[];
+        images: { url: string }[];
+      };
+      categories: { id: string }[];
+      name: { [x: string]: string };
+    };
+  };
+}
+
+export interface IFilteredProductResponseData {
+  masterVariant: {
+    prices: { discounted: { value: { centAmount: number } }; value: { centAmount: number } }[];
+    images: { url: string }[];
+  };
+  categories: { id: string }[];
+  name: { [x: string]: string };
+}
+
 export interface ProductInfo {
   category: string;
   header: string;
@@ -78,7 +106,8 @@ export interface Product {
   name: { 'en-US': string };
   description: { 'en-US': string };
   slug: { 'en-US': string };
-=======
+}
+
 export interface IMainAdBlockProps {
   containerClass: string;
   image: string;
@@ -88,5 +117,26 @@ export interface IMainAdBlockProps {
   description: string;
   btn: string;
   addEvent: () => void;
->>>>>>> release/catalog-product-profile
 }
+
+// export interface Product {
+//   categories: {
+//     id: string;
+//     obj: {
+//       ancestors: {
+//         id: string;
+//         obj: {
+//           slug: {
+//             'en-US': string;
+//           };
+//           orderHint: number;
+//         };
+//       }[];
+//       slug: {
+//         'en-US': string;
+//       };
+//       orderHint: number;
+//     };
+//   }[];
+//   slug: { 'en-US': string };
+// }

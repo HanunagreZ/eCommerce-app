@@ -135,6 +135,12 @@ export const modalProps = {
   },
 };
 
+export const catalogTitles = {
+  all: 'Show all',
+  cardBtn: 'Add to card',
+  sortingOptions: ['Sort by', 'Name: A - Z', 'Name: Z - A', 'Price Low To High', 'Price High to Low'],
+  filterOptions: ['Series', 'Marvel', 'Star Wars', 'Anime'],
+};
 export const mainAdBlock = {
   marvel: {
     containerClass: 'main__adBlock--spiderman',
