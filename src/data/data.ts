@@ -185,18 +185,18 @@ export const breadProps = {
   },
   accessories: {
     href: ['/', '/products', '/products/accessories'],
-    text: ['Funko', 'Category', 'Accessories!'],
+    text: ['Funko', 'Category', 'Accessories'],
   },
   anime: {
-    href: ['/', '/products', '/products/pop/anime'],
+    href: ['/', '/products', '/products/pop', '/products/pop/anime'],
     text: ['Funko', 'Category', 'Pop!', 'Anime'],
   },
   starwars: {
-    href: ['/', '/products', '/products/pop/starwars'],
+    href: ['/', '/products', '/products/pop', '/products/pop/starwars'],
     text: ['Funko', 'Category', 'Pop!', 'Star Wars'],
   },
   marvel: {
-    href: ['/', '/products', '/products/pop/marvel'],
+    href: ['/', '/products', '/products/pop', '/products/pop/marvel'],
     text: ['Funko', 'Category', 'Pop!', 'Marvel'],
   },
 };
