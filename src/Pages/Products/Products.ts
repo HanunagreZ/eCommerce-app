@@ -10,6 +10,7 @@ import { ProductsForPage } from '../../data/constants';
 import Loading from '../../components/Loading/Loading';
 import { SortEndpoints, TypeEndpoints } from '../../data/productsEndpoints';
 import { catalogTitles } from '../../data/data';
+import Button from '../../ui-components/Button/Button';
 
 export default class Catalog {
   private breadcrumb: Div;
@@ -83,11 +84,10 @@ export default class Catalog {
 
   renderSearchForm() {
     const searchForm = document.createElement('form');
+    searchForm.classList.add('catalog__search-form');
     searchForm.append(this.search.get());
-    searchForm.removeEventListener('submit', async (e) => {
-      await this.searchProduct(e);
-    });
-    searchForm.addEventListener('submit', async (e) => {
+    const searchBtn = new Button('', 'catalog__search-btn', searchForm);
+    searchBtn.addListener(async (e) => {
       await this.searchProduct(e);
     });
     this.filterSearch.get().append(searchForm);
@@ -208,8 +208,8 @@ export default class Catalog {
     await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
   }
 
-  async searchProduct(e: Event) {
-    e.preventDefault();
+  async searchProduct(e: Event | undefined) {
+    e?.preventDefault();
     this.activePage = 1;
     const searchText = this.search.get().value.replace(/ +/g, ' ').trim();
     this.search.get().value = '';
