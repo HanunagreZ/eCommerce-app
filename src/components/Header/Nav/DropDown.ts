@@ -13,8 +13,8 @@ export default class DropDown {
     this.element = document.createElement('ul');
     this.element.classList.add('header__dropdown_hidden');
     this.popLi = new Li(this.element);
-    this.popLink = new Link('/catalog', 'Pop!', this.popLi.get());
-    this.accessoriesLink = new Link('#', 'Accessories', new Li(this.element).get());
+    this.popLink = new Link('/catalog/pop', 'Pop!', this.popLi.get());
+    this.accessoriesLink = new Link('/catalog/accessories', 'Accessories', new Li(this.element).get());
   }
 
   get() {

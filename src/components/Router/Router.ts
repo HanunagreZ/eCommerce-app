@@ -54,7 +54,7 @@ class Router {
         this.navigateTo('/');
       }
     };
-    if (pathname.includes('/products')) {
+    if (pathname.includes('/catalog')) {
       const loader = new Loading();
       setTimeout(() => {
         executeRouting();

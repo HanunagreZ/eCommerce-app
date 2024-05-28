@@ -10,6 +10,7 @@ import { ProductsForPage } from '../../data/constants';
 import Loading from '../../components/Loading/Loading';
 import { SortEndpoints, TypeEndpoints } from '../../data/productsEndpoints';
 import { catalogTitles } from '../../data/data';
+import router from '../..';
 
 export default class Catalog {
   private breadcrumb: Div;
@@ -35,11 +36,17 @@ export default class Catalog {
     });
     this.filter = new Select('catalog__filter');
     this.filter.addListener(async () => {
-      await this.filterByCategory();
+      const field = this.filter.get().value.toLowerCase().replace(/\s+/g, '');
+      if (field === 'series') {
+        router.navigateTo('catalog/pop');
+      } else {
+        router.navigateTo(`catalog/pop/${field}`);
+      }
+      // await this.filterByCategory();
     });
     this.showAll = new Span(catalogTitles.all, 'catalog__show-all');
     this.showAll.get().addEventListener('click', async () => {
-      await this.showProducts(TypeEndpoints.pop);
+      await router.navigateTo('/catalog/pop');
     });
     this.search = new Input('', 'catalog__search');
     this.cardsWrapper = new Div('catalog__cards-wrapper');
