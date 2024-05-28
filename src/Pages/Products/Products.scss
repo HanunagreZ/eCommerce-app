@@ -36,7 +36,8 @@
   font-weight: Bold;
   text-transform: uppercase;
   background: none;
-  border: none;
+  border: 1px solid black;
+  border-radius: 5px;
   cursor: pointer;
   option {
     width: 90px;
@@ -47,6 +48,10 @@
     background-color: #ffffff;
     border: none;
   }
+}
+
+.catalog__show-all {
+  border: none;
 }
 
 .catalog__cards-wrapper {
@@ -136,10 +141,7 @@
   align-items: center;
   background-color: rgba(110, 65, 226, 0.16);
 }
-.catalog__pages-prev {
-  cursor: pointer;
-}
-
+.catalog__pages-prev,
 .catalog__pages-next {
   cursor: pointer;
 }

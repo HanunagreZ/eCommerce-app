@@ -10,6 +10,6 @@ export const TypeEndpoints = {
 export enum SortEndpoints {
   nameAZ = 'sort=name.en-us asc',
   nameZA = 'sort=name.en-us desc',
-  PriceLowToHigh = 'asc',
-  PriceHightoLow = 'desc',
+  PriceLowToHigh = 'sort=price asc',
+  PriceHightoLow = 'sort=price desc',
 }

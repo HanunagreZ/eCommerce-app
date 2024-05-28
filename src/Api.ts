@@ -140,9 +140,6 @@ class Api {
     try {
       const accessToken = userState.getAccessToken();
       const response = await axios.get(
-        // `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}&${ProductsEndpoints.marvel}`,
-
-        // `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections?limit=200&expand=categories[*].ancestors[*]`,
 
         `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
         {
@@ -151,7 +148,6 @@ class Api {
           },
         },
       );
-
       result = response.data;
     } catch (error) {
       console.error(error);
@@ -175,6 +171,7 @@ class Api {
       );
 
       result = response.data;
+
     } catch (error) {
       console.error(error);
       result = error;
@@ -218,12 +215,29 @@ class Api {
     }
     return result;
   }
+
+  async getExtendedProducts() {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections?limit=200&expand=categories[*].ancestors[*]`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      result = response.data.results;
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
 }
 const api = new Api();
 
 export default api;
 
-//?where=%28key%3D%22ackbar%22%29
-
-//filter
-//{{host}}/{{project-key}}/product-projections/search?filter=productType.id:"8ec0960c-cbfe-412a-bf93-4675105932d7"

@@ -181,6 +181,12 @@ export default class Catalog {
       case catalogTitles.sortingOptions[2]:
         await this.showSortingProducts(SortEndpoints.nameZA);
         break;
+      case catalogTitles.sortingOptions[3]:
+        await this.showSortingProducts(SortEndpoints.PriceLowToHigh);
+        break;
+      case catalogTitles.sortingOptions[4]:
+        await this.showSortingProducts(SortEndpoints.PriceHightoLow);
+        break;
     }
   }
 

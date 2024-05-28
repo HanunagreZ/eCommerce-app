@@ -71,15 +71,12 @@ export interface IFilteredProductResponseData {
   name: { [x: string]: string };
 }
 
-export interface IMainAdBlockProps {
-  containerClass: string;
-  image: string;
-  imageClass: string;
-  blockClass: string;
-  title: string;
+export interface ProductInfo {
+  category: string;
+  header: string;
+  price: string;
   description: string;
-  btn: string;
-  addEvent: () => void;
+  imgUrl: string;
 }
 
 export interface Product {
@@ -95,11 +92,51 @@ export interface Product {
           orderHint: number;
         };
       }[];
+      name: { 'en-US': string };
       slug: {
         'en-US': string;
       };
+
       orderHint: number;
     };
   }[];
+  masterVariant: {
+    images: { url: string }[];
+  };
+  name: { 'en-US': string };
+  description: { 'en-US': string };
   slug: { 'en-US': string };
 }
+
+export interface IMainAdBlockProps {
+  containerClass: string;
+  image: string;
+  imageClass: string;
+  blockClass: string;
+  title: string;
+  description: string;
+  btn: string;
+  addEvent: () => void;
+}
+
+// export interface Product {
+//   categories: {
+//     id: string;
+//     obj: {
+//       ancestors: {
+//         id: string;
+//         obj: {
+//           slug: {
+//             'en-US': string;
+//           };
+//           orderHint: number;
+//         };
+//       }[];
+//       slug: {
+//         'en-US': string;
+//       };
+//       orderHint: number;
+//     };
+//   }[];
+//   slug: { 'en-US': string };
+// }
