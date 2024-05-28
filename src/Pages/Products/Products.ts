@@ -72,13 +72,25 @@ export default class Catalog {
     const filterWrapper = new Div('catalog__ffilter-wrapper', this.filterSearch.get());
     filterWrapper.get().append(this.sorting.get());
     this.sorting.get().innerHTML = '';
-    this.search.render(this.filterSearch.get());
+    this.renderSearchForm();
     this.renderOptions(this.sorting.get(), catalogTitles.sortingOptions);
     if (this.activeType !== TypeEndpoints.accessories) {
       this.filter.get().innerHTML = '';
       this.renderOptions(this.filter.get(), catalogTitles.filterOptions);
       filterWrapper.get().append(this.filter.get(), this.showAll.get());
     }
+  }
+
+  renderSearchForm() {
+    const searchForm = document.createElement('form');
+    searchForm.append(this.search.get());
+    searchForm.removeEventListener('submit', async (e) => {
+      await this.searchProduct(e);
+    });
+    searchForm.addEventListener('submit', async (e) => {
+      await this.searchProduct(e);
+    });
+    this.filterSearch.get().append(searchForm);
   }
 
   renderOptions(parentElement: HTMLElement, options: string[]) {
@@ -194,6 +206,19 @@ export default class Catalog {
     this.activePage = 1;
     this.activeSorting = sortEndpoint;
     await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
+  }
+
+  async searchProduct(e: Event) {
+    e.preventDefault();
+    this.activePage = 1;
+    const searchText = this.search.get().value.replace(/ +/g, ' ').trim();
+    this.search.get().value = '';
+    if (searchText.trim() !== '') {
+      await this.renderProducts(this.activePage, `${this.activeType}&text.en-US="${searchText}"`, this.activeSorting);
+    }
+    if (catalogState.productsCount === 0) {
+      this.cardsWrapper.get().innerHTML = 'No results found...';
+    }
   }
 }
 

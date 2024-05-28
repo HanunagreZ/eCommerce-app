@@ -19,10 +19,6 @@ export class CatalogState {
     const data = await api.getSelectedProducts(page, filter, sorting);
 
     const products = data.results;
-
-    // const date2 = sortProductsById(products, 'cb0f9315-4738-41de-bdd5-92be6ca24d99');
-    // console.log(date2);
-
     this.productsCount = data.total;
     console.log(products);
     const productsData: IProductCard[] = products.map((el: IFilteredProductResponseData) => {

@@ -118,25 +118,3 @@ export interface IMainAdBlockProps {
   btn: string;
   addEvent: () => void;
 }
-
-// export interface Product {
-//   categories: {
-//     id: string;
-//     obj: {
-//       ancestors: {
-//         id: string;
-//         obj: {
-//           slug: {
-//             'en-US': string;
-//           };
-//           orderHint: number;
-//         };
-//       }[];
-//       slug: {
-//         'en-US': string;
-//       };
-//       orderHint: number;
-//     };
-//   }[];
-//   slug: { 'en-US': string };
-// }
