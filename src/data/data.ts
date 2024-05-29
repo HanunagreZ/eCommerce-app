@@ -140,7 +140,12 @@ export const catalogTitles = {
   cartBtn: 'Add to cart',
   sortingOptions: ['Sort by', 'Name: A - Z', 'Name: Z - A', 'Price Low To High', 'Price High to Low'],
   filterOptions: ['Series', 'Marvel', 'Star Wars', 'Anime'],
+  catalogOptions: ['Categories', 'Pop!', 'Accessories'],
+  searchPlaceholder: 'Search...',
+  searchRequest: 'Your search request: ',
+  noSearchresults: 'No results found...',
 };
+
 export const mainAdBlock = {
   marvel: {
     containerClass: 'main__adBlock--spiderman',

@@ -10,10 +10,14 @@ import { ProductsForPage } from '../../data/constants';
 import Loading from '../../components/Loading/Loading';
 import { SortEndpoints, TypeEndpoints } from '../../data/productsEndpoints';
 import { catalogTitles } from '../../data/data';
+import router from '../..';
+
+import { breadProps } from '../../data/data';
+import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import Button from '../../ui-components/Button/Button';
 
 export default class Catalog {
-  private breadcrumb: Div;
+  private breadcrumbs: Div;
   private filterSearch: Div;
   private sorting: Select;
   private filter: Select;
@@ -27,7 +31,7 @@ export default class Catalog {
   activeSorting: string;
 
   constructor() {
-    this.breadcrumb = new Div('catalog__breadcrumb');
+    this.breadcrumbs = new Div('catalog__breadcrumb');
     this.filterSearch = new Div('catalog__filter-search');
     this.sorting = new Select('catalog__sorting');
     this.activeSorting = '';
@@ -36,11 +40,27 @@ export default class Catalog {
     });
     this.filter = new Select('catalog__filter');
     this.filter.addListener(async () => {
-      await this.filterByCategory();
+      const field = this.filter.get().value.toLowerCase().replace(/\s+/g, '');
+      //     if (field === 'series') {
+      //   // this.activeType = 'all';
+      //   router.navigateTo('catalog/pop');
+      // } else {
+      // await this.filterByCategory();
+
+      await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
+      router.navigateTo(`catalog/pop/${field}`);
+      await this.renderFilterSearch();
+      // await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
+      //}
+      //await this.filterByCategory();
     });
     this.showAll = new Span(catalogTitles.all, 'catalog__show-all');
     this.showAll.get().addEventListener('click', async () => {
-      await this.showProducts(TypeEndpoints.pop);
+      if (this.activeType === TypeEndpoints.all) {
+        await router.navigateTo('/catalog');
+      } else {
+        await router.navigateTo('/catalog/pop');
+      }
     });
     this.search = new Input('', 'catalog__search');
     this.cardsWrapper = new Div('catalog__cards-wrapper');
@@ -53,10 +73,14 @@ export default class Catalog {
 
   render() {
     const container = new Div('catalog__container');
-    this.breadcrumb.get().innerText = 'Catalog/Pop!';
+
+    //breadcrumb.get().innerText = 'Catalog/Pop!';
+    //breadcrumbs.render(breadProps, container.get());
+
     const productsContainer = new Div('catalog__products');
     productsContainer.get().append(this.filterSearch.get(), this.cardsWrapper.get());
-    container.get().append(this.breadcrumb.get(), productsContainer.get(), this.pageNavigation.get());
+    //container.get().append(productsContainer.get(), this.pageNavigation.get());
+    container.get().append(this.breadcrumbs.get(), productsContainer.get(), this.pageNavigation.get());
     return container.get();
   }
 
@@ -64,54 +88,62 @@ export default class Catalog {
     this.activeSorting = '';
     this.activePage = 1;
     this.activeType = typeEndpoint;
-    const entries = Object.entries(TypeEndpoints).find((el) => el[1] === typeEndpoint);
-    const categoryKey = entries ? entries[0] : 'all';
-
-    await this.renderFilterSearch(categoryKey);
+    this.setBreadCrumbs(typeEndpoint);
+    await this.renderFilterSearch();
     await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
   }
 
-  async renderFilterSearch(categoryKey?: string) {
+  async renderFilterSearch() {
     this.filterSearch.get().innerHTML = '';
     const filterWrapper = new Div('catalog__ffilter-wrapper', this.filterSearch.get());
     filterWrapper.get().append(this.sorting.get());
     this.sorting.get().innerHTML = '';
-    this.renderSearchForm();
+
+    // this.search.render(this.filterSearch.get());
     this.renderOptions(this.sorting.get(), catalogTitles.sortingOptions);
     if (this.activeType !== TypeEndpoints.accessories) {
       this.filter.get().innerHTML = '';
-      this.renderOptions(this.filter.get(), catalogTitles.filterOptions, categoryKey);
+      if (this.activeType === TypeEndpoints.all) {
+        this.renderOptions(this.filter.get(), catalogTitles.catalogOptions);
+      } else {
+        this.renderOptions(this.filter.get(), catalogTitles.filterOptions);
+      }
       filterWrapper.get().append(this.filter.get(), this.showAll.get());
     }
+
+    this.renderSearchForm(this.filterSearch.get());
   }
 
-  renderSearchForm() {
-    const searchForm = document.createElement('form');
-    searchForm.classList.add('catalog__search-form');
-    searchForm.append(this.search.get());
-    const searchBtn = new Button('', 'catalog__search-btn', searchForm);
-    searchBtn.addListener(async (e) => {
-      await this.searchProduct(e);
-    });
-    this.filterSearch.get().append(searchForm);
-  }
+  renderOptions(parentElement: HTMLElement, options: string[]) {
+    const selectedCategory = Object.entries(TypeEndpoints).find((el) => el[1] === this.activeType);
+    const categoryKey = selectedCategory ? selectedCategory[0] : '';
+    console.log(categoryKey);
 
-  renderOptions(parentElement: HTMLElement, options: string[], categoryKey?: string) {
     options
       .map((option, i) => {
         const sortOption = document.createElement('option');
         sortOption.innerText = option;
         if (i === 0) {
-          sortOption.disabled = true;
           sortOption.selected = true;
           sortOption.hidden = true;
         }
-        if (categoryKey === option.replaceAll(' ', '').toLowerCase()) {
+        if (option.toLowerCase().replaceAll(/\s+/g, '') === categoryKey) {
           sortOption.selected = true;
         }
         return sortOption;
       })
       .map((option) => parentElement.append(option));
+  }
+
+  renderSearchForm(parentElement: HTMLElement) {
+    const form = document.createElement('form');
+    form.classList.add('catalog__search-form');
+    const searchBtn = new Button('', 'catalog__search-btn');
+    searchBtn.addListener(async (e) => {
+      await this.searchProduct(e);
+    });
+    form.append(this.search.get(), searchBtn.get());
+    parentElement.append(form);
   }
 
   async renderProducts(page: number, filter: string, sorting: string) {
@@ -219,6 +251,29 @@ export default class Catalog {
     await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
   }
 
+  setBreadCrumbs(TypeEndpoint: string) {
+    switch (TypeEndpoint) {
+      case TypeEndpoints.all:
+        this.breadcrumbs = new Breadcrumbs().render(breadProps.category, this.breadcrumbs.get());
+        break;
+      case TypeEndpoints.pop:
+        this.breadcrumbs = new Breadcrumbs().render(breadProps.pop, this.breadcrumbs.get());
+        break;
+      case TypeEndpoints.accessories:
+        this.breadcrumbs = new Breadcrumbs().render(breadProps.accessories, this.breadcrumbs.get());
+        break;
+      case TypeEndpoints.anime:
+        this.breadcrumbs = new Breadcrumbs().render(breadProps.anime, this.breadcrumbs.get());
+        break;
+      case TypeEndpoints.marvel:
+        this.breadcrumbs = new Breadcrumbs().render(breadProps.marvel, this.breadcrumbs.get());
+        break;
+      case TypeEndpoints.starwars:
+        this.breadcrumbs = new Breadcrumbs().render(breadProps.starwars, this.breadcrumbs.get());
+        break;
+    }
+  }
+
   async searchProduct(e: Event | undefined) {
     e?.preventDefault();
     this.activePage = 1;
@@ -228,7 +283,10 @@ export default class Catalog {
       await this.renderProducts(this.activePage, `${this.activeType}&text.en-US="${searchText}"`, this.activeSorting);
     }
     if (catalogState.productsCount === 0) {
-      this.cardsWrapper.get().innerHTML = 'No results found...';
+      // this.cardsWrapper.get().innerHTML = '';
+      new Div('catalog__search-request-msg', this.cardsWrapper.get()).get().innerText = catalogTitles.searchRequest;
+      new Div('catalog__search-request', this.cardsWrapper.get()).get().innerText = searchText;
+      new Div('catalog__no-search-results', this.cardsWrapper.get()).get().innerHTML = catalogTitles.noSearchresults;
     }
   }
 }

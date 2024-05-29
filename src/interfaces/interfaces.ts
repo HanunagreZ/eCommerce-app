@@ -123,3 +123,12 @@ export interface IBreadcrumbsProps {
   href: string[];
   text: string[];
 }
+
+export interface ITypeEndpoints {
+  all: string,
+  pop: string,
+  accessories: string,
+  marvel: string,
+  starwars: string,
+  anime: string,
+};
