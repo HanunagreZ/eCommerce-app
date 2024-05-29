@@ -13,6 +13,8 @@ import {
   allCatalog,
 } from '../Pages/Products/CatalogPages';
 
+import Profile from '../Pages/Profile/Profile';
+
 // Сюда импортируются вьюшки страниц, и прописываются в "component"
 // При определенноп path: прорисовывается такая-то страница
 
@@ -26,9 +28,9 @@ export const routes: IRoute[] = [
   { path: '/catalog/pop/marvel', component: marvelCatalog },
   { path: '/catalog/pop/anime', component: animeCatalog },
   { path: '/catalog/pop/starwars', component: starWarsCatalog },
-
+  { path: '/profile', component: new Profile().render() },
   // { path: '/products[id]', component: '<h1>Single Product Page</h1>' },
-  // { path: '/profile', component: '<h1>Profile Page</h1>' },
+
   // { path: '/basket', component: '<h1>Basket Page</h1>' },
   // { path: '/about', component: '<h1>About Us Page</h1>' },
   { path: '/404 ', component: new Page404().render() },

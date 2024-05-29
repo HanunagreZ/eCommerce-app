@@ -33,7 +33,7 @@ export default class NavAuth {
     this.arrow.classList.add('header__dropdown-arrow-up');
     this.dropDown.render(this.dropDownLi.get());
     this.dropDownLi.get().append(this.arrow);
-    this.userLink = new Link('#', String(userState.getUserName()), new Li(list).get());
+    this.userLink = new Link('/profile', String(userState.getUserName()), new Li(list).get());
     this.logOutBtn = new Button('Log out', 'header__btn', this.element);
     this.catalogExpand();
     this.logOut();
