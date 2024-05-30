@@ -13,8 +13,6 @@ class Router {
   constructor(root: HTMLElement, routeList: IRoute[]) {
     this.root = root;
     this.routes = routeList;
-
-    // this.routesMap = new Map();
     window.addEventListener('popstate', this.route.bind(this));
     this.route();
     this.handleLinkClicks();
@@ -24,6 +22,7 @@ class Router {
       }),
     );
   }
+
   public getRotes() {
     return this.routes;
   }
@@ -32,21 +31,23 @@ class Router {
     this.routes.push(route);
   }
 
-  private route() {
+  private async route() {
     const { pathname } = window.location;
-    const executeRouting = () => {
+    const executeRouting = async () => {
       const matchedRoute = this.routes.find((route) => route.path === pathname);
       if (!matchedRoute) {
         const page404 = this.routes.find((route) => route.path.includes('404'));
         if (page404) {
           this.root.innerHTML = '';
-          this.root.appendChild(page404.component);
+          const component = await page404.component;
+          this.root.appendChild(component);
         }
         return;
       }
       const { component } = matchedRoute;
       this.root.innerHTML = '';
-      this.root.appendChild(component);
+      const resolvedComponent = await component;
+      this.root.appendChild(resolvedComponent);
       if (
         (pathname === '/login' && userState.getUserName()) ||
         (pathname === '/registration' && userState.getUserName())
@@ -61,16 +62,23 @@ class Router {
       setTimeout(() => {
         executeRouting();
         loader.remove();
-      }, 250);
+      }, 300);
     } else {
       executeRouting();
     }
+    //   window.scrollTo(0, 0);
+    //   const loader = await new Loading();
+
+    //   await executeRouting();
+    //   loader.remove();
+    // }
   }
 
   public navigateTo(path: string) {
     if (window.location.pathname !== path) {
       window.history.pushState({}, '', path);
       this.route();
+      console.log(this.getRotes(), ' RRR');
     }
   }
 
