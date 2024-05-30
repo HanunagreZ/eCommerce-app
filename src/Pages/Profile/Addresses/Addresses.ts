@@ -2,6 +2,7 @@ import Div from '../../../ui-components/Div/Div';
 import Button from '../../../ui-components/Button/Button';
 import api from '../../../Api';
 import userState from '../../../states/UserState';
+import { AddressItem } from './AddressItem';
 
 class Addresses {
   private container: Div;
@@ -49,6 +50,9 @@ class Addresses {
         const addresses = data?.data.addresses;
         for (let i = 0; i < addresses.length; i++) {
           const address = addresses[i];
+
+          this.container.get().append(new AddressItem().render());
+
           console.log(address.id, address.country, address.city, address.streetName, address.postalCode);
         }
       });

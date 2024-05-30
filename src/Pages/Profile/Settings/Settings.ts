@@ -23,7 +23,7 @@ class Settings {
     this.cancelButton.addListener(() => this.cancelEdit());
     this.saveButton = new Button('Save', 'personal__edit-button', this.container.get());
     this.saveButton.addListener(() => this.saveChanges());
-    this.editButton = new Button('Edit profile', 'personal__edit-button', this.container.get());
+    this.editButton = new Button('Change password', 'personal__edit-button', this.container.get());
     this.editButton.addListener(() => this.renderEditMode());
   }
 
