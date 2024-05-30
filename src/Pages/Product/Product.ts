@@ -28,6 +28,7 @@ function addBreadcrumbs(category: string) {
 }
 
 export default class ProductPage {
+  private pageContainer: Div;
   private container: HTMLDivElement;
   private breadcrumb: Div;
   private productContainer: Div;
@@ -41,6 +42,7 @@ export default class ProductPage {
   private productImg: HTMLImageElement;
 
   constructor(productInfo: IProduct) {
+    this.pageContainer = new Div('product-page');
     this.container = document.createElement('div');
     this.container.classList.add('wrapper__product');
     const { hrefs, text } = addBreadcrumbs(productInfo.category);
@@ -54,7 +56,6 @@ export default class ProductPage {
     this.productHeader.textContent = productInfo.name;
     this.productHeader.classList.add('product__header');
     this.priceContainer = new Div('price__container');
-    // Add SALE if prices>1;
     const pricesElements: HTMLHeadingElement[] = [];
     productInfo.prices.forEach((price) => {
       const priceElement = document.createElement('h3');
@@ -105,6 +106,7 @@ export default class ProductPage {
   render() {
     this.productContainer.get().append(this.imgContainer.get(), this.descriptionContainer.get());
     this.container.append(this.breadcrumb.get(), this.productContainer.get());
-    return this.container;
+    this.pageContainer.get().append(this.container);
+    return this.pageContainer.get();
   }
 }
