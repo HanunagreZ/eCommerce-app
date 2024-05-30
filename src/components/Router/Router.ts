@@ -62,7 +62,7 @@ class Router {
       setTimeout(() => {
         executeRouting();
         loader.remove();
-      }, 300);
+      }, 500);
     } else {
       executeRouting();
     }

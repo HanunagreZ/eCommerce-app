@@ -1,6 +1,7 @@
 import './Product.scss';
 import Div from '../../ui-components/Div/Div';
 import Button from '../../ui-components/Button/Button';
+import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 
 interface IProduct {
   category: string;
@@ -10,8 +11,24 @@ interface IProduct {
   img: { url: string }[];
 }
 
+function addBreadcrumbs(category: string) {
+  const hrefs = ['/', 'catalog'];
+  const text = ['Funko', 'Catalog'];
+  if (category === 'Accessories') {
+    hrefs.push('catalog/accessories');
+    text.push('Accessories');
+  } else {
+    hrefs.push('catalog/pop');
+    hrefs.push('catalog/pop/' + category.toLowerCase());
+    text.push('Pop');
+    const categ = category[0].toUpperCase() + category.slice(1, category.length);
+    text.push(categ);
+  }
+  return { hrefs, text };
+}
+
 export default class ProductPage {
-  private container: Div;
+  private container: HTMLDivElement;
   private breadcrumb: Div;
   private productContainer: Div;
   private imgContainer: Div;
@@ -24,11 +41,12 @@ export default class ProductPage {
   private productImg: HTMLImageElement;
 
   constructor(productInfo: IProduct) {
-    this.container = new Div('wrapper__product');
-    this.breadcrumb = new Div('breadcrumb');
+    this.container = document.createElement('div');
+    this.container.classList.add('wrapper__product');
+    const { hrefs, text } = addBreadcrumbs(productInfo.category);
+    this.breadcrumb = new Breadcrumbs().render({ href: hrefs, text: text }, this.container);
     this.productContainer = new Div('product__container');
     this.descriptionContainer = new Div('product__description');
-    this.breadcrumb.get().textContent = 'BRead';
     this.categoryName = document.createElement('p');
     this.categoryName.textContent = productInfo.category;
     this.categoryName.classList.add('product__category');
@@ -86,7 +104,7 @@ export default class ProductPage {
 
   render() {
     this.productContainer.get().append(this.imgContainer.get(), this.descriptionContainer.get());
-    this.container.get().append(this.breadcrumb.get(), this.productContainer.get());
-    return this.container.get();
+    this.container.append(this.breadcrumb.get(), this.productContainer.get());
+    return this.container;
   }
 }
