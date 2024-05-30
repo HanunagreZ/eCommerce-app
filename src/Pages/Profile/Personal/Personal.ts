@@ -87,7 +87,11 @@ class Personal {
   }
 
   disableInputs() {
-    this.inputFields.map((el) => (el.input.get().disabled = true));
+    this.inputFields.map((el) => {
+      el.input.get().disabled = true;
+      el.input.get().classList.remove('error');
+      el.clue.get().classList.remove('error');
+    });
     this.dateOfBirth.input.get().disabled = true;
   }
 

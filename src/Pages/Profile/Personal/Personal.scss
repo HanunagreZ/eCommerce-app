@@ -2,7 +2,6 @@
 
 .profile__personal {
   width: 100%;
-  // height: 380px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -87,13 +86,3 @@
     display: none;
   }
 }
-
-// .personal__date-of-birth:before {
-//   content: attr(placeholder) !important;
-//   color: #aaa;
-//   margin-right: 0.5em;
-// }
-// // .personal__date-of-birth:focus:before,
-// // .personal__date-of-birth:valid:before {
-// //   content: "";
-// // }

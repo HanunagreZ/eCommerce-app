@@ -255,4 +255,21 @@ export const profile = {
     labelText: 'Date of birth',
     clueText: 'Date format: DD.MM.YYYY. You must be above 13 years old.',
   },
+  passwords: [
+    {
+      labelText: 'Current password',
+      clueText:
+        'Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number, must not contain special characters',
+      reg: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+
+      //(?=.*[!@#$%^&*()\-_=+{};:'",.<>?]): Positive lookahead to ensure there is at least one special character
+      // reg: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:'",.<>?])(?!.*\s).{8,}$/,
+    },
+    {
+      labelText: 'New password',
+      clueText:
+        'Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number, must not contain special characters',
+      reg: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+    },
+  ],
 };
