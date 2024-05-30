@@ -1,6 +1,5 @@
 import './Product.scss';
 import Div from '../../ui-components/Div/Div';
-import Button from '../../ui-components/Button/Button';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import addModal from './modal';
 
@@ -40,7 +39,7 @@ export default class ProductPage {
   private productHeader: HTMLHeadingElement;
   private priceContainer: Div;
   private productDescription: HTMLParagraphElement;
-  private button: Button;
+  private button: HTMLButtonElement;
 
   constructor(productInfo: IProduct) {
     this.pageContainer = new Div('product-page');
@@ -78,8 +77,10 @@ export default class ProductPage {
       this.priceContainer.get().append(pricesElements[0]);
     }
     // Buy Button
-    this.button = new Button('Add to cart', 'button__404');
-    console.log('Buy');
+    this.button = document.createElement('button');
+    this.button.classList.add('product__button');
+    this.button.textContent = 'Add to cart';
+    this.button.addEventListener('click', () => console.log('Buy'));
     // Product Description
     this.productDescription = document.createElement('p');
     this.productDescription.textContent = productInfo.description;
@@ -129,13 +130,7 @@ export default class ProductPage {
 
     this.descriptionContainer
       .get()
-      .append(
-        this.categoryName,
-        this.productHeader,
-        this.priceContainer.get(),
-        this.button.get(),
-        this.productDescription,
-      );
+      .append(this.categoryName, this.productHeader, this.priceContainer.get(), this.button, this.productDescription);
   }
 
   render() {

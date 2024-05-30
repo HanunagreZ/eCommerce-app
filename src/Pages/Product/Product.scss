@@ -137,6 +137,27 @@ p {
   text-decoration: line-through;
 }
 
+.product__button {
+  width: 270px;
+  height: 44px;
+  border: 0;
+  border-radius: 5px;
+  background-color: rgb(110, 65, 226);
+  color: rgb(255, 255, 255);
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.4s;
+
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+
+  &:hover {
+    background-color: rgb(85, 31, 223);
+  }
+}
+
 .product__info {
   margin-top: 50px;
 }

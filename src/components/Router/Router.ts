@@ -16,11 +16,7 @@ class Router {
     window.addEventListener('popstate', this.route.bind(this));
     this.route();
     this.handleLinkClicks();
-    getPaths().then((data) =>
-      data.forEach((route) => {
-        this.addRoute(route);
-      }),
-    );
+    this.updateRoutes();
   }
 
   public getRotes() {
@@ -28,10 +24,19 @@ class Router {
   }
 
   public addRoute(route: IRoute) {
-    this.routes.push(route);
+    if (!this.routes.includes(route)) this.routes.push(route);
+  }
+
+  private async updateRoutes() {
+    getPaths().then((data) =>
+      data.forEach((route) => {
+        this.addRoute(route);
+      }),
+    );
   }
 
   private async route() {
+    this.updateRoutes();
     const { pathname } = window.location;
     const executeRouting = async () => {
       const matchedRoute = this.routes.find((route) => route.path === pathname);
@@ -60,11 +65,10 @@ class Router {
       window.scrollTo(0, 0);
       const loader = new Loading();
       setTimeout(() => {
-        executeRouting();
-        loader.remove();
+        executeRouting().then(() => {
+          loader.remove();
+        });
       }, 500);
-    } else {
-      executeRouting();
     }
     //   window.scrollTo(0, 0);
     //   const loader = await new Loading();
