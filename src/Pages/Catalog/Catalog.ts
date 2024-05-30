@@ -48,9 +48,15 @@ export default class Catalog {
 
       await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
       console.log(field);
-      router.navigateTo(`catalog/pop/${field}`);
+      if (field === 'pop!') {
+        router.navigateTo('catalog/pop');
+      } else if (field === 'accessories') {
+        router.navigateTo('catalog/accessories');
+      } else {
+        router.navigateTo(`catalog/pop/${field}`);
+      }
       await this.renderFilterSearch();
-      console.log(field);
+      // console.log(field);
 
       // await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
       //}
