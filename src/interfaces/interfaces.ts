@@ -125,10 +125,10 @@ export interface IBreadcrumbsProps {
 }
 
 export interface ITypeEndpoints {
-  all: string,
-  pop: string,
-  accessories: string,
-  marvel: string,
-  starwars: string,
-  anime: string,
-};
+  all: string;
+  pop: string;
+  accessories: string;
+  marvel: string;
+  starwars: string;
+  anime: string;
+}

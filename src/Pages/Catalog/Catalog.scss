@@ -27,8 +27,7 @@
 }
 
 .catalog__sorting,
-.catalog__filter,
-.catalog__show-all {
+.catalog__filter {
   width: 185px;
   height: 30px;
   margin: 0 20px 10px 0;
@@ -39,21 +38,17 @@
   border: 1px solid black;
   border-radius: 5px;
   cursor: pointer;
-  option {
-    width: 90px;
-    height: 40px;
-    font-size: 16px;
-    font-weight: Bold;
-    text-transform: uppercase;
-    background-color: #ffffff;
-    border: none;
-  }
 }
 
 .catalog__show-all {
   display: inline-block;
+  height: 30px;
+  margin: 0 20px 10px 0;
   white-space: nowrap;
-  border: none;
+  font-size: 16px;
+  font-weight: Bold;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
 .catalog__search-form {
@@ -82,7 +77,7 @@
 
 .catalog__search-request-msg,
 .catalog__no-search-results {
-  grid-column: span 3;
+  grid-column: span 5;
 }
 .catalog__search-request {
   font-weight: Bold;

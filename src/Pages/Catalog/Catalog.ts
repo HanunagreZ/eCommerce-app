@@ -7,7 +7,6 @@ import Span from '../../ui-components/Span/Span';
 import { ProductCard } from './ProductCard';
 import Img from '../../ui-components/Img/Img';
 import { ProductsForPage } from '../../data/constants';
-import Loading from '../../components/Loading/Loading';
 import { SortEndpoints, TypeEndpoints } from '../../data/productsEndpoints';
 import { catalogTitles } from '../../data/data';
 import router from '../..';
@@ -48,8 +47,11 @@ export default class Catalog {
       // await this.filterByCategory();
 
       await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
+      console.log(field);
       router.navigateTo(`catalog/pop/${field}`);
       await this.renderFilterSearch();
+      console.log(field);
+
       // await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
       //}
       //await this.filterByCategory();
@@ -117,8 +119,6 @@ export default class Catalog {
   renderOptions(parentElement: HTMLElement, options: string[]) {
     const selectedCategory = Object.entries(TypeEndpoints).find((el) => el[1] === this.activeType);
     const categoryKey = selectedCategory ? selectedCategory[0] : '';
-    console.log(categoryKey);
-
     options
       .map((option, i) => {
         const sortOption = document.createElement('option');
@@ -152,6 +152,8 @@ export default class Catalog {
     products.map((data) => {
       new ProductCard(data, this.cardsWrapper.get());
     });
+    // const w = document.querySelector('.catalog__cards-wrapper');
+    // console.log(w?.innerHTML);
     await this.renderPageNavigation(page);
   }
 
@@ -177,9 +179,7 @@ export default class Catalog {
     } else {
       if (clickedElement.closest('span')) {
         this.activePage = Number(clickedElement.innerText);
-        const loading = new Loading();
         await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
-        loading.remove();
       }
     }
     if (
@@ -188,9 +188,7 @@ export default class Catalog {
       this.activePage > 1
     ) {
       this.activePage--;
-      const loading = new Loading();
       await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
-      loading.remove();
     }
     if (
       clickedElement.closest('img') &&
@@ -198,9 +196,7 @@ export default class Catalog {
       this.activePage < pagesCount
     ) {
       this.activePage++;
-      const loading = new Loading();
       await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
-      loading.remove();
     }
   }
 

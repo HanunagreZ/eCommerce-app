@@ -44,9 +44,7 @@ export class CatalogState {
   }
 
   setFilteredDiscountedPrice(product: IFilteredProductResponseData) {
-    return product.masterVariant.prices[0].discounted !== undefined
-      ? product.masterVariant.prices[0].discounted.value.centAmount
-      : 0;
+    return product.masterVariant.prices[1] !== undefined ? product.masterVariant.prices[1].value.centAmount : 0;
   }
 }
 
