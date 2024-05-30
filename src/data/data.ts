@@ -15,7 +15,11 @@ export const constants = {
       {
         labelText: 'Password',
         clueText: 'Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number',
+        //must not contain special character
         reg: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+
+        //(?=.*[!@#$%^&*()\-_=+{};:'",.<>?]): Positive lookahead to ensure there is at least one special character
+        // reg: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:'",.<>?])(?!.*\s).{8,}$/,
       },
       {
         labelText: 'First name',
@@ -226,5 +230,29 @@ export const breadProps = {
   marvel: {
     href: ['/', '/catalog', '/catalog/pop', '/catalog/pop/marvel'],
     text: ['Funko', 'Catalog', 'Pop!', 'Marvel'],
+  },
+};
+
+export const profile = {
+  profileGeneralData: [
+    {
+      labelText: 'Email',
+      clueText: 'A properly formatted email address (e.g., example@email.com)',
+      reg: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+    },
+    {
+      labelText: 'First name',
+      clueText: 'Must contain at least one character and no special characters or numbers',
+      reg: /^[A-Za-z]+$/,
+    },
+    {
+      labelText: 'Last name',
+      clueText: 'Must contain at least one character and no special characters or numbers',
+      reg: /^[A-Za-z]+$/,
+    },
+  ],
+  dateOfBirth: {
+    labelText: 'Date of birth',
+    clueText: 'Date format: DD.MM.YYYY. You must be above 13 years old.',
   },
 };
