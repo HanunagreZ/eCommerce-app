@@ -32,14 +32,14 @@ export default class ProductPage {
   private container: HTMLDivElement;
   private breadcrumb: Div;
   private productContainer: Div;
-  private imgContainer: Div;
+  private imgContainer: HTMLDivElement;
+  private slider: Div;
   private descriptionContainer: Div;
   private categoryName: HTMLParagraphElement;
   private productHeader: HTMLHeadingElement;
   private priceContainer: Div;
   private productDescription: HTMLParagraphElement;
   private button: Button;
-  private productImg: HTMLImageElement;
 
   constructor(productInfo: IProduct) {
     this.pageContainer = new Div('product-page');
@@ -55,6 +55,7 @@ export default class ProductPage {
     this.productHeader = document.createElement('h2');
     this.productHeader.textContent = productInfo.name;
     this.productHeader.classList.add('product__header');
+    //Prices
     this.priceContainer = new Div('price__container');
     const pricesElements: HTMLHeadingElement[] = [];
     productInfo.prices.forEach((price) => {
@@ -75,23 +76,50 @@ export default class ProductPage {
     } else {
       this.priceContainer.get().append(pricesElements[0]);
     }
-
+    // Buy Button
     this.button = new Button('Add to cart', 'button__404');
     this.button.get().onclick = () => console.log('Buy');
+    // Product Description
     this.productDescription = document.createElement('p');
     this.productDescription.textContent = productInfo.description;
     this.productDescription.classList.add('product__info');
-    this.imgContainer = new Div('img__container');
+    //Images
+    this.slider = new Div('product__slider');
+    this.imgContainer = document.createElement('div');
+    this.imgContainer.classList.add('img__container');
+    const sliderButtons = document.createElement('div');
+    sliderButtons.classList.add('slider__buttons');
+    const sliderButtonsArray: HTMLButtonElement[] = [];
     productInfo.img.forEach((img, idx) => {
       const image = document.createElement('img');
       image.classList.add('product__image');
       image.src = img.url;
       image.alt = productInfo.name + idx;
-      this.imgContainer.get().append(image);
+      this.imgContainer.append(image);
+      const sliderButton = document.createElement('button');
+      sliderButton.classList.add(`slider-button${idx}`);
+      sliderButton.classList.add('slider-button');
+      sliderButtonsArray.push(sliderButton);
+      sliderButtons.append(sliderButton);
     });
-    this.productImg = document.createElement('img');
-    this.productImg.src = productInfo.img[0].url;
-    this.productImg.alt = productInfo.name;
+    //Slider Mechanic
+    console.log(sliderButtons, 'sl vu');
+    if (sliderButtonsArray.length > 1) {
+      sliderButtonsArray[0].classList.add('slider-button_active');
+    }
+    sliderButtonsArray.forEach((el, idx) => {
+      el.addEventListener('click', (e) => {
+        sliderButtonsArray.forEach((button) => button.classList.remove('slider-button_active'));
+        console.log(this.imgContainer.style.transform);
+        this.imgContainer.style.transform = `translateX(-${idx * 100}%)`;
+        console.log(e);
+        el.classList.add('slider-button_active');
+      });
+    });
+    console.log(sliderButtons.childNodes);
+
+    this.slider.get().append(this.imgContainer, sliderButtons);
+
     this.descriptionContainer
       .get()
       .append(
@@ -104,7 +132,7 @@ export default class ProductPage {
   }
 
   render() {
-    this.productContainer.get().append(this.imgContainer.get(), this.descriptionContainer.get());
+    this.productContainer.get().append(this.slider.get(), this.descriptionContainer.get());
     this.container.append(this.breadcrumb.get(), this.productContainer.get());
     this.pageContainer.get().append(this.container);
     return this.pageContainer.get();
