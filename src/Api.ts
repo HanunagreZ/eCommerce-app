@@ -229,7 +229,6 @@ class Api {
         },
       );
       result = response.data.results;
-      console.log(result);
     } catch (error) {
       console.error(error);
       result = error;

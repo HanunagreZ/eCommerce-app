@@ -102,7 +102,6 @@ async function getPaths() {
     const route: IRoute = { path: productPath, component: getProductPageByKey(productKey) };
     newRoutes.push(route);
   });
-  console.log('RoRutes', newRoutes);
   return newRoutes;
 }
 

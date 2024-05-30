@@ -79,7 +79,7 @@ export default class ProductPage {
     }
     // Buy Button
     this.button = new Button('Add to cart', 'button__404');
-    this.button.get().onclick = () => console.log('Buy');
+    console.log('Buy');
     // Product Description
     this.productDescription = document.createElement('p');
     this.productDescription.textContent = productInfo.description;
@@ -107,16 +107,13 @@ export default class ProductPage {
       sliderButtons.append(sliderButton);
     });
     //Slider Mechanic
-    console.log(sliderButtons, 'sl vu');
     if (sliderButtonsArray.length > 1) {
       sliderButtonsArray[0].classList.add('slider-button_active');
     }
     sliderButtonsArray.forEach((el, idx) => {
-      el.addEventListener('click', (e) => {
+      el.addEventListener('click', () => {
         sliderButtonsArray.forEach((button) => button.classList.remove('slider-button_active'));
-        console.log(this.imgContainer.style.transform);
         this.imgContainer.style.transform = `translateX(-${idx * 100}%)`;
-        console.log(e);
         el.classList.add('slider-button_active');
       });
     });

@@ -30,7 +30,6 @@ function addModal(slider: HTMLElement) {
       sliderButtons.forEach((btn) => btn.classList.remove('slider-button_active'));
       imageContainer!.style.transform = `translateX(-${idx * 100}%)`;
       el.classList.add('slider-button_active');
-      console.log('CLICk');
     });
   });
   overlay.addEventListener('click', () => {

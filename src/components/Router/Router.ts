@@ -78,7 +78,6 @@ class Router {
     if (window.location.pathname !== path) {
       window.history.pushState({}, '', path);
       this.route();
-      console.log(this.getRotes(), ' RRR');
     }
   }
 
