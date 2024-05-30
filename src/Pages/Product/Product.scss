@@ -14,34 +14,35 @@ p {
 }
 
 .breadcrumb {
-  font-size: 16px;
   padding: 20px 0;
+  font-size: 16px;
 }
 
 .product__container {
   box-sizing: border-box;
   display: grid;
-  //   justify-items: center;
   grid-template-columns: 1fr 1fr;
   gap: 30px;
   width: 100%;
-  background-color: #b9bbde;
   padding: 40px;
+  background-color: #b9bbde;
   transition: all 0.5s;
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
+    justify-items: center;
   }
 }
 
 .product__slider {
-  max-width: 100%;
   position: relative;
-  max-height: 500px;
   display: flex;
+  max-width: 100%;
+  max-height: 500px;
   overflow: hidden;
   background-color: #ffffff;
   @media (max-width: 900px) {
     align-self: center;
+    max-width: 500px;
   }
   @media (max-width: 500px) {
     max-width: 300px;
@@ -64,15 +65,15 @@ p {
 }
 
 .slider-button {
+  position: relative;
+  box-sizing: border-box;
   width: 30px;
   height: 30px;
+  padding: 5px;
+  border: 5px solid white;
   border-radius: 100%;
   background-color: black;
-  border: 5px solid white;
-  padding: 5px;
-  box-sizing: border-box;
   cursor: pointer;
-  position: relative;
 }
 
 .slider-button::before {
@@ -92,9 +93,10 @@ p {
 
 .product__image {
   flex: 0 0 100%;
-  max-width: 80%;
-  padding: 10%;
+  max-width: 70%;
+  padding: 15%;
   object-fit: contain;
+  cursor: zoom-in;
   @media (max-width: 500px) {
   }
 }
@@ -121,13 +123,13 @@ p {
 
 .product__sale {
   width: 70px;
+  padding: 10px;
+  background-color: #ff4d4d;
+  color: #ffffff;
   font-size: 24px;
   line-height: 16px;
-  padding: 10px;
   font-weight: 300;
-  color: #ffffff;
   text-align: center;
-  background-color: #ff4d4d;
 }
 
 .price__sale {

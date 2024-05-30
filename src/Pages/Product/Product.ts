@@ -2,6 +2,7 @@ import './Product.scss';
 import Div from '../../ui-components/Div/Div';
 import Button from '../../ui-components/Button/Button';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
+import addModal from './modal';
 
 interface IProduct {
   category: string;
@@ -33,7 +34,7 @@ export default class ProductPage {
   private breadcrumb: Div;
   private productContainer: Div;
   private imgContainer: HTMLDivElement;
-  private slider: Div;
+  private slider: HTMLDivElement;
   private descriptionContainer: Div;
   private categoryName: HTMLParagraphElement;
   private productHeader: HTMLHeadingElement;
@@ -84,12 +85,14 @@ export default class ProductPage {
     this.productDescription.textContent = productInfo.description;
     this.productDescription.classList.add('product__info');
     //Images
-    this.slider = new Div('product__slider');
+    this.slider = document.createElement('div');
+    this.slider.classList.add('product__slider');
     this.imgContainer = document.createElement('div');
     this.imgContainer.classList.add('img__container');
     const sliderButtons = document.createElement('div');
     sliderButtons.classList.add('slider__buttons');
     const sliderButtonsArray: HTMLButtonElement[] = [];
+    const imgArray: HTMLImageElement[] = [];
     productInfo.img.forEach((img, idx) => {
       const image = document.createElement('img');
       image.classList.add('product__image');
@@ -100,6 +103,7 @@ export default class ProductPage {
       sliderButton.classList.add(`slider-button${idx}`);
       sliderButton.classList.add('slider-button');
       sliderButtonsArray.push(sliderButton);
+      imgArray.push(image);
       sliderButtons.append(sliderButton);
     });
     //Slider Mechanic
@@ -116,9 +120,15 @@ export default class ProductPage {
         el.classList.add('slider-button_active');
       });
     });
-    console.log(sliderButtons.childNodes);
+    // Modal Mechanic
+    imgArray.forEach((img) => {
+      img.addEventListener('click', () => {
+        const image = this.slider.cloneNode(true) as HTMLElement;
+        addModal(image);
+      });
+    });
 
-    this.slider.get().append(this.imgContainer, sliderButtons);
+    this.slider.append(this.imgContainer, sliderButtons);
 
     this.descriptionContainer
       .get()
@@ -132,7 +142,7 @@ export default class ProductPage {
   }
 
   render() {
-    this.productContainer.get().append(this.slider.get(), this.descriptionContainer.get());
+    this.productContainer.get().append(this.slider, this.descriptionContainer.get());
     this.container.append(this.breadcrumb.get(), this.productContainer.get());
     this.pageContainer.get().append(this.container);
     return this.pageContainer.get();
