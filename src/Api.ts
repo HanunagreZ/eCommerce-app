@@ -1,9 +1,10 @@
 import axios, { AxiosError } from 'axios';
-import { ICustomerRegistration, ICustomerLogin } from './interfaces/interfaces';
+import { ICustomerRegistration, ICustomerLogin, IPersonalData, IAddress } from './interfaces/interfaces';
 import Modal from './components/Modal/Modal';
 import { modalProps } from './data/data';
 import userState from './states/UserState';
 import Loading from './components/Loading/Loading';
+import personal from './Pages/Profile/Personal/Personal';
 
 import router from '.';
 import header from './components/Header/Header';
@@ -61,6 +62,10 @@ class Api {
         },
       });
       userState.setUserName(response.data.customer.firstName);
+      userState.setUserId(response.data.customer.id);
+      userState.setUserVersion(response.data.customer.version);
+      personal.updateContent();
+
       loading.remove();
       new Modal(modalProps.modalSuccess);
 
@@ -92,7 +97,11 @@ class Api {
       });
 
       await this.obtainTokens(payload);
+
       userState.setUserName(response.data.customer.firstName);
+      userState.setUserId(response.data.customer.id);
+      userState.setUserVersion(response.data.customer.version);
+      personal.updateContent();
       loading.remove();
       header.renderNav();
       router.navigateTo('/');
@@ -235,6 +244,289 @@ class Api {
       result = error;
     }
     return result;
+  }
+
+  /* Пометка под рефакторинг: ниже методы, которые используются в личном кабинете */
+
+  async getCustomerById(id: string) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      result = response;
+    } catch (error) {
+      console.error(error);
+    }
+    return result;
+  }
+
+  async changeCustomerPersonalData(data: IPersonalData) {
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/${userState.getUserId()}`,
+        {
+          version: userState.getUserVersion(),
+          actions: [
+            {
+              action: 'setFirstName',
+              firstName: data.firstName,
+            },
+            {
+              action: 'setLastName',
+              lastName: data.lastName,
+            },
+            {
+              action: 'setDateOfBirth',
+              dateOfBirth: data.dateOfBirth,
+            },
+            {
+              action: 'changeEmail',
+              email: data.email,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      /* TODO: Удалить после проверки с полями */
+      console.log('Личная информация успешно изменена!');
+      userState.setUserVersion(response.data.version);
+      userState.setUserName(response.data.firstName);
+    } catch (error) {
+      console.error(error);
+      if (error instanceof AxiosError) {
+        if (error.response?.data.message === 'There is already an existing customer with the provided email.') {
+          new Modal(modalProps.modalUserChangeEmail);
+        }
+      }
+    }
+  }
+
+  async changeCustomerPassword(data: string[]) {
+    try {
+      const accessToken = userState.getAccessToken();
+      await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/password`,
+        {
+          id: userState.getUserId(),
+          version: userState.getUserVersion(),
+          currentPassword: data[0],
+          newPassword: data[1],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      /* TODO: Удалить после проверки с полями */
+      console.log('Пароль успешно изменен');
+      new Modal(modalProps.modalUserChangePasswordSuccess);
+    } catch (error) {
+      console.error(error);
+      if (error instanceof AxiosError) {
+        if (error.response?.data.message === 'The given current password does not match.') {
+          new Modal(modalProps.modalUserWrongCurrentPassword);
+        }
+      }
+    }
+  }
+
+  async addNewCustomerAddress(data: IAddress) {
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/${userState.getUserId()}`,
+        {
+          version: userState.getUserVersion(),
+          actions: [
+            {
+              action: 'addAddress',
+              address: {
+                title: '',
+                salutation: '',
+                firstName: '',
+                lastName: '',
+                streetName: data.streetName,
+                streetNumber: '',
+                additionalStreetInfo: '',
+                postalCode: data.postalCode,
+                city: data.city,
+                region: '',
+                state: '',
+                country: data.country,
+                company: '',
+                department: '',
+                building: '',
+                apartment: '',
+                pOBox: '',
+                phone: '',
+                mobile: '',
+                email: '',
+                fax: '',
+                additionalAddressInfo: '',
+                externalId: 'none',
+              },
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      /* TODO: Удалить после проверки с полями */
+      console.log('Добавлен новый адрес!');
+      userState.setUserVersion(response.data.version);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async changeCustomerAddress(data: IAddress, id: string) {
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/${userState.getUserId()}`,
+        {
+          version: userState.getUserVersion(),
+          actions: [
+            {
+              action: 'changeAddress',
+              addressId: id,
+              address: {
+                title: '',
+                salutation: '',
+                firstName: '',
+                lastName: '',
+                streetName: data.streetName,
+                streetNumber: '',
+                additionalStreetInfo: '',
+                postalCode: data.postalCode,
+                city: data.city,
+                region: '',
+                state: '',
+                country: data.country,
+                company: '',
+                department: '',
+                building: '',
+                apartment: '',
+                pOBox: '',
+                phone: '',
+                mobile: '',
+                email: '',
+                fax: '',
+                additionalAddressInfo: '',
+                externalId: 'none',
+              },
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      /* TODO: Удалить после проверки с полями */
+      console.log('Существующий адрес изменен!');
+      userState.setUserVersion(response.data.version);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async removeAddressById(id: string) {
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/${userState.getUserId()}`,
+        {
+          version: userState.getUserVersion(),
+          actions: [
+            {
+              action: 'removeAddress',
+              addressId: id,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      /* TODO: Удалить после проверки с полями */
+      console.log('Адрес удален!');
+      userState.setUserVersion(response.data.version);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async setDefaultBillingAddress(id: string) {
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/${userState.getUserId()}`,
+        {
+          version: userState.getUserVersion(),
+          actions: [
+            {
+              action: 'setDefaultBillingAddress',
+              addressId: id,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      /* TODO: Удалить после проверки с полями */
+      console.log('Billing адрес изменен!');
+      userState.setUserVersion(response.data.version);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async setDefaultShippingAddress(id: string) {
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/${userState.getUserId()}`,
+        {
+          version: userState.getUserVersion(),
+          actions: [
+            {
+              action: 'setDefaultShippingAddress',
+              addressId: id,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      /* TODO: Удалить после проверки с полями */
+      console.log('Shipping адрес изменен!');
+      userState.setUserVersion(response.data.version);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 const api = new Api();

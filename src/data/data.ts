@@ -102,6 +102,27 @@ export const modalProps = {
     btn: 'Back',
     addEvent: () => {},
   },
+  modalUserChangeEmail: {
+    icon: 'assets/icons/iconError.svg',
+    title: 'This email is already in use',
+    description: 'Please use another email. Fill out the form again',
+    btn: 'Back',
+    addEvent: () => {},
+  },
+  modalUserWrongCurrentPassword: {
+    icon: 'assets/icons/iconError.svg',
+    title: 'Please use correct password',
+    description: 'The given current password does not match',
+    btn: 'Back',
+    addEvent: () => {},
+  },
+  modalUserChangePasswordSuccess: {
+    icon: 'assets/icons/iconSuccess.svg',
+    title: 'Password succesfully changed',
+    description: 'Write down your new password so you dont forget!',
+    btn: 'Back',
+    addEvent: () => {},
+  },
   modalCredentialsNotFound: {
     icon: 'assets/icons/iconError.svg',
     title: 'Customer account with the given credentials not found',

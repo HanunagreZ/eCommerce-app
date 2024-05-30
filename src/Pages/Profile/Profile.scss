@@ -1,2 +1,21 @@
 @import '../../styles.scss';
 @import '../Profile/SelectionPanel/SelectionPanel.scss';
+@import '../Profile/Personal/Personal.scss';
+@import '../Profile/Addresses/Addresses.scss';
+@import '../Profile/Settings/Settings.scss';
+
+.profile {
+  width: 100%;
+  max-width: 1360px;
+  height: 100%;
+  display: flex;
+  background-color: darkcyan;
+  padding: 20px;
+  gap: 70px;
+}
+
+@media screen and (max-width: 766px) {
+  .profile {
+    flex-direction: column;
+  }
+}

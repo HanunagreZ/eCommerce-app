@@ -6,12 +6,11 @@ export default class Profile {
   private container: Div;
 
   constructor() {
-    this.container = new Div('profile__wrapper');
+    this.container = new Div('profile');
   }
 
   render() {
     selectionPanel.render(this.container.get());
-
     return this.container.get();
   }
 }

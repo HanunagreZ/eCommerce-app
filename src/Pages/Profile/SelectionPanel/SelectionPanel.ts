@@ -1,8 +1,9 @@
 import Div from '../../../ui-components/Div/Div';
 import Span from '../../../ui-components/Span/Span';
 import Img from '../../../ui-components/Img/Img';
-
-import userState from '../../../states/UserState';
+import personal from '../Personal/Personal';
+import addresses from '../Addresses/Addresses';
+import settings from '../Settings/Settings';
 
 class SelectionPanel {
   private container: Div;
@@ -12,7 +13,6 @@ class SelectionPanel {
   private imageTextDiv: Div;
   private profileImage: Img;
   private greeting: Span;
-  private profileName: Span;
   private personalDiv: Div;
   private personalTitle: Span;
   private personalImg: Img;
@@ -37,10 +37,9 @@ class SelectionPanel {
     );
     this.imageTextDiv = new Div('profile__image-div-text', this.imageDiv.get());
     this.greeting = new Span('Hello! ⭐', 'profile__greeting', this.imageTextDiv.get());
-    this.profileName = new Span(String(userState.getUserName()), 'profile__name', this.imageTextDiv.get());
 
-    this.personalDiv = new Div('profile__personal', this.selectionPanel.get());
-    this.personalDiv.get().classList.add('profile__personal_active');
+    this.personalDiv = new Div('profile__personal-div', this.selectionPanel.get());
+    this.personalDiv.get().classList.add('profile__personal-div_active');
 
     this.personalImg = new Img(
       'profile__personal-img',
@@ -50,7 +49,7 @@ class SelectionPanel {
     );
     this.personalTitle = new Span('Personal Information', 'profile__personal-title', this.personalDiv.get());
 
-    this.addressDiv = new Div('profile__address', this.selectionPanel.get());
+    this.addressDiv = new Div('profile__address-div', this.selectionPanel.get());
     this.addressImg = new Img(
       'profile__address-img',
       'assets/profile/iconPen.svg',
@@ -59,7 +58,7 @@ class SelectionPanel {
     );
     this.addressTitle = new Span('Manage Addresses', 'profile__address-title', this.addressDiv.get());
 
-    this.settingsDiv = new Div('profile__settings', this.selectionPanel.get());
+    this.settingsDiv = new Div('profile__settings-div', this.selectionPanel.get());
     this.settingsImg = new Img(
       'profile__settings-img',
       'assets/profile/iconLock.svg',
@@ -74,25 +73,38 @@ class SelectionPanel {
   }
 
   render(parentElement: HTMLElement) {
+    parentElement.append(this.get());
+    personal.render(parentElement);
+
     this.personalDiv.get().addEventListener('click', () => {
-      this.personalDiv.get().classList.add('profile__personal_active');
-      this.addressDiv.get().classList.remove('profile__address_active');
-      this.settingsDiv.get().classList.remove('profile__settings_active');
+      this.personalDiv.get().classList.add('profile__personal-div_active');
+      this.addressDiv.get().classList.remove('profile__address-div_active');
+      this.settingsDiv.get().classList.remove('profile__settings-div_active');
+
+      addresses?.get().remove();
+      settings?.get().remove();
+      personal.render(parentElement);
     });
 
     this.addressDiv.get().addEventListener('click', () => {
-      this.addressDiv.get().classList.add('profile__address_active');
-      this.personalDiv.get().classList.remove('profile__personal_active');
-      this.settingsDiv.get().classList.remove('profile__settings_active');
+      this.addressDiv.get().classList.add('profile__address-div_active');
+      this.personalDiv.get().classList.remove('profile__personal-div_active');
+      this.settingsDiv.get().classList.remove('profile__settings-div_active');
+
+      personal?.get().remove();
+      settings?.get().remove();
+      addresses.render(parentElement);
     });
 
     this.settingsDiv.get().addEventListener('click', () => {
-      this.settingsDiv.get().classList.add('profile__settings_active');
-      this.personalDiv.get().classList.remove('profile__personal_active');
-      this.addressDiv.get().classList.remove('profile__address_active');
-    });
+      this.settingsDiv.get().classList.add('profile__settings-div_active');
+      this.personalDiv.get().classList.remove('profile__personal-div_active');
+      this.addressDiv.get().classList.remove('profile__address-div_active');
 
-    parentElement.append(this.get());
+      addresses?.get().remove();
+      personal?.get().remove();
+      settings.render(parentElement);
+    });
   }
 }
 

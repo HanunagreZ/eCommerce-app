@@ -123,3 +123,24 @@ export interface IBreadcrumbsProps {
   href: string[];
   text: string[];
 }
+
+export interface IUserData {
+  customer: {
+    id: string;
+    version: number;
+    versionModifiedAt: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    dateOfBirth: string;
+    password: string;
+    addresses: [];
+  };
+}
+
+export interface IPersonalData {
+  email: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+}
