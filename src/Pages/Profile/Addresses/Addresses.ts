@@ -6,6 +6,7 @@ import { AddressItem } from './AddressItem';
 
 class Addresses {
   private container: Div;
+
   private showButton: Button;
   private addNewAddressButton: Button;
   private removeAddressButton: Button;
@@ -16,6 +17,11 @@ class Addresses {
 
   constructor() {
     this.container = new Div('profile__addresses');
+
+    const f = new AddressItem().render();
+
+    this.container.get().append(f);
+
     this.showButton = new Button('Show addresses', 'addresses__edit-button', this.container.get());
     this.addNewAddressButton = new Button('Add new address', 'addresses__add-new-button', this.container.get());
     this.removeAddressButton = new Button('Remove address', 'addresses__remove-button', this.container.get());
@@ -41,8 +47,8 @@ class Addresses {
     return this.container.get();
   }
 
-  render(parentElement: HTMLElement) {
-    parentElement.append(this.container.get());
+  render(parentElement?: HTMLElement) {
+    if (parentElement) parentElement.append(this.container.get());
 
     this.showButton.get().addEventListener('click', () => {
       /* Собираем валидированные данные из форм и отправляем */
@@ -51,7 +57,7 @@ class Addresses {
         for (let i = 0; i < addresses.length; i++) {
           const address = addresses[i];
 
-          this.container.get().append(new AddressItem().render());
+          // this.container.get().append(new AddressItem().render());
 
           console.log(address.id, address.country, address.city, address.streetName, address.postalCode);
         }

@@ -76,34 +76,40 @@ class SelectionPanel {
     parentElement.append(this.get());
     personal.render(parentElement);
 
+    settings.render();
+    addresses.render();
+
     this.personalDiv.get().addEventListener('click', () => {
+      if (this.personalDiv.get().classList.contains('profile__personal-div_active')) {
+        return;
+      }
       this.personalDiv.get().classList.add('profile__personal-div_active');
       this.addressDiv.get().classList.remove('profile__address-div_active');
       this.settingsDiv.get().classList.remove('profile__settings-div_active');
 
-      addresses?.get().remove();
-      settings?.get().remove();
-      personal.render(parentElement);
+      parentElement.replaceChild(personal.get(), parentElement.childNodes[1]);
     });
 
     this.addressDiv.get().addEventListener('click', () => {
+      if (this.addressDiv.get().classList.contains('profile__address-div_active')) {
+        return;
+      }
       this.addressDiv.get().classList.add('profile__address-div_active');
       this.personalDiv.get().classList.remove('profile__personal-div_active');
       this.settingsDiv.get().classList.remove('profile__settings-div_active');
 
-      personal?.get().remove();
-      settings?.get().remove();
-      addresses.render(parentElement);
+      parentElement.replaceChild(addresses.get(), parentElement.childNodes[1]);
     });
 
     this.settingsDiv.get().addEventListener('click', () => {
+      if (this.settingsDiv.get().classList.contains('profile__settings-div_active')) {
+        return;
+      }
       this.settingsDiv.get().classList.add('profile__settings-div_active');
       this.personalDiv.get().classList.remove('profile__personal-div_active');
       this.addressDiv.get().classList.remove('profile__address-div_active');
 
-      addresses?.get().remove();
-      personal?.get().remove();
-      settings.render(parentElement);
+      parentElement.replaceChild(settings.get(), parentElement.childNodes[1]);
     });
   }
 }
