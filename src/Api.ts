@@ -190,7 +190,6 @@ class Api {
         },
       });
       result = response.data.results;
-      console.log(result);
     } catch (error) {
       console.error(error);
       result = error;
@@ -208,7 +207,6 @@ class Api {
         },
       });
       result = response.data.name['en-US' as keyof typeof response.data.name];
-      console.log(result);
     } catch (error) {
       console.error(error);
       result = error;

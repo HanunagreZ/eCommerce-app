@@ -10,7 +10,6 @@ import { ProductsForPage } from '../../data/constants';
 import { SortEndpoints, TypeEndpoints } from '../../data/productsEndpoints';
 import { catalogTitles } from '../../data/data';
 import router from '../..';
-
 import { breadProps } from '../../data/data';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import Button from '../../ui-components/Button/Button';
@@ -40,14 +39,7 @@ export default class Catalog {
     this.filter = new Select('catalog__filter');
     this.filter.addListener(async () => {
       const field = this.filter.get().value.toLowerCase().replace(/\s+/g, '');
-      //     if (field === 'series') {
-      //   // this.activeType = 'all';
-      //   router.navigateTo('catalog/pop');
-      // } else {
-      // await this.filterByCategory();
-
       await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
-      console.log(field);
       if (field === 'pop!') {
         router.navigateTo('catalog/pop');
       } else if (field === 'accessories') {
@@ -56,11 +48,6 @@ export default class Catalog {
         router.navigateTo(`catalog/pop/${field}`);
       }
       await this.renderFilterSearch();
-      // console.log(field);
-
-      // await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
-      //}
-      //await this.filterByCategory();
     });
     this.showAll = new Span(catalogTitles.all, 'catalog__show-all');
     this.showAll.get().addEventListener('click', async () => {
@@ -81,13 +68,8 @@ export default class Catalog {
 
   render() {
     const container = new Div('catalog__container');
-
-    //breadcrumb.get().innerText = 'Catalog/Pop!';
-    //breadcrumbs.render(breadProps, container.get());
-
     const productsContainer = new Div('catalog__products');
     productsContainer.get().append(this.filterSearch.get(), this.cardsWrapper.get());
-    //container.get().append(productsContainer.get(), this.pageNavigation.get());
     container.get().append(this.breadcrumbs.get(), productsContainer.get(), this.pageNavigation.get());
     return container.get();
   }
@@ -106,8 +88,6 @@ export default class Catalog {
     const filterWrapper = new Div('catalog__ffilter-wrapper', this.filterSearch.get());
     filterWrapper.get().append(this.sorting.get());
     this.sorting.get().innerHTML = '';
-
-    // this.search.render(this.filterSearch.get());
     this.renderOptions(this.sorting.get(), catalogTitles.sortingOptions);
     if (this.activeType !== TypeEndpoints.accessories) {
       this.filter.get().innerHTML = '';
@@ -118,7 +98,6 @@ export default class Catalog {
       }
       filterWrapper.get().append(this.filter.get(), this.showAll.get());
     }
-
     this.renderSearchForm(this.filterSearch.get());
   }
 
@@ -144,6 +123,7 @@ export default class Catalog {
   renderSearchForm(parentElement: HTMLElement) {
     const form = document.createElement('form');
     form.classList.add('catalog__search-form');
+    this.search.get().placeholder = catalogTitles.searchPlaceholder;
     const searchBtn = new Button('', 'catalog__search-btn');
     searchBtn.addListener(async (e) => {
       await this.searchProduct(e);
@@ -158,15 +138,12 @@ export default class Catalog {
     products.map((data) => {
       new ProductCard(data, this.cardsWrapper.get());
     });
-    // const w = document.querySelector('.catalog__cards-wrapper');
-    // console.log(w?.innerHTML);
     await this.renderPageNavigation(page);
   }
 
   async renderPageNavigation(activePage = 1) {
     this.pageNavigation.get().innerHTML = '';
     const productsCount = catalogState.getProductsCount();
-    console.log(productsCount);
     this.pagesCount = Math.ceil(productsCount / ProductsForPage);
     new Img('catalog__pages-prev', './../../assets/icons/iconPrev.svg', 'Back', this.pageNavigation.get());
     for (let i = 1; i <= this.pagesCount; i++) {
@@ -285,7 +262,6 @@ export default class Catalog {
       await this.renderProducts(this.activePage, `${this.activeType}&text.en-US="${searchText}"`, this.activeSorting);
     }
     if (catalogState.productsCount === 0) {
-      // this.cardsWrapper.get().innerHTML = '';
       new Div('catalog__search-request-msg', this.cardsWrapper.get()).get().innerText = catalogTitles.searchRequest;
       new Div('catalog__search-request', this.cardsWrapper.get()).get().innerText = searchText;
       new Div('catalog__no-search-results', this.cardsWrapper.get()).get().innerHTML = catalogTitles.noSearchresults;

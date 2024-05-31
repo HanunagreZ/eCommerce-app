@@ -13,3 +13,8 @@ export const SortEndpoints = {
   PriceLowToHigh: 'sort=price asc',
   PriceHightoLow: 'sort=price desc',
 };
+
+export const productTypeID = {
+  accessories: 'f04d2c67-32ca-4fe3-8ec6-567f489cf89c',
+  pop: '96743fc0-b9e5-49b7-8a40-7d6ca919a901',
+};
