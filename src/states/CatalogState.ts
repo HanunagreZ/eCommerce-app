@@ -32,7 +32,6 @@ export class CatalogState {
     return productsData;
   }
 
-  
   setProductType(product: IProductResponseData) {
     const result = Object.entries(productTypeID).find((type) => type[1] === product.productType.id);
     return result ? result[0] : '';
@@ -47,7 +46,6 @@ export class CatalogState {
     });
     return categoryName;
   }
-
 }
 
 const catalogState = new CatalogState();
