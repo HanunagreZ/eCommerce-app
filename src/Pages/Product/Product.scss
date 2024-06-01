@@ -1,0 +1,163 @@
+h2,
+h3,
+p {
+  padding: 0;
+  margin: 0;
+}
+
+.product-page {
+  max-width: 1440px;
+}
+
+.wrapper__product {
+  margin: 0 3%;
+}
+
+.breadcrumb {
+  padding: 20px 0;
+  font-size: 16px;
+}
+
+.product__container {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  width: 100%;
+  padding: 40px;
+  background-color: #b9bbde;
+  transition: all 0.5s;
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}
+
+.product__slider {
+  position: relative;
+  display: flex;
+  max-width: 100%;
+  max-height: 500px;
+  overflow: hidden;
+  background-color: #ffffff;
+  @media (max-width: 900px) {
+    align-self: center;
+    max-width: 500px;
+  }
+  @media (max-width: 500px) {
+    max-width: 300px;
+    max-height: 300px;
+  }
+}
+
+.img__container {
+  display: flex;
+  transition: all 0.5s;
+}
+
+.slider__buttons {
+  position: absolute;
+  display: flex;
+  gap: 30px;
+  bottom: 30px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.slider-button {
+  position: relative;
+  box-sizing: border-box;
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  border: 5px solid white;
+  border-radius: 100%;
+  background-color: black;
+  cursor: pointer;
+}
+
+.slider-button::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  left: -5px;
+  right: -5px;
+  border: 3px solid black;
+  border-radius: 100%;
+}
+
+.slider-button_active {
+  border: 5px solid black;
+}
+
+.product__image {
+  flex: 0 0 100%;
+  max-width: 70%;
+  padding: 15%;
+  object-fit: contain;
+  cursor: zoom-in;
+  @media (max-width: 500px) {
+  }
+}
+
+.product__description {
+  max-width: 580px;
+}
+
+.product__category {
+  margin: 0;
+  padding: 0;
+}
+
+.product__header {
+  font-size: 36px;
+}
+
+.price__container {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin: 30px 0;
+}
+
+.product__sale {
+  width: 70px;
+  padding: 10px;
+  background-color: #ff4d4d;
+  color: #ffffff;
+  font-size: 24px;
+  line-height: 16px;
+  font-weight: 300;
+  text-align: center;
+}
+
+.price__sale {
+  font-weight: 300;
+  text-decoration: line-through;
+}
+
+.product__button {
+  width: 270px;
+  height: 44px;
+  border: 0;
+  border-radius: 5px;
+  background-color: rgb(110, 65, 226);
+  color: rgb(255, 255, 255);
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.4s;
+
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+
+  &:hover {
+    background-color: rgb(85, 31, 223);
+  }
+}
+
+.product__info {
+  margin-top: 50px;
+}

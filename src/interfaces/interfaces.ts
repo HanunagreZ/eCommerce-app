@@ -31,7 +31,7 @@ export interface IAddress {
 
 export interface IRoute {
   path: string;
-  component: HTMLElement | HTMLDivElement;
+  component: HTMLElement | HTMLDivElement | Promise<HTMLDivElement>;
 }
 
 export interface IModalProps {
@@ -103,6 +103,7 @@ export interface Product {
   masterVariant: {
     images: { url: string }[];
   };
+  key: string;
   name: { 'en-US': string };
   description: { 'en-US': string };
   slug: { 'en-US': string };

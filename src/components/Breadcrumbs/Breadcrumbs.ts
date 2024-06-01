@@ -24,7 +24,6 @@ export default class Breadcrumbs {
       const li = new Li(this.breadList);
       new Link(props.href[i], props.text[i], li.get());
     }
-
     parentElement.append(this.element.get());
     return this.element;
   }

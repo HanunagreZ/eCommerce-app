@@ -229,14 +229,34 @@ class Api {
         },
       );
       result = response.data.results;
-      console.log(result);
     } catch (error) {
       console.error(error);
       result = error;
     }
     return result;
   }
+
+  async getProductByKey(key: string) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/products/key=${key}?expand=masterData.current.categories[*].obj`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      result = response.data.masterData;
+      // console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+    return result;
+  }
 }
+
 const api = new Api();
 
 export default api;
