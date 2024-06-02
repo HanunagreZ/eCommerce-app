@@ -1,0 +1,118 @@
+@import '../../../styles.scss';
+
+.profile__addresses {
+  width: 100%;
+  max-width: 930px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+}
+
+.addresses__title {
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-style: SemiBold;
+  color: rgb(102, 102, 102);
+}
+
+.address__form {
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.address__body {
+  display: flex;
+  flex-wrap: wrap;
+
+  &::after {
+    content: ' ';
+    height: 2px;
+    width: 100%;
+    background: rgb(0, 0, 0);
+    display: block;
+  }
+}
+
+.address__header {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.address__default-container {
+  display: flex;
+  .address__default-wrapper {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 250px;
+    gap: 5%;
+
+    input {
+      margin: 0;
+    }
+  }
+}
+
+.address__btn-container {
+  align-self: end;
+}
+
+.address__edit-btn,
+.address__remove-btn {
+  position: absolute;
+  top: 0px;
+  display: inline;
+  height: 24px;
+  width: 24px;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #6e41e2;
+    color: #fafafa;
+    transition: 0.3s;
+  }
+  &.hidden {
+    display: none;
+  }
+}
+
+.address__edit-btn {
+  right: 40px;
+  background-image: url('../../assets/profile/iconPen.svg');
+}
+
+.address__remove-btn {
+  right: 0px;
+  background-image: url('../../assets/profile/iconRemove.svg');
+}
+
+@media screen and (max-width: 766px) {
+  .profile__addresses {
+    margin: 0 auto;
+    width: 94%;
+  }
+
+  .input-field {
+    width: 100%;
+    max-width: 750px;
+  }
+}
+
+@media (min-width: 766px) and (max-width: 950px) {
+  .address__default-container {
+    flex-direction: column;
+    margin-left: 10%;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 560px) {
+  .address__default-container {
+    flex-direction: column;
+    margin-left: 10%;
+    gap: 10px;
+  }
+}

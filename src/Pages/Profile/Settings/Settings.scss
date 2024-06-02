@@ -1,0 +1,26 @@
+.profile__settings {
+  width: 100%;
+  max-width: 930px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin-top: 60px;
+}
+
+.profile__settings-form {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;  
+}
+
+.addresses__btn-container {
+  display: flex;
+  justify-content: end;
+}
+
+@media screen and (max-width: 766px) {
+  .profile__settings {
+    margin: 0;
+  }
+}

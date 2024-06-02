@@ -14,7 +14,8 @@ export const constants = {
       },
       {
         labelText: 'Password',
-        clueText: 'Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number',
+        clueText:
+          'Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number, must not contain special characters',
         reg: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/,
       },
       {
@@ -99,6 +100,27 @@ export const modalProps = {
     icon: 'assets/icons/iconError.svg',
     title: 'This email is already in use',
     description: 'Please log in or use another email',
+    btn: 'Back',
+    addEvent: () => {},
+  },
+  modalUserChangeEmail: {
+    icon: 'assets/icons/iconError.svg',
+    title: 'This email is already in use',
+    description: 'Please use another email. Fill out the form again',
+    btn: 'Back',
+    addEvent: () => {},
+  },
+  modalUserWrongCurrentPassword: {
+    icon: 'assets/icons/iconError.svg',
+    title: 'Please use correct password',
+    description: 'The given current password does not match',
+    btn: 'Back',
+    addEvent: () => {},
+  },
+  modalUserChangePasswordSuccess: {
+    icon: 'assets/icons/iconSuccess.svg',
+    title: 'Password succesfully changed',
+    description: 'Write down your new password so you dont forget!',
     btn: 'Back',
     addEvent: () => {},
   },
@@ -210,4 +232,61 @@ export const breadProps = {
     href: ['/', '/catalog', '/catalog/pop', '/catalog/pop/marvel'],
     text: ['Funko', 'Catalog', 'Pop!', 'Marvel'],
   },
+};
+
+export const profile = {
+  profileGeneralData: [
+    {
+      labelText: 'Email',
+      clueText: 'A properly formatted email address (e.g., example@email.com)',
+      reg: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+    },
+    {
+      labelText: 'First name',
+      clueText: 'Must contain at least one character and no special characters or numbers',
+      reg: /^[A-Za-z]+$/,
+    },
+    {
+      labelText: 'Last name',
+      clueText: 'Must contain at least one character and no special characters or numbers',
+      reg: /^[A-Za-z]+$/,
+    },
+  ],
+  dateOfBirth: {
+    labelText: 'Date of birth',
+    clueText: 'Date format: DD.MM.YYYY. You must be above 13 years old.',
+  },
+  passwords: [
+    {
+      labelText: 'Current password',
+      clueText:
+        'Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number, must not contain special characters',
+      reg: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+
+      //(?=.*[!@#$%^&*()\-_=+{};:'",.<>?]): Positive lookahead to ensure there is at least one special character
+      // reg: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:'",.<>?])(?!.*\s).{8,}$/,
+    },
+    {
+      labelText: 'New password',
+      clueText:
+        'Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number, must not contain special characters',
+      reg: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+    },
+  ],
+  countries: {
+    US: 'United States of America',
+    CA: 'Canada',
+    RS: 'RS',
+  },
+
+  countrCodes: {
+    'United States of America': 'US',
+    Canada: 'CA',
+    RS: 'RS',
+  },
+
+  addressesTitle: 'Addresses:',
+  defaultBillAdr: 'Default billing address',
+  defaultShipAddr: 'Default shipping address',
+  addNewAddresBtn: 'Add new Address',
 };

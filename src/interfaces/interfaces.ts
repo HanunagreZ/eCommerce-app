@@ -117,6 +117,54 @@ export interface IBreadcrumbsProps {
   text: string[];
 }
 
+export interface IUserData {
+  customer: {
+    id: string;
+    version: number;
+    versionModifiedAt: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    dateOfBirth: string;
+    password: string;
+    addresses: [];
+  };
+}
+
+export interface IPersonalData {
+  email: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+}
+
+// export interface ICountryCode {
+//   US: string;
+//   CA: string;
+// }
+
+export interface IAddressData {
+  id: string;
+  countryCode: string;
+  city: string;
+  streetName: string;
+  postalCode: string;
+  //типы адресов: billing или shipping
+  //isBillingAddress: boolean;
+  //isShippingAddress: boolean;
+  isDefaultBilling?: boolean;
+  isDefaultShipping?: boolean;
+}
+
+export interface IEmptyAddressData {
+  countryCode: string;
+  city: '';
+  streetName: '';
+  postalCode: '';
+  isDefaultBilling: false;
+  isDefaultShipping: false;
+}
+
 export interface ITypeEndpoints {
   all: string;
   pop: string;
