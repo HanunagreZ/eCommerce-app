@@ -1,4 +1,4 @@
-import Catalog from './Products';
+import Catalog from './Catalog';
 import { TypeEndpoints } from '../../data/productsEndpoints';
 
 const allProducts = new Catalog();

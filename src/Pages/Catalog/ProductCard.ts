@@ -1,3 +1,4 @@
+import router from '../..';
 import { catalogTitles } from '../../data/data';
 import { IProductCard } from '../../interfaces/interfaces';
 import Button from '../../ui-components/Button/Button';
@@ -28,7 +29,19 @@ export class ProductCard {
     } else {
       new Span(`$${(productData.price / 100).toFixed(2)}`, 'catalog__product-price', priceContainer.get());
     }
-    new Button(catalogTitles.cardBtn, 'catalog__card-btn', card.get());
+    new Button(catalogTitles.cartBtn, 'catalog__cart-btn', card.get());
+
+    card.get().addEventListener('click', (e) => {
+      const clickedElement = e.target as HTMLElement;
+      if (!clickedElement.classList.contains('catalog__cart-btn'))
+        if (productData.productType === 'pop') {
+          router.navigateTo(
+            `/catalog/${productData.productType}/${productData.category.toLowerCase()}/${productData.key}`,
+          );
+        } else {
+          router.navigateTo(`/catalog/${productData.productType}/${productData.key}`);
+        }
+    });
     return card.get();
   }
 }

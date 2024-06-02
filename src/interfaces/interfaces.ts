@@ -31,7 +31,7 @@ export interface IAddress {
 
 export interface IRoute {
   path: string;
-  component: HTMLElement | HTMLDivElement;
+  component: HTMLElement | HTMLDivElement | Promise<HTMLDivElement>;
 }
 
 export interface IModalProps {
@@ -43,26 +43,18 @@ export interface IModalProps {
 }
 
 export interface IProductCard {
+  productType: string;
+  key: string;
   imgSrc: string;
   category: string;
   name: string;
   price: number;
   discountedPrice?: number;
 }
-export interface IProductResponseData {
-  masterData: {
-    current: {
-      masterVariant: {
-        prices: { discounted: { value: { centAmount: number } }; value: { centAmount: number } }[];
-        images: { url: string }[];
-      };
-      categories: { id: string }[];
-      name: { [x: string]: string };
-    };
-  };
-}
 
-export interface IFilteredProductResponseData {
+export interface IProductResponseData {
+  productType: { id: string };
+  key: string;
   masterVariant: {
     prices: { discounted: { value: { centAmount: number } }; value: { centAmount: number } }[];
     images: { url: string }[];
@@ -103,6 +95,7 @@ export interface Product {
   masterVariant: {
     images: { url: string }[];
   };
+  key: string;
   name: { 'en-US': string };
   description: { 'en-US': string };
   slug: { 'en-US': string };
@@ -170,4 +163,13 @@ export interface IEmptyAddressData {
   postalCode: '';
   isDefaultBilling: false;
   isDefaultShipping: false;
+}
+
+export interface ITypeEndpoints {
+  all: string;
+  pop: string;
+  accessories: string;
+  marvel: string;
+  starwars: string;
+  anime: string;
 }

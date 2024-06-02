@@ -1,19 +1,74 @@
 import api from '../Api';
 import ProductPage from '../Pages/Product/Product';
 import { IRoute } from '../interfaces/interfaces';
-import { Product, ProductInfo } from '../interfaces/interfaces';
+import { Product } from '../interfaces/interfaces';
+
+interface IProductData {
+  current: {
+    categories: {
+      obj: {
+        name: {
+          'en-US': string;
+        };
+      };
+    }[];
+    description: {
+      'en-US': string;
+    };
+    name: {
+      'en-US': string;
+    };
+    masterVariant: {
+      images: {
+        url: string;
+      }[];
+    };
+  };
+  staged: {
+    masterVariant: {
+      prices: {
+        value: {
+          centAmount: number;
+        };
+      }[];
+    };
+  };
+}
+
+interface IProduct {
+  key?: string;
+  category: string;
+  name: string;
+  prices: { value: { centAmount: number } }[];
+  description: string;
+  img: { url: string }[];
+}
+
+async function getProductPageByKey(productKey: string) {
+  const singleProductInfo: IProductData = await api.getProductByKey(productKey);
+  const productInfo: IProduct = {
+    category: singleProductInfo.current.categories[0].obj.name['en-US'],
+    name: singleProductInfo.current.name['en-US'],
+    prices: singleProductInfo.staged.masterVariant.prices,
+    description: singleProductInfo.current.description['en-US'],
+    img: singleProductInfo.current.masterVariant.images,
+  };
+  const page = new ProductPage(productInfo).render();
+  return page;
+}
 
 async function getPaths() {
   const newRoutes: IRoute[] = [];
   const info = await api.getExtendedProducts();
-  const productPaths: string[] = [];
   const categoriesPaths: string[] = [];
   const subCategoryPaths: string[] = [];
+  const productKeys: string[] = [];
+
   info.forEach((product: Product) => {
     let productPath = '';
     let subCategory = '';
     let category = '';
-    productPath += product.slug['en-US'];
+    productPath += product.key;
     if (product.categories.length > 0) {
       productPath = product.categories[0].obj.slug['en-US'] + '/' + productPath;
       if (product.categories[0].obj.orderHint > 0.1) {
@@ -42,19 +97,9 @@ async function getPaths() {
     if (!categoriesPaths.includes(category)) {
       categoriesPaths.push(category);
     }
-    productPaths.push(productPath);
-    let imgPath = '';
-    imgPath = product.masterVariant.images[0].url;
-    const productInfo: ProductInfo = {
-      category: product.categories[0].obj.name['en-US'],
-      header: product.name['en-US'],
-      price: '10$',
-      description: product.description['en-US'],
-      imgUrl: imgPath,
-    };
-
-    const page = new ProductPage(productInfo).render();
-    const route: IRoute = { path: productPath, component: page };
+    const productKey = product.key;
+    productKeys.push(productKey);
+    const route: IRoute = { path: productPath, component: getProductPageByKey(productKey) };
     newRoutes.push(route);
   });
   return newRoutes;

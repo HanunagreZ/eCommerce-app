@@ -27,11 +27,10 @@
 }
 
 .catalog__sorting,
-.catalog__filter,
-.catalog__show-all {
-  width: 180px;
+.catalog__filter {
+  width: 185px;
   height: 30px;
-  margin-right: 20px;
+  margin: 0 20px 10px 0;
   font-size: 16px;
   font-weight: Bold;
   text-transform: uppercase;
@@ -39,19 +38,49 @@
   border: 1px solid black;
   border-radius: 5px;
   cursor: pointer;
-  option {
-    width: 90px;
-    height: 40px;
-    font-size: 16px;
-    font-weight: Bold;
-    text-transform: uppercase;
-    background-color: #ffffff;
-    border: none;
-  }
 }
 
 .catalog__show-all {
+  display: inline-block;
+  height: 30px;
+  margin: 0 20px 10px 0;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: Bold;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.catalog__search-form {
+  margin: 0 20px 10px 0;
+  width: 250px;
+  position: relative;
+}
+
+.catalog__search {
+  width: 250px;
+  height: 26px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+.catalog__search-btn {
+  position: absolute;
+  right: 1%;
+  top: 3px;
+  width: 24px;
+  height: 24px;
+  background: none;
+  background-image: url('../../assets/icons/iconSearch.svg');
   border: none;
+  cursor: pointer;
+}
+
+.catalog__search-request-msg,
+.catalog__no-search-results {
+  grid-column: span 5;
+}
+.catalog__search-request {
+  font-weight: Bold;
 }
 
 .catalog__cards-wrapper {
@@ -74,13 +103,16 @@
   gap: 10px;
   border-radius: 15px;
   background-color: #ffffff;
+  cursor: pointer;
+
+  &:hover {
+    .catalog__card-img {
+      transform: scale(1.15);
+    }
+  }
 }
 .catalog__card-img {
   transition: transform 0.2s;
-
-  &:hover {
-    transform: scale(1.2);
-  }
 }
 
 .catalog__product-category {
@@ -107,7 +139,7 @@
   }
 }
 
-.catalog__card-btn {
+.catalog__cart-btn {
   padding: 13px 0;
   background-color: rgb(110, 65, 226, 0.16);
   font-size: 16px;
@@ -165,6 +197,12 @@
 }
 
 @media (max-width: 680px) {
+  .catalog__cards-wrapper {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (max-width: 566px) {
   .catalog__cards-wrapper {
     grid-template-columns: repeat(1, 1fr);
   }

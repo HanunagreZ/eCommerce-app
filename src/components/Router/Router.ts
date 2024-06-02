@@ -8,63 +8,77 @@ import getPaths from '../../api/getPaths';
 class Router {
   private root: HTMLElement;
   private routes: IRoute[];
-  // private routesMap: Map;
 
   constructor(root: HTMLElement, routeList: IRoute[]) {
     this.root = root;
     this.routes = routeList;
-
-    // this.routesMap = new Map();
     window.addEventListener('popstate', this.route.bind(this));
-    this.route();
     this.handleLinkClicks();
+    this.updateRoutes();
+    this.route();
+  }
+
+  public getRotes() {
+    return this.routes;
+  }
+
+  public addRoute(route: IRoute) {
+    if (!this.routes.includes(route)) this.routes.push(route);
+  }
+
+  private async updateRoutes() {
     getPaths().then((data) =>
       data.forEach((route) => {
         this.addRoute(route);
       }),
     );
   }
-  public getRotes() {
-    return this.routes;
-  }
 
-  public addRoute(route: IRoute) {
-    this.routes.push(route);
-  }
-
-  private route() {
+  private async route() {
+    await this.updateRoutes();
     const { pathname } = window.location;
-    const executeRouting = () => {
-      const matchedRoute = this.routes.find((route) => route.path === pathname);
+    async function executeRouting(path: string, routes: IRoute[], root: HTMLElement) {
+      console.log('execute');
+      const matchedRoute = routes.find((route) => route.path === pathname);
       if (!matchedRoute) {
-        const page404 = this.routes.find((route) => route.path.includes('404'));
+        const page404 = routes.find((route) => route.path.includes('404'));
         if (page404) {
-          this.root.innerHTML = '';
-          this.root.appendChild(page404.component);
+          root.innerHTML = '';
+          const component = await page404.component;
+          root.appendChild(component);
         }
+        console.log('404 RETURN');
         return;
       }
       const { component } = matchedRoute;
-      this.root.innerHTML = '';
-      this.root.appendChild(component);
-      if (
-        (pathname === '/login' && userState.getUserName()) ||
-        (pathname === '/registration' && userState.getUserName())
-      ) {
-        this.navigateTo('/');
-      }
-    };
+
+      root.innerHTML = '';
+      const resolvedComponent = await component;
+      root.appendChild(resolvedComponent);
+    }
+
     if (pathname.includes('/catalog')) {
       /* 😎 костыль 🤙 */
       window.scrollTo(0, 0);
       const loader = new Loading();
       setTimeout(() => {
-        executeRouting();
+        executeRouting(pathname, this.routes, this.root);
         loader.remove();
-      }, 250);
+      }, 600);
+    } else if (
+      (pathname === '/login' && userState.getUserName()) ||
+      (pathname === '/registration' && userState.getUserName())
+    ) {
+      this.navigateTo('/');
     } else {
-      executeRouting();
+      executeRouting(pathname, this.routes, this.root);
     }
+    //   window.scrollTo(0, 0);
+    //   const loader = await new Loading();
+
+    //   await executeRouting();
+    //   loader.remove();
+    // }
   }
 
   public navigateTo(path: string) {

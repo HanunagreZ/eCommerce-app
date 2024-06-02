@@ -11,7 +11,7 @@ import {
   animeCatalog,
   starWarsCatalog,
   allCatalog,
-} from '../Pages/Products/CatalogPages';
+} from '../Pages/Catalog/CatalogPages';
 
 import Profile from '../Pages/Profile/Profile';
 
