@@ -7,9 +7,14 @@ export const TypeEndpoints = {
   anime: 'filter=categories.id:"e05a4e72-e27c-43c3-b224-0871adecb928"',
 };
 
-export enum SortEndpoints {
-  nameAZ = 'sort=name.en-us asc',
-  nameZA = 'sort=name.en-us desc',
-  PriceLowToHigh = 'sort=price asc',
-  PriceHightoLow = 'sort=price desc',
-}
+export const SortEndpoints = {
+  nameAZ: 'sort=name.en-us asc',
+  nameZA: 'sort=name.en-us desc',
+  PriceLowToHigh: 'sort=price asc',
+  PriceHightoLow: 'sort=price desc',
+};
+
+export const productTypeID = {
+  accessories: 'f04d2c67-32ca-4fe3-8ec6-567f489cf89c',
+  pop: '96743fc0-b9e5-49b7-8a40-7d6ca919a901',
+};

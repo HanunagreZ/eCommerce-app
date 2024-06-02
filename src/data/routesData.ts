@@ -11,7 +11,7 @@ import {
   animeCatalog,
   starWarsCatalog,
   allCatalog,
-} from '../Pages/Products/CatalogPages';
+} from '../Pages/Catalog/CatalogPages';
 
 // Сюда импортируются вьюшки страниц, и прописываются в "component"
 // При определенноп path: прорисовывается такая-то страница

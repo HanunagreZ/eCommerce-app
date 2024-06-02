@@ -1,4 +1,4 @@
-import './Products.scss';
+import './Catalog.scss';
 import catalogState from '../../states/CatalogState';
 import Div from '../../ui-components/Div/Div';
 import Input from '../../ui-components/Input/Input';
@@ -7,13 +7,12 @@ import Span from '../../ui-components/Span/Span';
 import { ProductCard } from './ProductCard';
 import Img from '../../ui-components/Img/Img';
 import { ProductsForPage } from '../../data/constants';
-import Loading from '../../components/Loading/Loading';
 import { SortEndpoints, TypeEndpoints } from '../../data/productsEndpoints';
 import { catalogTitles } from '../../data/data';
 import router from '../..';
-
 import { breadProps } from '../../data/data';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
+import Button from '../../ui-components/Button/Button';
 
 export default class Catalog {
   private breadcrumbs: Div;
@@ -40,16 +39,23 @@ export default class Catalog {
     this.filter = new Select('catalog__filter');
     this.filter.addListener(async () => {
       const field = this.filter.get().value.toLowerCase().replace(/\s+/g, '');
-      if (field === 'series') {
+      await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
+      if (field === 'pop!') {
         router.navigateTo('catalog/pop');
+      } else if (field === 'accessories') {
+        router.navigateTo('catalog/accessories');
       } else {
         router.navigateTo(`catalog/pop/${field}`);
       }
-      //await this.filterByCategory();
+      await this.renderFilterSearch();
     });
     this.showAll = new Span(catalogTitles.all, 'catalog__show-all');
     this.showAll.get().addEventListener('click', async () => {
-      await router.navigateTo('/catalog/pop');
+      if (this.activeType === TypeEndpoints.all) {
+        await router.navigateTo('/catalog');
+      } else {
+        await router.navigateTo('/catalog/pop');
+      }
     });
     this.search = new Input('', 'catalog__search');
     this.cardsWrapper = new Div('catalog__cards-wrapper');
@@ -62,13 +68,8 @@ export default class Catalog {
 
   render() {
     const container = new Div('catalog__container');
-
-    //breadcrumb.get().innerText = 'Catalog/Pop!';
-    //breadcrumbs.render(breadProps, container.get());
-
     const productsContainer = new Div('catalog__products');
     productsContainer.get().append(this.filterSearch.get(), this.cardsWrapper.get());
-    //container.get().append(productsContainer.get(), this.pageNavigation.get());
     container.get().append(this.breadcrumbs.get(), productsContainer.get(), this.pageNavigation.get());
     return container.get();
   }
@@ -87,23 +88,48 @@ export default class Catalog {
     const filterWrapper = new Div('catalog__ffilter-wrapper', this.filterSearch.get());
     filterWrapper.get().append(this.sorting.get());
     this.sorting.get().innerHTML = '';
-    this.search.render(this.filterSearch.get());
     this.renderOptions(this.sorting.get(), catalogTitles.sortingOptions);
     if (this.activeType !== TypeEndpoints.accessories) {
       this.filter.get().innerHTML = '';
-      this.renderOptions(this.filter.get(), catalogTitles.filterOptions);
+      if (this.activeType === TypeEndpoints.all) {
+        this.renderOptions(this.filter.get(), catalogTitles.catalogOptions);
+      } else {
+        this.renderOptions(this.filter.get(), catalogTitles.filterOptions);
+      }
       filterWrapper.get().append(this.filter.get(), this.showAll.get());
     }
+    this.renderSearchForm(this.filterSearch.get());
   }
 
   renderOptions(parentElement: HTMLElement, options: string[]) {
+    const selectedCategory = Object.entries(TypeEndpoints).find((el) => el[1] === this.activeType);
+    const categoryKey = selectedCategory ? selectedCategory[0] : '';
     options
-      .map((option) => {
+      .map((option, i) => {
         const sortOption = document.createElement('option');
         sortOption.innerText = option;
+        if (i === 0) {
+          sortOption.selected = true;
+          sortOption.hidden = true;
+        }
+        if (option.toLowerCase().replaceAll(/\s+/g, '') === categoryKey) {
+          sortOption.selected = true;
+        }
         return sortOption;
       })
       .map((option) => parentElement.append(option));
+  }
+
+  renderSearchForm(parentElement: HTMLElement) {
+    const form = document.createElement('form');
+    form.classList.add('catalog__search-form');
+    this.search.get().placeholder = catalogTitles.searchPlaceholder;
+    const searchBtn = new Button('', 'catalog__search-btn');
+    searchBtn.addListener(async (e) => {
+      await this.searchProduct(e);
+    });
+    form.append(this.search.get(), searchBtn.get());
+    parentElement.append(form);
   }
 
   async renderProducts(page: number, filter: string, sorting: string) {
@@ -118,7 +144,6 @@ export default class Catalog {
   async renderPageNavigation(activePage = 1) {
     this.pageNavigation.get().innerHTML = '';
     const productsCount = catalogState.getProductsCount();
-    console.log(productsCount);
     this.pagesCount = Math.ceil(productsCount / ProductsForPage);
     new Img('catalog__pages-prev', './../../assets/icons/iconPrev.svg', 'Back', this.pageNavigation.get());
     for (let i = 1; i <= this.pagesCount; i++) {
@@ -137,9 +162,7 @@ export default class Catalog {
     } else {
       if (clickedElement.closest('span')) {
         this.activePage = Number(clickedElement.innerText);
-        const loading = new Loading();
         await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
-        loading.remove();
       }
     }
     if (
@@ -148,9 +171,7 @@ export default class Catalog {
       this.activePage > 1
     ) {
       this.activePage--;
-      const loading = new Loading();
       await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
-      loading.remove();
     }
     if (
       clickedElement.closest('img') &&
@@ -158,9 +179,7 @@ export default class Catalog {
       this.activePage < pagesCount
     ) {
       this.activePage++;
-      const loading = new Loading();
       await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
-      loading.remove();
     }
   }
 
@@ -231,6 +250,21 @@ export default class Catalog {
       case TypeEndpoints.starwars:
         this.breadcrumbs = new Breadcrumbs().render(breadProps.starwars, this.breadcrumbs.get());
         break;
+    }
+  }
+
+  async searchProduct(e: Event | undefined) {
+    e?.preventDefault();
+    this.activePage = 1;
+    const searchText = this.search.get().value.replace(/ +/g, ' ').trim();
+    this.search.get().value = '';
+    if (searchText.trim() !== '') {
+      await this.renderProducts(this.activePage, `${this.activeType}&text.en-US="${searchText}"`, this.activeSorting);
+    }
+    if (catalogState.productsCount === 0) {
+      new Div('catalog__search-request-msg', this.cardsWrapper.get()).get().innerText = catalogTitles.searchRequest;
+      new Div('catalog__search-request', this.cardsWrapper.get()).get().innerText = searchText;
+      new Div('catalog__no-search-results', this.cardsWrapper.get()).get().innerHTML = catalogTitles.noSearchresults;
     }
   }
 }

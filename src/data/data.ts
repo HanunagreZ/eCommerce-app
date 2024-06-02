@@ -137,9 +137,13 @@ export const modalProps = {
 
 export const catalogTitles = {
   all: 'Show all',
-  cardBtn: 'Add to card',
+  cartBtn: 'Add to cart',
   sortingOptions: ['Sort by', 'Name: A - Z', 'Name: Z - A', 'Price Low To High', 'Price High to Low'],
   filterOptions: ['Series', 'Marvel', 'Star Wars', 'Anime'],
+  catalogOptions: ['Categories', 'Pop!', 'Accessories'],
+  searchPlaceholder: 'Search...',
+  searchRequest: 'Your search request: ',
+  noSearchresults: 'No results found...',
 };
 
 export const mainAdBlock = {
