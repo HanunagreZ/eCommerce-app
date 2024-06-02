@@ -243,8 +243,6 @@ class Api {
     return result;
   }
 
-  /* Пометка под рефакторинг: ниже методы, которые используются в личном кабинете */
-
   async getCustomerById(id: string) {
     let result;
     try {
@@ -292,9 +290,7 @@ class Api {
             Authorization: `Bearer ${accessToken}`,
           },
         },
-      );
-      /* TODO: Удалить после проверки с полями */
-      console.log('Личная информация успешно изменена!');
+      );     
       userState.setUserVersion(response.data.version);
       userState.setUserName(response.data.firstName);
     } catch (error) {
@@ -324,8 +320,6 @@ class Api {
           },
         },
       );
-      /* TODO: Удалить после проверки с полями */
-      console.log('Пароль успешно изменен');
       new Modal(modalProps.modalUserChangePasswordSuccess);
     } catch (error) {
       console.error(error);
@@ -381,8 +375,6 @@ class Api {
           },
         },
       );
-      /* TODO: Удалить после проверки с полями */
-      console.log('Добавлен новый адрес!');
       userState.setUserVersion(response.data.version);
     } catch (error) {
       console.error(error);
@@ -434,8 +426,6 @@ class Api {
           },
         },
       );
-      /* TODO: Удалить после проверки с полями */
-      console.log('Существующий адрес изменен!');
       userState.setUserVersion(response.data.version);
     } catch (error) {
       console.error(error);
@@ -462,8 +452,6 @@ class Api {
           },
         },
       );
-      /* TODO: Удалить после проверки с полями */
-      console.log('Адрес удален!');
       userState.setUserVersion(response.data.version);
     } catch (error) {
       console.error(error);
@@ -490,8 +478,6 @@ class Api {
           },
         },
       );
-      /* TODO: Удалить после проверки с полями */
-      console.log('Billing адрес изменен!');
       userState.setUserVersion(response.data.version);
     } catch (error) {
       console.error(error);
@@ -518,8 +504,6 @@ class Api {
           },
         },
       );
-      /* TODO: Удалить после проверки с полями */
-      console.log('Shipping адрес изменен!');
       userState.setUserVersion(response.data.version);
     } catch (error) {
       console.error(error);

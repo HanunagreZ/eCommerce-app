@@ -11,51 +11,7 @@
 
 .profile__personal-form {
   display: flex;
-  flex-wrap: wrap;
-
-  .input-field {
-    margin: 5px auto;
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    max-width: 450px;
-    gap: 0;
-    font-family: Poppins;
-    font-style: Regular;
-    color: rgb(102, 102, 102);
-  }
-
-  .input-field-input {
-    height: 45px;
-    padding: 1% 2%;
-    background-color: rgba(255, 255, 255);
-    border: 1px solid rgba(102, 102, 102, 0.35);
-    border-radius: 12px;
-
-    &.error {
-      border-color: red;
-    }
-
-    &:disabled {
-      color: rgba(102, 102, 102, 0.35);
-      background-color: rgb(244, 244, 244);
-      border-color: rgba(102, 102, 102, 0.35);
-    }
-  }
-
-  .input-field-label {
-    font-size: 16px;
-  }
-
-  .input-field-clue {
-    height: 28px;
-    font-size: 14px;
-    visibility: hidden;
-    &.error {
-      visibility: visible;
-      color: red;
-    }
-  }
+  flex-wrap: wrap; 
 }
 
 @media screen and (max-width: 766px) {
