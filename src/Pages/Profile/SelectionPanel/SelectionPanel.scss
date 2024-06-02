@@ -3,6 +3,7 @@
   width: 300px;
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
 }
 
 .profile__selection-title {
@@ -15,6 +16,7 @@
   width: 300px;
   height: 320px;
   flex-direction: column;
+  margin: 0 auto;
   justify-content: space-between;
   border: 1px solid #bdbaba;
 }
@@ -132,4 +134,13 @@
 .profile__address-title,
 .profile__settings-title {
   margin-left: 20px;
+}
+
+@media screen and (max-width: 766px) {
+  .profile__selection-panel-wrapper {
+    width: 94%;
+  }
+  .profile__selection-panel {
+    width: 94%;
+  }
 }

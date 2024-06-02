@@ -24,7 +24,6 @@ export class CatalogState {
     // console.log(date2);
 
     this.productsCount = data.total;
-    console.log(products);
     const productsData: IProductCard[] = products.map((el: IFilteredProductResponseData) => {
       return {
         imgSrc: el.masterVariant.images[0].url,

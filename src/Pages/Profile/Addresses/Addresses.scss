@@ -1,27 +1,56 @@
+@import '../../../styles.scss';
+
 .profile__addresses {
   width: 100%;
-  // background-color: firebrick;
+  max-width: 930px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+}
+
+.addresses__title {
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-style: SemiBold;
+  color: rgb(102, 102, 102);
 }
 
 .address__form {
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.address__body {
+  display: flex;
+  flex-wrap: wrap;
+  // justify-content: space-between;
+
   .input-field {
     margin: 5px auto;
     display: flex;
     flex-direction: column;
-    width: 92%;
-    max-width: 473px;
+    width: 80%;
+    max-width: 450px;
     gap: 0;
     font-family: Poppins;
     font-style: Regular;
     color: rgb(102, 102, 102);
+
+    .registration__country_label {
+      margin: 0;
+    }
+    .registration__country {
+      width: 100%;
+      height: 56px;
+      margin: 0;
+    }
   }
 
   .input-field-input,
   .registration__country {
-    width: 430px;
     height: 45px;
     padding: 1% 2%;
-    background-color: rgba(244, 244, 244);
+    background-color: rgba(255, 255, 255);
     border: 1px solid rgba(102, 102, 102, 0.35);
     border-radius: 12px;
 
@@ -31,6 +60,7 @@
 
     &:disabled {
       color: rgba(102, 102, 102, 0.35);
+      background-color: rgba(244, 244, 244);
       border-color: rgba(102, 102, 102, 0.35);
     }
   }
@@ -47,5 +77,97 @@
       visibility: visible;
       color: red;
     }
+  }
+
+  &::after {
+    content: ' ';
+    height: 2px;
+    width: 100%;
+    background: rgb(0, 0, 0);
+    display: block;
+  }
+}
+
+.address__header {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.address__default-container {
+  display: flex;
+  .address__default-wrapper {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 250px;
+    gap: 5%;
+
+    input {
+      margin: 0;
+    }
+  }
+}
+
+.address__btn-container {
+  align-self: end;
+}
+
+.address__edit-btn,
+.address__remove-btn {
+  position: absolute;
+  top: 0px;
+  display: inline;
+  height: 24px;
+  width: 24px;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #6e41e2;
+    color: #fafafa;
+    transition: 0.3s;
+  }
+  &.hidden {
+    display: none;
+  }
+}
+
+.address__edit-btn {
+  right: 40px;
+  background-image: url('../../assets/profile/iconPen.svg');
+}
+
+.address__remove-btn {
+  right: 0px;
+  background-image: url('../../assets/profile/iconRemove.svg');
+}
+
+@media screen and (max-width: 766px) {
+  .profile__addresses {
+    margin: 0 auto;
+    width: 94%;
+  }
+
+  .input-field {
+    width: 100%;
+    max-width: 750px;
+  }
+}
+
+@media (min-width: 766px) and (max-width: 950px) {
+  .address__default-container {
+    flex-direction: column;
+    margin-left: 10%;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 560px) {
+  .address__default-container {
+    flex-direction: column;
+    margin-left: 10%;
+    gap: 10px;
   }
 }

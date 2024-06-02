@@ -1,6 +1,7 @@
 import InputField from '../../components/InputField/InputField';
 import { constants } from '../../data/data';
 import { IRegistrationData } from '../../interfaces/interfaces';
+import Div from '../../ui-components/Div/Div';
 import Label from '../../ui-components/Label/Label';
 import Select from '../../ui-components/Select/Select';
 
@@ -21,8 +22,9 @@ export default class Address {
   }
 
   render(parentElement: HTMLElement) {
-    new Label(constants.registration.country, 'registration__country_label', parentElement);
-    this.country.render(parentElement);
+    const countryContainer = new Div('input-field', parentElement);
+    new Label(constants.registration.country, 'registration__country_label', countryContainer.get());
+
     constants.registration.countries
       .map((country) => {
         const countryOption = document.createElement('option');
@@ -30,7 +32,7 @@ export default class Address {
         return countryOption;
       })
       .map((country) => this.country.get().append(country));
-    this.country.render(parentElement);
+    this.country.render(countryContainer.get());
     this.country.addListener(() => {
       this.changePostalCode();
     });

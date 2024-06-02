@@ -3,44 +3,21 @@ import Button from '../../../ui-components/Button/Button';
 import api from '../../../Api';
 import userState from '../../../states/UserState';
 import { AddressItem } from './AddressItem';
+import { IAddressData } from '../../../interfaces/interfaces';
+import { profile } from '../../../data/data';
+import Span from '../../../ui-components/Span/Span';
 
 class Addresses {
   private container: Div;
-
-  private showButton: Button;
+  private addressContainer: Div;
   private addNewAddressButton: Button;
-  private removeAddressButton: Button;
-  private changeAddressButton: Button;
-  private checkDefaultAddressButton: Button;
-  private changeBillingAddressButton: Button;
-  private changeShippingAddressButton: Button;
+  private addressTitle: Span;
 
   constructor() {
     this.container = new Div('profile__addresses');
-
-    const f = new AddressItem().render();
-
-    this.container.get().append(f);
-
-    this.showButton = new Button('Show addresses', 'addresses__edit-button', this.container.get());
-    this.addNewAddressButton = new Button('Add new address', 'addresses__add-new-button', this.container.get());
-    this.removeAddressButton = new Button('Remove address', 'addresses__remove-button', this.container.get());
-    this.changeAddressButton = new Button('Change address', 'addresses__change-button', this.container.get());
-    this.checkDefaultAddressButton = new Button(
-      'Check default address',
-      'addresses__check-default-button',
-      this.container.get(),
-    );
-    this.changeBillingAddressButton = new Button(
-      'Change billing address',
-      'addresses__change-billing-button',
-      this.container.get(),
-    );
-    this.changeShippingAddressButton = new Button(
-      'Change shipping address',
-      'addresses__change-shipping-button',
-      this.container.get(),
-    );
+    this.addressTitle = new Span(profile.addressesTitle, 'addresses__title', this.container.get());
+    this.addressContainer = new Div('addresses__addresses-container', this.container.get());
+    this.addNewAddressButton = new Button('Add new address', 'addresses__btn', this.container.get());
   }
 
   get() {
@@ -48,65 +25,74 @@ class Addresses {
   }
 
   render(parentElement?: HTMLElement) {
+    this.updateContent();
     if (parentElement) parentElement.append(this.container.get());
-
-    this.showButton.get().addEventListener('click', () => {
-      /* Собираем валидированные данные из форм и отправляем */
-      api.getCustomerById(userState.getUserId() as string).then((data) => {
-        const addresses = data?.data.addresses;
-        for (let i = 0; i < addresses.length; i++) {
-          const address = addresses[i];
-
-          // this.container.get().append(new AddressItem().render());
-
-          console.log(address.id, address.country, address.city, address.streetName, address.postalCode);
-        }
-      });
+    this.addNewAddressButton.get().addEventListener('click', async () => {
+      await this.addNewAddress();
     });
+  }
 
-    this.addNewAddressButton.get().addEventListener('click', () => {
-      /* Собираем валидированные данные из форм и отправляем */
+  async updateContent() {
+    this.addressContainer.get().innerHTML = '';
+    await this.showAddresses();
+  }
 
-      const addressData = {
-        streetName: 'Тест тестов',
-        postalCode: '12312',
-        city: 'ыыыыы',
-        country: 'RS',
-      };
+  async showAddresses() {
+    await api.getCustomerById(userState.getUserId() as string).then((data) => {
+      const addresses = data?.data.addresses;
+      //const billingAddressIds = data?.data.billingAddressIds;
+      //const shippingAddressIds = data?.data.shippingAddressIds;
+      let defaultBillingAddressId = '';
+      let defaultShippingAddressId = '';
+      if (data?.data.defaultBillingAddressId) defaultBillingAddressId = data?.data.defaultBillingAddressId;
+      if (data?.data.defaultShippingAddressId) defaultShippingAddressId = data?.data.defaultShippingAddressId;
 
-      api.addNewCustomerAddress(addressData);
+      for (let i = 0; i < addresses.length; i++) {
+        const address = addresses[i];
+
+        const addressData: IAddressData = {
+          id: address.id,
+          countryCode: address.country,
+          city: address.city,
+          streetName: address.streetName,
+          postalCode: address.postalCode,
+          //isBillingAddress: billingAddressIds.includes(address.id),
+          //isShippingAddress: shippingAddressIds.includes(address.id),
+          isDefaultBilling: address.id === defaultBillingAddressId,
+          isDefaultShipping: address.id === defaultShippingAddressId,
+        };
+        const newAddress = new AddressItem(addressData);
+        this.addressContainer.get().append(newAddress.render());
+      }
     });
+  }
 
-    this.removeAddressButton.get().addEventListener('click', () => {
-      /* Id адреса */
-      api.removeAddressById('O5_3rlAO');
-    });
+  async addNewAddress() {
+    const emptyAddressData: IAddressData = {
+      id: '1',
+      countryCode: profile.countrCodes['United States of America'],
+      city: '',
+      streetName: '',
+      postalCode: '',
+      isDefaultBilling: false,
+      isDefaultShipping: false,
+    };
+    const newAddress = new AddressItem(emptyAddressData);
+    this.addressContainer.get().append(newAddress.render());
+    newAddress.renderEditMode(undefined);
+    newAddress.cancelEdit = function (e: Event | undefined) {
+      e?.preventDefault();
+      newAddress.removeForm();
+    };
 
-    this.changeAddressButton.get().addEventListener('click', () => {
-      const newAddressData = {
-        streetName: '2 22',
-        postalCode: '123123',
-        city: 'Kursk',
-        country: 'RU',
-      };
-
-      api.changeCustomerAddress(newAddressData, 'MhRIdQpW');
-    });
-
-    this.checkDefaultAddressButton.get().addEventListener('click', () => {
-      api.getCustomerById(userState.getUserId() as string).then((data) => {
-        console.log(data?.data.defaultBillingAddressId);
-        console.log(data?.data.defaultShippingAddressId);
-      });
-    });
-
-    this.changeBillingAddressButton.get().addEventListener('click', () => {
-      api.setDefaultBillingAddress('O5_3rlAO');
-    });
-
-    this.changeShippingAddressButton.get().addEventListener('click', () => {
-      api.setDefaultShippingAddress('MhRIdQpW');
-    });
+    newAddress.saveChanges = async function (e: Event | undefined) {
+      e?.preventDefault();
+      if (newAddress.validateForm()) {
+        await newAddress.setDefaultAddresses();
+        await api.addNewCustomerAddress(newAddress.formAddressData());
+        newAddress.renderDisableMode(e);
+      }
+    };
   }
 }
 

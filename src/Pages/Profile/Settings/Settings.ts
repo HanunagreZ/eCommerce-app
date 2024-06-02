@@ -19,24 +19,25 @@ class Settings {
     this.form = document.createElement('form');
     this.form.classList.add('profile__settings-form');
 
-    this.cancelButton = new Button('Cancel', 'personal__edit-button', this.container.get());
+    this.cancelButton = new Button('Cancel', 'addresses__btn', this.container.get());
     this.cancelButton.addListener(() => this.cancelEdit());
-    this.saveButton = new Button('Save', 'personal__edit-button', this.container.get());
+    this.saveButton = new Button('Save', 'addresses__btn', this.container.get());
     this.saveButton.addListener(() => this.saveChanges());
-    this.editButton = new Button('Change password', 'personal__edit-button', this.container.get());
+    this.editButton = new Button('Change password', 'addresses__btn', this.container.get());
     this.editButton.addListener(() => this.renderEditMode());
   }
 
   render(parentElement?: HTMLElement) {
-    new Div('personal__btn-container', this.container.get())
+    new Div('addresses__btn-container', this.container.get())
       .get()
       .append(this.editButton.get(), this.cancelButton.get(), this.saveButton.get());
     this.cancelButton.get().classList.add('hidden');
     this.saveButton.get().classList.add('hidden');
     this.container.get().append(this.form);
     this.addInputs(profile.passwords);
+    this.inputFields.map((el) => el.get().classList.add('hidden'));
     this.updateContent();
-    this.disableInputs();
+    this.removeErrorVisibility();
     if (parentElement) parentElement.append(this.container.get());
   }
 
@@ -47,9 +48,8 @@ class Settings {
     });
   }
 
-  disableInputs() {
+  removeErrorVisibility() {
     this.inputFields.map((el) => {
-      el.input.get().disabled = true;
       el.input.get().classList.remove('error');
       el.clue.get().classList.remove('error');
     });
@@ -68,15 +68,16 @@ class Settings {
     this.editButton.get().classList.add('hidden');
     this.cancelButton.get().classList.remove('hidden');
     this.saveButton.get().classList.remove('hidden');
-    this.inputFields.map((el) => (el.input.get().disabled = false));
+    this.inputFields.map((el) => el.get().classList.remove('hidden'));
   }
 
   cancelEdit() {
     this.editButton.get().classList.remove('hidden');
     this.cancelButton.get().classList.add('hidden');
     this.saveButton.get().classList.add('hidden');
-    this.disableInputs();
+    this.removeErrorVisibility();
     this.updateContent();
+    this.inputFields.map((el) => el.get().classList.add('hidden'));
   }
 
   saveChanges() {
@@ -86,7 +87,8 @@ class Settings {
       this.editButton.get().classList.remove('hidden');
       this.cancelButton.get().classList.add('hidden');
       this.saveButton.get().classList.add('hidden');
-      this.disableInputs();
+      this.inputFields.map((el) => el.get().classList.add('hidden'));
+      this.removeErrorVisibility();
     }
     this.updateContent();
   }

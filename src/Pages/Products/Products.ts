@@ -118,7 +118,6 @@ export default class Catalog {
   async renderPageNavigation(activePage = 1) {
     this.pageNavigation.get().innerHTML = '';
     const productsCount = catalogState.getProductsCount();
-    console.log(productsCount);
     this.pagesCount = Math.ceil(productsCount / ProductsForPage);
     new Img('catalog__pages-prev', './../../assets/icons/iconPrev.svg', 'Back', this.pageNavigation.get());
     for (let i = 1; i <= this.pagesCount; i++) {

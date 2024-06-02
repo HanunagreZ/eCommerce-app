@@ -22,11 +22,11 @@ class Personal {
     this.form = document.createElement('form');
     this.form.classList.add('profile__personal-form');
 
-    this.cancelButton = new Button('Cancel', 'personal__edit-button', this.container.get());
+    this.cancelButton = new Button('Cancel', 'addresses__btn', this.container.get());
     this.cancelButton.addListener(() => this.cancelEdit());
-    this.saveButton = new Button('Save', 'personal__edit-button', this.container.get());
+    this.saveButton = new Button('Save', 'addresses__btn', this.container.get());
     this.saveButton.addListener(() => this.saveChanges());
-    this.editButton = new Button('Edit profile', 'personal__edit-button', this.container.get());
+    this.editButton = new Button('Edit profile', 'addresses__btn', this.container.get());
     this.editButton.addListener(() => this.renderEditMode());
     this.dateOfBirth = new InputField(profile.dateOfBirth.labelText, profile.dateOfBirth.clueText);
   }
@@ -36,7 +36,7 @@ class Personal {
   }
 
   render(parentElement?: HTMLElement) {
-    new Div('personal__btn-container', this.container.get())
+    new Div('addresses__btn-container', this.container.get())
       .get()
       .append(this.editButton.get(), this.cancelButton.get(), this.saveButton.get());
     this.cancelButton.get().classList.add('hidden');

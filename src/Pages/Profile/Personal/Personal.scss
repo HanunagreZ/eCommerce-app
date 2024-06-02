@@ -2,9 +2,11 @@
 
 .profile__personal {
   width: 100%;
+  max-width: 930px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
+  margin-top: 60px;
 }
 
 .profile__personal-form {
@@ -15,8 +17,8 @@
     margin: 5px auto;
     display: flex;
     flex-direction: column;
-    width: 92%;
-    max-width: 473px;
+    width: 80%;
+    max-width: 450px;
     gap: 0;
     font-family: Poppins;
     font-style: Regular;
@@ -24,10 +26,9 @@
   }
 
   .input-field-input {
-    width: 430px;
     height: 45px;
     padding: 1% 2%;
-    background-color: rgba(244, 244, 244);
+    background-color: rgba(255, 255, 255);
     border: 1px solid rgba(102, 102, 102, 0.35);
     border-radius: 12px;
 
@@ -37,6 +38,7 @@
 
     &:disabled {
       color: rgba(102, 102, 102, 0.35);
+      background-color: rgb(244, 244, 244);
       border-color: rgba(102, 102, 102, 0.35);
     }
   }
@@ -56,33 +58,8 @@
   }
 }
 
-.personal__btn-container {
-  display: flex;
-  justify-content: end;
-}
-
-.personal__edit-button {
-  width: 125px;
-  height: 44px;
-  margin: 20px 20px;
-  display: inline;
-
-  font:
-    16px 'Poppins',
-    sans-serif;
-  color: #6e41e2;
-  border: 2px solid #6e41e2;
-  border-radius: 4px;
-  align-self: end;
-  cursor: pointer;
-  transition: 0.3s;
-
-  &:hover {
-    background-color: #6e41e2;
-    color: #fafafa;
-    transition: 0.3s;
-  }
-  &.hidden {
-    display: none;
+@media screen and (max-width: 766px) {
+  .profile__personal {
+    margin: 0;
   }
 }

@@ -14,12 +14,9 @@ export const constants = {
       },
       {
         labelText: 'Password',
-        clueText: 'Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number',
-        //must not contain special character
+        clueText:
+          'Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number, must not contain special characters',
         reg: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-
-        //(?=.*[!@#$%^&*()\-_=+{};:'",.<>?]): Positive lookahead to ensure there is at least one special character
-        // reg: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:'",.<>?])(?!.*\s).{8,}$/,
       },
       {
         labelText: 'First name',
@@ -272,4 +269,20 @@ export const profile = {
       reg: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/,
     },
   ],
+  countries: {
+    US: 'United States of America',
+    CA: 'Canada',
+    RS: 'RS',
+  },
+
+  countrCodes: {
+    'United States of America': 'US',
+    Canada: 'CA',
+    RS: 'RS',
+  },
+
+  addressesTitle: 'Addresses:',
+  defaultBillAdr: 'Default billing address',
+  defaultShipAddr: 'Default shipping address',
+  addNewAddresBtn: 'Add new Address',
 };
