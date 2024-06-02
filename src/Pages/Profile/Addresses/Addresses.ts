@@ -40,8 +40,6 @@ class Addresses {
   async showAddresses() {
     await api.getCustomerById(userState.getUserId() as string).then((data) => {
       const addresses = data?.data.addresses;
-      //const billingAddressIds = data?.data.billingAddressIds;
-      //const shippingAddressIds = data?.data.shippingAddressIds;
       let defaultBillingAddressId = '';
       let defaultShippingAddressId = '';
       if (data?.data.defaultBillingAddressId) defaultBillingAddressId = data?.data.defaultBillingAddressId;
@@ -56,8 +54,6 @@ class Addresses {
           city: address.city,
           streetName: address.streetName,
           postalCode: address.postalCode,
-          //isBillingAddress: billingAddressIds.includes(address.id),
-          //isShippingAddress: shippingAddressIds.includes(address.id),
           isDefaultBilling: address.id === defaultBillingAddressId,
           isDefaultShipping: address.id === defaultShippingAddressId,
         };
