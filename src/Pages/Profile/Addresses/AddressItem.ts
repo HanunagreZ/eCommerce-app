@@ -198,7 +198,7 @@ export class AddressItem {
     }
       addresses.updateContent();
     }
-  }
+  
 
   removeForm() {
     this.form.innerHTML = '';
