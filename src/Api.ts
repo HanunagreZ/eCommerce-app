@@ -116,6 +116,26 @@ class Api {
     }
   }
 
+  async hiddenLogin(payload: ICustomerLogin) {
+    try {
+      const token = userState.getAccessToken();
+      const response = await axios.post(`${process.env.API_URL}/${process.env.PROJECT_KEY}/login`, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      await this.obtainTokens(payload);
+
+      userState.setUserName(response.data.customer.firstName);
+      userState.setUserId(response.data.customer.id);
+      userState.setUserVersion(response.data.customer.version);
+      personal.updateContent();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async isRefreshTokenExist() {
     if (userState.getRefreshToken()) {
       return;
@@ -254,7 +274,7 @@ class Api {
       });
       result = response;
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
     return result;
   }
@@ -293,6 +313,7 @@ class Api {
       );
       userState.setUserVersion(response.data.version);
       userState.setUserName(response.data.firstName);
+      new Modal(modalProps.modalSuccessUpdate);
     } catch (error) {
       console.error(error);
       if (error instanceof AxiosError) {
@@ -306,7 +327,7 @@ class Api {
   async changeCustomerPassword(data: string[]) {
     try {
       const accessToken = userState.getAccessToken();
-      await axios.post(
+      const response = await axios.post(
         `${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/password`,
         {
           id: userState.getUserId(),
@@ -320,6 +341,16 @@ class Api {
           },
         },
       );
+      userState.setUserVersion(response.data.version);
+
+      const payload = {
+        email: response.data.email,
+        password: data[1],
+      };
+
+      await this.getAccessToken();
+      await this.hiddenLogin(payload);
+
       new Modal(modalProps.modalUserChangePasswordSuccess);
     } catch (error) {
       console.error(error);
@@ -332,6 +363,8 @@ class Api {
   }
 
   async addNewCustomerAddress(data: IAddress) {
+    let newAddressId;
+
     try {
       const accessToken = userState.getAccessToken();
       const response = await axios.post(
@@ -375,10 +408,15 @@ class Api {
           },
         },
       );
+      newAddressId = response.data.addresses[response.data.addresses.length - 1].id;
+
       userState.setUserVersion(response.data.version);
+      new Modal(modalProps.modalSuccessNewAddress);
     } catch (error) {
       console.error(error);
     }
+
+    return newAddressId;
   }
 
   async changeCustomerAddress(data: IAddress, id: string) {
@@ -427,6 +465,7 @@ class Api {
         },
       );
       userState.setUserVersion(response.data.version);
+      new Modal(modalProps.modalSuccessUpdate);
     } catch (error) {
       console.error(error);
     }
@@ -453,6 +492,7 @@ class Api {
         },
       );
       userState.setUserVersion(response.data.version);
+      new Modal(modalProps.modalSuccessDelete);
     } catch (error) {
       console.error(error);
     }
