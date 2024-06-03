@@ -248,7 +248,7 @@ export const breadProps = {
     text: ['Funko', 'Catalog', 'Pop!', 'Anime'],
   },
   starwars: {
-    href: ['/', '/catalog', '/catalog/pop', '/catalog/pop/starwars'],
+    href: ['/', '/catalog', '/catalog/pop', '/catalog/pop/star-wars'],
     text: ['Funko', 'Catalog', 'Pop!', 'Star Wars'],
   },
   marvel: {
