@@ -60,15 +60,16 @@ class Router {
 
     if (pathname.includes('/catalog')) {
       /* 😎 костыль 🤙 */
-      window.scrollTo(0, 0);
       const loader = new Loading();
       setTimeout(() => {
+        window.scrollTo(0, 0);
         executeRouting(pathname, this.routes, this.root);
         loader.remove();
       }, 600);
     } else if (
       (pathname === '/login' && userState.getUserName()) ||
-      (pathname === '/registration' && userState.getUserName())
+      (pathname === '/registration' && userState.getUserName()) ||
+      (pathname === '/profile' && !userState.getUserName())
     ) {
       this.navigateTo('/');
     } else {

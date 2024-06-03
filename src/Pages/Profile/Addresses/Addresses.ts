@@ -38,7 +38,7 @@ class Addresses {
   }
 
   async showAddresses() {
-    if (userState.getUserId !== null) {
+    if (userState.getUserId() !== null) {
       await api.getCustomerById(userState.getUserId() as string).then((data) => {
         const addresses = data?.data.addresses;
         let defaultBillingAddressId = '';

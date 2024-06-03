@@ -63,12 +63,13 @@ export interface IProductResponseData {
   name: { [x: string]: string };
 }
 
-export interface ProductInfo {
+export interface IProduct {
+  key?: string;
   category: string;
-  header: string;
-  price: string;
+  name: string;
+  prices: { value: { centAmount: number } }[];
   description: string;
-  imgUrl: string;
+  img: { url: string }[];
 }
 
 export interface Product {
@@ -101,6 +102,37 @@ export interface Product {
   slug: { 'en-US': string };
 }
 
+export interface IProductData {
+  current: {
+    categories: {
+      obj: {
+        name: {
+          'en-US': string;
+        };
+      };
+    }[];
+    description: {
+      'en-US': string;
+    };
+    name: {
+      'en-US': string;
+    };
+    masterVariant: {
+      images: {
+        url: string;
+      }[];
+    };
+  };
+  staged: {
+    masterVariant: {
+      prices: {
+        value: {
+          centAmount: number;
+        };
+      }[];
+    };
+  };
+}
 export interface IMainAdBlockProps {
   containerClass: string;
   image: string;
