@@ -45,9 +45,6 @@ async function getPaths() {
     }
     const productKey = product.key;
     productKeys.push(productKey);
-    if (productKey == 'avatar') {
-      console.log(api.getProductByKey(productKey));
-    }
     const route: IRoute = { path: productPath, component: getProductPageByKey(productKey) };
     newRoutes.push(route);
   });

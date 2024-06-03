@@ -39,7 +39,6 @@ class Router {
     await this.updateRoutes();
     const { pathname } = window.location;
     async function executeRouting(path: string, routes: IRoute[], root: HTMLElement) {
-      console.log('execute');
       const matchedRoute = routes.find((route) => route.path === pathname);
       if (!matchedRoute) {
         const page404 = routes.find((route) => route.path.includes('404'));
@@ -48,7 +47,6 @@ class Router {
           const component = await page404.component;
           root.appendChild(component);
         }
-        console.log('404 RETURN');
         return;
       }
       const { component } = matchedRoute;
