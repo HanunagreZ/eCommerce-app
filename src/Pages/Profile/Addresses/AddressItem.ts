@@ -196,9 +196,8 @@ export class AddressItem {
     ) {
       await api.setDefaultShippingAddress(this.addressData.id);
     }
-      addresses.updateContent();
-    }
-  
+    addresses.updateContent();
+  }
 
   removeForm() {
     this.form.innerHTML = '';
