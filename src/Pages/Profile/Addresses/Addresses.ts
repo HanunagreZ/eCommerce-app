@@ -45,6 +45,7 @@ class Addresses {
         let defaultShippingAddressId = '';
         if (data?.data.defaultBillingAddressId) defaultBillingAddressId = data?.data.defaultBillingAddressId;
         if (data?.data.defaultShippingAddressId) defaultShippingAddressId = data?.data.defaultShippingAddressId;
+        this.addressContainer.get().innerHTML = '';
         for (let i = 0; i < addresses.length; i++) {
           const address = addresses[i];
           const addressData: IAddressData = {
