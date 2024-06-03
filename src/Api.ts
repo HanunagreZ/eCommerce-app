@@ -290,7 +290,7 @@ class Api {
             Authorization: `Bearer ${accessToken}`,
           },
         },
-      );     
+      );
       userState.setUserVersion(response.data.version);
       userState.setUserName(response.data.firstName);
     } catch (error) {

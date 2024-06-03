@@ -68,7 +68,8 @@ class Router {
       }, 600);
     } else if (
       (pathname === '/login' && userState.getUserName()) ||
-      (pathname === '/registration' && userState.getUserName())
+      (pathname === '/registration' && userState.getUserName()) ||
+      (pathname === '/profile' && !userState.getUserName())
     ) {
       this.navigateTo('/');
     } else {
