@@ -67,7 +67,7 @@ export interface IProduct {
   key?: string;
   category: string;
   name: string;
-  prices: { value: { centAmount: number } }[];
+  prices: { discounted: { value: { centAmount: number } }; value: { centAmount: number } };
   description: string;
   img: { url: string }[];
 }
@@ -103,36 +103,36 @@ export interface Product {
 }
 
 export interface IProductData {
-  current: {
-    categories: {
-      obj: {
-        name: {
-          'en-US': string;
-        };
+  categories: {
+    obj: {
+      name: {
+        'en-US': string;
       };
-    }[];
-    description: {
-      'en-US': string;
     };
-    name: {
-      'en-US': string;
-    };
-    masterVariant: {
-      images: {
-        url: string;
-      }[];
-    };
+  }[];
+  description: {
+    'en-US': string;
   };
-  staged: {
-    masterVariant: {
-      prices: {
+  name: {
+    'en-US': string;
+  };
+  masterVariant: {
+    images: {
+      url: string;
+    }[];
+    prices: {
+      value: {
+        centAmount: number;
+      };
+      discounted: {
         value: {
           centAmount: number;
         };
-      }[];
-    };
+      };
+    }[];
   };
 }
+
 export interface IMainAdBlockProps {
   containerClass: string;
   image: string;
