@@ -175,7 +175,7 @@ export const modalProps = {
     description: 'Address deleted',
     btn: 'Back',
     addEvent: () => {
-      router.navigateTo('/profile');
+      //router.navigateTo('/profile');
     },
   },
 };

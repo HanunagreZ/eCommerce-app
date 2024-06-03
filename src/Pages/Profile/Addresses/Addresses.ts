@@ -32,9 +32,9 @@ class Addresses {
     });
   }
 
-  async updateContent() {
+  updateContent() {
     this.addressContainer.get().innerHTML = '';
-    await this.showAddresses();
+    this.showAddresses();
   }
 
   async showAddresses() {
@@ -84,8 +84,9 @@ class Addresses {
     newAddress.saveChanges = async function (e: Event | undefined) {
       e?.preventDefault();
       if (newAddress.validateForm()) {
-        await newAddress.setDefaultAddresses();
-        await api.addNewCustomerAddress(newAddress.formAddressData());
+        const newAddressId = await api.addNewCustomerAddress(newAddress.formAddressData());
+        newAddress.addressData.id = newAddressId;
+        newAddress.setDefaultAddresses();
         newAddress.renderDisableMode(e);
       }
     };
