@@ -155,6 +155,29 @@ export const modalProps = {
       header.renderNav();
     },
   },
+  modalSuccessUpdate: {
+    icon: 'assets/icons/iconSuccess.svg',
+    title: 'Success',
+    description: 'Information updated',
+    btn: 'Back',
+    addEvent: () => {},
+  },
+  modalSuccessNewAddress: {
+    icon: 'assets/icons/iconSuccess.svg',
+    title: 'Success',
+    description: 'Address add',
+    btn: 'Back',
+    addEvent: () => {},
+  },
+  modalSuccessDelete: {
+    icon: 'assets/icons/iconSuccess.svg',
+    title: 'Success',
+    description: 'Address deleted',
+    btn: 'Back',
+    addEvent: () => {
+      router.navigateTo('/profile');
+    },
+  },
 };
 
 export const catalogTitles = {

@@ -254,7 +254,7 @@ class Api {
       });
       result = response;
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
     return result;
   }
@@ -290,9 +290,10 @@ class Api {
             Authorization: `Bearer ${accessToken}`,
           },
         },
-      );     
+      );
       userState.setUserVersion(response.data.version);
       userState.setUserName(response.data.firstName);
+      new Modal(modalProps.modalSuccessUpdate);
     } catch (error) {
       console.error(error);
       if (error instanceof AxiosError) {
@@ -306,7 +307,7 @@ class Api {
   async changeCustomerPassword(data: string[]) {
     try {
       const accessToken = userState.getAccessToken();
-      await axios.post(
+      const response = await axios.post(
         `${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/password`,
         {
           id: userState.getUserId(),
@@ -320,6 +321,7 @@ class Api {
           },
         },
       );
+      userState.setUserVersion(response.data.version);
       new Modal(modalProps.modalUserChangePasswordSuccess);
     } catch (error) {
       console.error(error);
@@ -376,6 +378,7 @@ class Api {
         },
       );
       userState.setUserVersion(response.data.version);
+      new Modal(modalProps.modalSuccessNewAddress);
     } catch (error) {
       console.error(error);
     }
@@ -427,6 +430,7 @@ class Api {
         },
       );
       userState.setUserVersion(response.data.version);
+      new Modal(modalProps.modalSuccessUpdate);
     } catch (error) {
       console.error(error);
     }
@@ -453,6 +457,7 @@ class Api {
         },
       );
       userState.setUserVersion(response.data.version);
+      new Modal(modalProps.modalSuccessDelete);
     } catch (error) {
       console.error(error);
     }
