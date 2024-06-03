@@ -45,7 +45,7 @@ export default class Catalog {
       } else if (field === 'accessories') {
         router.navigateTo('catalog/accessories');
       } else {
-        router.navigateTo(`catalog/pop${field}`);
+        router.navigateTo(`catalog/pop/${field}`);
       }
       await this.renderFilterSearch();
     });
