@@ -116,6 +116,7 @@ export class AddressItem {
 
   renderEditMode(e: Event | undefined) {
     e?.preventDefault();
+    this.addressFields.changePostalCode();
     this.editButton.get().classList.add('hidden');
     this.removeButton.get().classList.add('hidden');
 
