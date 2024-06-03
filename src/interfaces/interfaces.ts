@@ -55,12 +55,34 @@ export interface IProductCard {
 export interface IProductResponseData {
   productType: { id: string };
   key: string;
-  masterVariant: {
-    prices: { discounted: { value: { centAmount: number } }; value: { centAmount: number } }[];
-    images: { url: string }[];
+  categories: {
+    obj: {
+      name: {
+        'en-US': string;
+      };
+    };
+  }[];
+  description: {
+    'en-US': string;
   };
-  categories: { id: string }[];
-  name: { [x: string]: string };
+  name: {
+    'en-US': string;
+  };
+  masterVariant: {
+    images: {
+      url: string;
+    }[];
+    prices: {
+      value: {
+        centAmount: number;
+      };
+      discounted: {
+        value: {
+          centAmount: number;
+        };
+      };
+    }[];
+  };
 }
 
 export interface IProduct {

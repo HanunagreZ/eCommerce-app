@@ -192,7 +192,7 @@ class Api {
     try {
       const accessToken = userState.getAccessToken();
       const response = await axios.get(
-        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections/search?${filter}&${sorting}&limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections/search?${filter}&${sorting}&limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}&expand=categories[*].ancestors[*]`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,

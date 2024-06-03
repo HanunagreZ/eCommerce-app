@@ -4,11 +4,6 @@ import { IProductCard, IProductResponseData } from '../interfaces/interfaces';
 
 export class CatalogState {
   public productsCount = 0;
-  private categories = [];
-
-  async getCategories() {
-    this.categories = await api.getAllCategories();
-  }
 
   getProductsCount() {
     return this.productsCount;
@@ -17,14 +12,13 @@ export class CatalogState {
   async getSelectedData(page: number, filter: string, sorting: string) {
     const data = await api.getSelectedProducts(page, filter, sorting);
     const products = data.results;
-    console.log(data);
     this.productsCount = data.total;
     const productsData: IProductCard[] = products.map((el: IProductResponseData) => {
       return {
         productType: this.setProductType(el),
         key: el.key,
         imgSrc: el.masterVariant.images[0].url,
-        category: this.setCategoryName(el),
+        category: el.categories[0].obj.name['en-US'],
         name: el.name['en-US' as keyof typeof el.name],
         price: el.masterVariant.prices[0].value.centAmount,
 
@@ -41,18 +35,7 @@ export class CatalogState {
     const result = Object.entries(productTypeID).find((type) => type[1] === product.productType.id);
     return result ? result[0] : '';
   }
-
-  setCategoryName(product: IProductResponseData): string {
-    let categoryName = '';
-    this.categories.forEach((categoryItem: { id: string; name: { [x: string]: string } }) => {
-      if (categoryItem.id === product.categories[0].id) {
-        categoryName = categoryItem.name['en-US' as keyof typeof categoryItem.name];
-      }
-    });
-    return categoryName;
-  }
 }
 
 const catalogState = new CatalogState();
-catalogState.getCategories();
 export default catalogState;
