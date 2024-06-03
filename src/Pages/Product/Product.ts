@@ -2,6 +2,7 @@ import './Product.scss';
 import Div from '../../ui-components/Div/Div';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import addModal from './modal';
+import addBreadcrumbs from './addBreadCrumbs';
 
 interface IProduct {
   category: string;
@@ -9,22 +10,6 @@ interface IProduct {
   prices: { value: { centAmount: number } }[];
   description: string;
   img: { url: string }[];
-}
-
-function addBreadcrumbs(category: string) {
-  const hrefs = ['/', 'catalog'];
-  const text = ['Funko', 'Catalog'];
-  if (category === 'Accessories') {
-    hrefs.push('catalog/accessories');
-    text.push('Accessories');
-  } else {
-    hrefs.push('catalog/pop');
-    hrefs.push('catalog/pop/' + category.toLowerCase());
-    text.push('Pop');
-    const categ = category[0].toUpperCase() + category.slice(1, category.length);
-    text.push(categ);
-  }
-  return { hrefs, text };
 }
 
 export default class ProductPage {
