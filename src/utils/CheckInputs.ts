@@ -1,5 +1,5 @@
 import InputField from '../components/InputField/InputField';
-import { registrationError } from '../pages/Registration/Registration';
+import { registrationError } from '../Pages/Registration/Registration';
 
 export function CheckInputs(inputFields: InputField[]): boolean {
   let isAllValid = true;

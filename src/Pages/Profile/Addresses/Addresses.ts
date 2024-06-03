@@ -32,35 +32,35 @@ class Addresses {
     });
   }
 
-  async updateContent() {
+  updateContent() {
     this.addressContainer.get().innerHTML = '';
-    await this.showAddresses();
+    this.showAddresses();
   }
 
   async showAddresses() {
-    await api.getCustomerById(userState.getUserId() as string).then((data) => {
-      const addresses = data?.data.addresses;
-      let defaultBillingAddressId = '';
-      let defaultShippingAddressId = '';
-      if (data?.data.defaultBillingAddressId) defaultBillingAddressId = data?.data.defaultBillingAddressId;
-      if (data?.data.defaultShippingAddressId) defaultShippingAddressId = data?.data.defaultShippingAddressId;
-
-      for (let i = 0; i < addresses.length; i++) {
-        const address = addresses[i];
-
-        const addressData: IAddressData = {
-          id: address.id,
-          countryCode: address.country,
-          city: address.city,
-          streetName: address.streetName,
-          postalCode: address.postalCode,
-          isDefaultBilling: address.id === defaultBillingAddressId,
-          isDefaultShipping: address.id === defaultShippingAddressId,
-        };
-        const newAddress = new AddressItem(addressData);
-        this.addressContainer.get().append(newAddress.render());
-      }
-    });
+    if (userState.getUserId() !== null) {
+      await api.getCustomerById(userState.getUserId() as string).then((data) => {
+        const addresses = data?.data.addresses;
+        let defaultBillingAddressId = '';
+        let defaultShippingAddressId = '';
+        if (data?.data.defaultBillingAddressId) defaultBillingAddressId = data?.data.defaultBillingAddressId;
+        if (data?.data.defaultShippingAddressId) defaultShippingAddressId = data?.data.defaultShippingAddressId;
+        for (let i = 0; i < addresses.length; i++) {
+          const address = addresses[i];
+          const addressData: IAddressData = {
+            id: address.id,
+            countryCode: address.country,
+            city: address.city,
+            streetName: address.streetName,
+            postalCode: address.postalCode,
+            isDefaultBilling: address.id === defaultBillingAddressId,
+            isDefaultShipping: address.id === defaultShippingAddressId,
+          };
+          const newAddress = new AddressItem(addressData);
+          this.addressContainer.get().append(newAddress.render());
+        }
+      });
+    }
   }
 
   async addNewAddress() {
@@ -84,8 +84,9 @@ class Addresses {
     newAddress.saveChanges = async function (e: Event | undefined) {
       e?.preventDefault();
       if (newAddress.validateForm()) {
-        await newAddress.setDefaultAddresses();
-        await api.addNewCustomerAddress(newAddress.formAddressData());
+        const newAddressId = await api.addNewCustomerAddress(newAddress.formAddressData());
+        newAddress.addressData.id = newAddressId;
+        newAddress.setDefaultAddresses();
         newAddress.renderDisableMode(e);
       }
     };

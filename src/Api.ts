@@ -116,6 +116,26 @@ class Api {
     }
   }
 
+  async hiddenLogin(payload: ICustomerLogin) {
+    try {
+      const token = userState.getAccessToken();
+      const response = await axios.post(`${process.env.API_URL}/${process.env.PROJECT_KEY}/login`, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      await this.obtainTokens(payload);
+
+      userState.setUserName(response.data.customer.firstName);
+      userState.setUserId(response.data.customer.id);
+      userState.setUserVersion(response.data.customer.version);
+      personal.updateContent();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async isRefreshTokenExist() {
     if (userState.getRefreshToken()) {
       return;
@@ -168,11 +188,13 @@ class Api {
   }
 
   async getSelectedProducts(page: number, filter: string, sorting: string) {
+    await this.getAccessToken();
+    await this.isRefreshTokenExist();
     let result;
     try {
       const accessToken = userState.getAccessToken();
       const response = await axios.get(
-        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections/search?${filter}&${sorting}&limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections/search?${filter}&${sorting}&limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}&expand=categories[*].ancestors[*]`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -224,6 +246,8 @@ class Api {
   }
 
   async getExtendedProducts() {
+    await this.getAccessToken();
+    await this.isRefreshTokenExist();
     let result;
     try {
       const accessToken = userState.getAccessToken();
@@ -254,7 +278,7 @@ class Api {
       });
       result = response;
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
     return result;
   }
@@ -290,9 +314,10 @@ class Api {
             Authorization: `Bearer ${accessToken}`,
           },
         },
-      );     
+      );
       userState.setUserVersion(response.data.version);
       userState.setUserName(response.data.firstName);
+      new Modal(modalProps.modalSuccessUpdate);
     } catch (error) {
       console.error(error);
       if (error instanceof AxiosError) {
@@ -306,7 +331,7 @@ class Api {
   async changeCustomerPassword(data: string[]) {
     try {
       const accessToken = userState.getAccessToken();
-      await axios.post(
+      const response = await axios.post(
         `${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/password`,
         {
           id: userState.getUserId(),
@@ -320,6 +345,16 @@ class Api {
           },
         },
       );
+      userState.setUserVersion(response.data.version);
+
+      const payload = {
+        email: response.data.email,
+        password: data[1],
+      };
+
+      await this.getAccessToken();
+      await this.hiddenLogin(payload);
+
       new Modal(modalProps.modalUserChangePasswordSuccess);
     } catch (error) {
       console.error(error);
@@ -332,6 +367,8 @@ class Api {
   }
 
   async addNewCustomerAddress(data: IAddress) {
+    let newAddressId;
+
     try {
       const accessToken = userState.getAccessToken();
       const response = await axios.post(
@@ -375,10 +412,15 @@ class Api {
           },
         },
       );
+      newAddressId = response.data.addresses[response.data.addresses.length - 1].id;
+
       userState.setUserVersion(response.data.version);
+      new Modal(modalProps.modalSuccessNewAddress);
     } catch (error) {
       console.error(error);
     }
+
+    return newAddressId;
   }
 
   async changeCustomerAddress(data: IAddress, id: string) {
@@ -427,6 +469,7 @@ class Api {
         },
       );
       userState.setUserVersion(response.data.version);
+      new Modal(modalProps.modalSuccessUpdate);
     } catch (error) {
       console.error(error);
     }
@@ -453,6 +496,7 @@ class Api {
         },
       );
       userState.setUserVersion(response.data.version);
+      new Modal(modalProps.modalSuccessDelete);
     } catch (error) {
       console.error(error);
     }
@@ -515,7 +559,26 @@ class Api {
     try {
       const accessToken = userState.getAccessToken();
       const response = await axios.get(
-        `${process.env.API_URL}/${process.env.PROJECT_KEY}/products/key=${key}?expand=masterData.current.categories[*].obj`,
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/products/key=${key}?expand=masterData.current.categories[*].obj&expand=masterData.current.masterVariant.prices[*].discountedPrice`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      result = response.data.masterData.current;
+      // console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+    return result;
+  }
+  async getProductDiscountByKey(key: string) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/{projectKey}/product-discounts/key=${key}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,

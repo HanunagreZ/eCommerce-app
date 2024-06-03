@@ -1,61 +1,7 @@
 import api from '../Api';
-import ProductPage from '../Pages/Product/Product';
 import { IRoute } from '../interfaces/interfaces';
 import { Product } from '../interfaces/interfaces';
-
-interface IProductData {
-  current: {
-    categories: {
-      obj: {
-        name: {
-          'en-US': string;
-        };
-      };
-    }[];
-    description: {
-      'en-US': string;
-    };
-    name: {
-      'en-US': string;
-    };
-    masterVariant: {
-      images: {
-        url: string;
-      }[];
-    };
-  };
-  staged: {
-    masterVariant: {
-      prices: {
-        value: {
-          centAmount: number;
-        };
-      }[];
-    };
-  };
-}
-
-interface IProduct {
-  key?: string;
-  category: string;
-  name: string;
-  prices: { value: { centAmount: number } }[];
-  description: string;
-  img: { url: string }[];
-}
-
-async function getProductPageByKey(productKey: string) {
-  const singleProductInfo: IProductData = await api.getProductByKey(productKey);
-  const productInfo: IProduct = {
-    category: singleProductInfo.current.categories[0].obj.name['en-US'],
-    name: singleProductInfo.current.name['en-US'],
-    prices: singleProductInfo.staged.masterVariant.prices,
-    description: singleProductInfo.current.description['en-US'],
-    img: singleProductInfo.current.masterVariant.images,
-  };
-  const page = new ProductPage(productInfo).render();
-  return page;
-}
+import getProductPageByKey from './getProductPageByKey';
 
 async function getPaths() {
   const newRoutes: IRoute[] = [];
@@ -64,7 +10,7 @@ async function getPaths() {
   const subCategoryPaths: string[] = [];
   const productKeys: string[] = [];
 
-  info.forEach((product: Product) => {
+  await info.forEach((product: Product) => {
     let productPath = '';
     let subCategory = '';
     let category = '';

@@ -18,7 +18,7 @@ export class AddressItem {
   private cancelButton: Button;
   private saveButton: Button;
   private addressFields: Address;
-  private addressData: IAddressData;
+  public addressData: IAddressData;
 
   constructor(addressData: IAddressData) {
     this.form = document.createElement('form');
@@ -155,6 +155,7 @@ export class AddressItem {
       await api.changeCustomerAddress(newAddressData, this.addressData.id);
 
       this.renderDisableMode(e);
+      await addresses.updateContent();
     }
   }
 

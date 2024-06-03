@@ -2,31 +2,9 @@ import './Product.scss';
 import Div from '../../ui-components/Div/Div';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import addModal from './modal';
-
-interface IProduct {
-  category: string;
-  name: string;
-  prices: { value: { centAmount: number } }[];
-  description: string;
-  img: { url: string }[];
-}
-
-function addBreadcrumbs(category: string) {
-  const hrefs = ['/', 'catalog'];
-  const text = ['Funko', 'Catalog'];
-  if (category === 'Accessories') {
-    hrefs.push('catalog/accessories');
-    text.push('Accessories');
-  } else {
-    hrefs.push('catalog/pop');
-    hrefs.push('catalog/pop/' + category.toLowerCase());
-    text.push('Pop');
-    const categ = category[0].toUpperCase() + category.slice(1, category.length);
-    text.push(categ);
-  }
-  return { hrefs, text };
-}
-
+import addBreadcrumbs from './addBreadCrumbs';
+import createPriceElement from './createPriceElement';
+import { IProduct } from '../../interfaces/interfaces';
 export default class ProductPage {
   private pageContainer: Div;
   private container: HTMLDivElement;
@@ -58,20 +36,17 @@ export default class ProductPage {
     //Prices
     this.priceContainer = new Div('price__container');
     const pricesElements: HTMLHeadingElement[] = [];
-    productInfo.prices.forEach((price) => {
-      const priceElement = document.createElement('h3');
-      const priceCents = price.value.centAmount;
-      const cents = priceCents % 100 === 0 ? '.00' : '.' + (priceCents % 100).toString();
-      const priceInDollars = '$' + (priceCents / 100).toString() + cents;
-      priceElement.textContent = priceInDollars;
-      pricesElements.push(priceElement);
-    });
-    if (productInfo.prices.length > 1) {
+    //Add Price
+    const priceElement = createPriceElement(productInfo.prices.value.centAmount, 'price');
+    pricesElements.push(priceElement);
+    //Add discount if exist
+    if (productInfo.prices.discounted) {
       const saleBlock = document.createElement('h3');
       saleBlock.classList.add('product__sale');
       saleBlock.textContent = 'SALE';
-      pricesElements[0].classList.add('price__sale');
-      pricesElements[1].classList.add('price__discount');
+      priceElement.classList.add('price__sale');
+      const discountPrice = createPriceElement(productInfo.prices.discounted.value.centAmount, 'price__discount');
+      pricesElements.push(discountPrice);
       this.priceContainer.get().append(saleBlock, pricesElements[0], pricesElements[1]);
     } else {
       this.priceContainer.get().append(pricesElements[0]);

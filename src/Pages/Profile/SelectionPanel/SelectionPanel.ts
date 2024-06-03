@@ -99,6 +99,8 @@ class SelectionPanel {
       this.settingsDiv.get().classList.remove('profile__settings-div_active');
 
       parentElement.replaceChild(addresses.get(), parentElement.childNodes[1]);
+
+      addresses.updateContent();
     });
 
     this.settingsDiv.get().addEventListener('click', () => {

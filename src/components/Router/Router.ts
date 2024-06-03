@@ -2,6 +2,7 @@ import { IRoute } from '../../interfaces/interfaces';
 import userState from '../../states/UserState';
 import Loading from '../Loading/Loading';
 import getPaths from '../../api/getPaths';
+import api from '../../Api';
 // import Loading from '../Loading/Loading';
 // import app from '../App';
 
@@ -10,11 +11,11 @@ class Router {
   private routes: IRoute[];
 
   constructor(root: HTMLElement, routeList: IRoute[]) {
+    this.updateRoutes();
     this.root = root;
     this.routes = routeList;
     window.addEventListener('popstate', this.route.bind(this));
     this.handleLinkClicks();
-    this.updateRoutes();
     this.route();
   }
 
@@ -26,8 +27,8 @@ class Router {
     if (!this.routes.includes(route)) this.routes.push(route);
   }
 
-  private async updateRoutes() {
-    getPaths().then((data) =>
+  public async updateRoutes() {
+    await getPaths().then((data) =>
       data.forEach((route) => {
         this.addRoute(route);
       }),
@@ -35,10 +36,9 @@ class Router {
   }
 
   private async route() {
-    await this.updateRoutes();
+    await api.isRefreshTokenExist();
     const { pathname } = window.location;
     async function executeRouting(path: string, routes: IRoute[], root: HTMLElement) {
-      console.log('execute');
       const matchedRoute = routes.find((route) => route.path === pathname);
       if (!matchedRoute) {
         const page404 = routes.find((route) => route.path.includes('404'));
@@ -47,7 +47,6 @@ class Router {
           const component = await page404.component;
           root.appendChild(component);
         }
-        console.log('404 RETURN');
         return;
       }
       const { component } = matchedRoute;
@@ -59,15 +58,26 @@ class Router {
 
     if (pathname.includes('/catalog')) {
       /* 😎 костыль 🤙 */
+      // window.scrollTo(0, 0);
+      // const loader = new Loading();
+      // setTimeout(() => {
+      //   this.updateRoutes();
+      //   executeRouting(pathname, this.routes, this.root);
+      //   loader.remove();
+      // }, 1000);
       window.scrollTo(0, 0);
       const loader = new Loading();
-      setTimeout(() => {
+      const asyncFn = async () => {
+        await api.getAccessToken();
+        await this.updateRoutes();
         executeRouting(pathname, this.routes, this.root);
         loader.remove();
-      }, 600);
+      };
+      asyncFn();
     } else if (
       (pathname === '/login' && userState.getUserName()) ||
-      (pathname === '/registration' && userState.getUserName())
+      (pathname === '/registration' && userState.getUserName()) ||
+      (pathname === '/profile' && !userState.getUserName())
     ) {
       this.navigateTo('/');
     } else {

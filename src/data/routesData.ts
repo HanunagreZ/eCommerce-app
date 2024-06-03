@@ -1,9 +1,8 @@
 import { IRoute } from '../interfaces/interfaces';
-import Page404 from '../pages/404/404';
+import Page404 from '../Pages/404/404';
 import MainPage from '../Pages/Main/Main';
-//import ProductsPage from '../../pages/Products/Products';
-import Login from '../pages/Login/Login';
-import Registration from '../pages/Registration/Registration';
+import Login from '../Pages/Login/Login';
+import Registration from '../Pages/Registration/Registration';
 import {
   popCatalog,
   marvelCatalog,
@@ -27,7 +26,7 @@ export const routes: IRoute[] = [
   { path: '/catalog/accessories', component: accessoriesCatalog },
   { path: '/catalog/pop/marvel', component: marvelCatalog },
   { path: '/catalog/pop/anime', component: animeCatalog },
-  { path: '/catalog/pop/starwars', component: starWarsCatalog },
+  { path: '/catalog/pop/star-wars', component: starWarsCatalog },
   { path: '/profile', component: new Profile().render() },
   // { path: '/products[id]', component: '<h1>Single Product Page</h1>' },
 

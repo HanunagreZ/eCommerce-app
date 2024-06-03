@@ -55,20 +55,43 @@ export interface IProductCard {
 export interface IProductResponseData {
   productType: { id: string };
   key: string;
-  masterVariant: {
-    prices: { discounted: { value: { centAmount: number } }; value: { centAmount: number } }[];
-    images: { url: string }[];
+  categories: {
+    obj: {
+      name: {
+        'en-US': string;
+      };
+    };
+  }[];
+  description: {
+    'en-US': string;
   };
-  categories: { id: string }[];
-  name: { [x: string]: string };
+  name: {
+    'en-US': string;
+  };
+  masterVariant: {
+    images: {
+      url: string;
+    }[];
+    prices: {
+      value: {
+        centAmount: number;
+      };
+      discounted: {
+        value: {
+          centAmount: number;
+        };
+      };
+    }[];
+  };
 }
 
-export interface ProductInfo {
+export interface IProduct {
+  key?: string;
   category: string;
-  header: string;
-  price: string;
+  name: string;
+  prices: { discounted: { value: { centAmount: number } }; value: { centAmount: number } };
   description: string;
-  imgUrl: string;
+  img: { url: string }[];
 }
 
 export interface Product {
@@ -99,6 +122,37 @@ export interface Product {
   name: { 'en-US': string };
   description: { 'en-US': string };
   slug: { 'en-US': string };
+}
+
+export interface IProductData {
+  categories: {
+    obj: {
+      name: {
+        'en-US': string;
+      };
+    };
+  }[];
+  description: {
+    'en-US': string;
+  };
+  name: {
+    'en-US': string;
+  };
+  masterVariant: {
+    images: {
+      url: string;
+    }[];
+    prices: {
+      value: {
+        centAmount: number;
+      };
+      discounted: {
+        value: {
+          centAmount: number;
+        };
+      };
+    }[];
+  };
 }
 
 export interface IMainAdBlockProps {

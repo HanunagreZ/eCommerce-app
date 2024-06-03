@@ -155,6 +155,29 @@ export const modalProps = {
       header.renderNav();
     },
   },
+  modalSuccessUpdate: {
+    icon: 'assets/icons/iconSuccess.svg',
+    title: 'Success',
+    description: 'Information updated',
+    btn: 'Back',
+    addEvent: () => {},
+  },
+  modalSuccessNewAddress: {
+    icon: 'assets/icons/iconSuccess.svg',
+    title: 'Success',
+    description: 'Address add',
+    btn: 'Back',
+    addEvent: () => {},
+  },
+  modalSuccessDelete: {
+    icon: 'assets/icons/iconSuccess.svg',
+    title: 'Success',
+    description: 'Address deleted',
+    btn: 'Back',
+    addEvent: () => {
+      //router.navigateTo('/profile');
+    },
+  },
 };
 
 export const catalogTitles = {
@@ -190,7 +213,7 @@ export const mainAdBlock = {
     description: 'Welcome This Exclusive Inu to Take Her Rightful Place in Your Inuyasha Collection.',
     btn: 'See collection',
     addEvent: () => {
-      router.navigateTo('/catalog/pop/starwars');
+      router.navigateTo('/catalog/pop/star-wars');
     },
   },
   anime: {
@@ -225,7 +248,7 @@ export const breadProps = {
     text: ['Funko', 'Catalog', 'Pop!', 'Anime'],
   },
   starwars: {
-    href: ['/', '/catalog', '/catalog/pop', '/catalog/pop/starwars'],
+    href: ['/', '/catalog', '/catalog/pop', '/catalog/pop/star-wars'],
     text: ['Funko', 'Catalog', 'Pop!', 'Star Wars'],
   },
   marvel: {
