@@ -213,7 +213,7 @@ export const mainAdBlock = {
     description: 'Welcome This Exclusive Inu to Take Her Rightful Place in Your Inuyasha Collection.',
     btn: 'See collection',
     addEvent: () => {
-      router.navigateTo('/catalog/pop/starwars');
+      router.navigateTo('/catalog/pop/star-wars');
     },
   },
   anime: {
