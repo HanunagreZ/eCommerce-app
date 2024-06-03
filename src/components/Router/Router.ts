@@ -1,5 +1,9 @@
 import { IRoute } from '../../interfaces/interfaces';
 import userState from '../../states/UserState';
+import Loading from '../Loading/Loading';
+import getPaths from '../../api/getPaths';
+import api from '../../Api';
+// import Loading from '../Loading/Loading';
 // import app from '../App';
 
 class Router {
@@ -7,34 +11,84 @@ class Router {
   private routes: IRoute[];
 
   constructor(root: HTMLElement, routeList: IRoute[]) {
+    this.updateRoutes();
     this.root = root;
     this.routes = routeList;
     window.addEventListener('popstate', this.route.bind(this));
-    this.route();
     this.handleLinkClicks();
+    this.route();
   }
 
-  private route() {
+  public getRotes() {
+    return this.routes;
+  }
+
+  public addRoute(route: IRoute) {
+    if (!this.routes.includes(route)) this.routes.push(route);
+  }
+
+  public async updateRoutes() {
+    await getPaths().then((data) =>
+      data.forEach((route) => {
+        this.addRoute(route);
+      }),
+    );
+  }
+
+  private async route() {
+    await api.isRefreshTokenExist();
     const { pathname } = window.location;
-    const matchedRoute = this.routes.find((route) => route.path === pathname);
-    if (!matchedRoute) {
-      // this.navigateTo('/404');
-      const page404 = this.routes.find((route) => route.path.includes('404'));
-      if (page404) {
-        this.root.innerHTML = '';
-        this.root.appendChild(page404.component);
+    async function executeRouting(path: string, routes: IRoute[], root: HTMLElement) {
+      const matchedRoute = routes.find((route) => route.path === pathname);
+      if (!matchedRoute) {
+        const page404 = routes.find((route) => route.path.includes('404'));
+        if (page404) {
+          root.innerHTML = '';
+          const component = await page404.component;
+          root.appendChild(component);
+        }
+        return;
       }
-      return;
+      const { component } = matchedRoute;
+
+      root.innerHTML = '';
+      const resolvedComponent = await component;
+      root.appendChild(resolvedComponent);
     }
-    const { component } = matchedRoute;
-    this.root.innerHTML = '';
-    this.root.appendChild(component);
-    if (
+
+    if (pathname.includes('/catalog')) {
+      /* 😎 костыль 🤙 */
+      // window.scrollTo(0, 0);
+      // const loader = new Loading();
+      // setTimeout(() => {
+      //   this.updateRoutes();
+      //   executeRouting(pathname, this.routes, this.root);
+      //   loader.remove();
+      // }, 1000);
+      window.scrollTo(0, 0);
+      const loader = new Loading();
+      const asyncFn = async () => {
+        await api.getAccessToken();
+        await this.updateRoutes();
+        executeRouting(pathname, this.routes, this.root);
+        loader.remove();
+      };
+      asyncFn();
+    } else if (
       (pathname === '/login' && userState.getUserName()) ||
-      (pathname === '/registration' && userState.getUserName())
+      (pathname === '/registration' && userState.getUserName()) ||
+      (pathname === '/profile' && !userState.getUserName())
     ) {
       this.navigateTo('/');
+    } else {
+      executeRouting(pathname, this.routes, this.root);
     }
+    //   window.scrollTo(0, 0);
+    //   const loader = await new Loading();
+
+    //   await executeRouting();
+    //   loader.remove();
+    // }
   }
 
   public navigateTo(path: string) {
@@ -43,6 +97,7 @@ class Router {
       this.route();
     }
   }
+
   private handleLinkClicks() {
     document.addEventListener('click', (event) => {
       const target = event.target as HTMLElement;

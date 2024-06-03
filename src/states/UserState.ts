@@ -1,4 +1,10 @@
 class UserState {
+  private userData: string;
+
+  constructor() {
+    this.userData = '';
+  }
+
   setAccessToken(data: string) {
     localStorage.setItem('accessToken', data);
   }
@@ -32,10 +38,39 @@ class UserState {
     this.removeAccessToken();
     this.removeRefreshToken();
     this.removeUserName();
+    this.removeUserId();
+    this.removeUserVersion();
   }
   getCookie(name: string): string | null {
     const cookie = document.cookie.split('; ').find((el) => el.startsWith(name + '='));
     return cookie ? cookie.split('=')[1] : null;
+  }
+
+  /* Добавил в рамках реализации профиля пользователя */
+  setUserId(data: string) {
+    localStorage.setItem('userId', data);
+  }
+
+  getUserId(): string | null {
+    const userId = localStorage.getItem('userId');
+    return userId;
+  }
+
+  removeUserId() {
+    localStorage.removeItem('userId');
+  }
+
+  setUserVersion(data: string) {
+    localStorage.setItem('userVersion', data);
+  }
+
+  getUserVersion(): number | null {
+    const userVersion = localStorage.getItem('userVersion');
+    return userVersion ? parseInt(userVersion) : null;
+  }
+
+  removeUserVersion() {
+    localStorage.removeItem('userVersion');
   }
 }
 

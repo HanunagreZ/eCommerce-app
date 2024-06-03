@@ -1,12 +1,14 @@
 import axios, { AxiosError } from 'axios';
-import { ICustomerRegistration, ICustomerLogin } from './interfaces/interfaces';
-import Modal from './components/modal/Modal';
+import { ICustomerRegistration, ICustomerLogin, IPersonalData, IAddress } from './interfaces/interfaces';
+import Modal from './components/Modal/Modal';
 import { modalProps } from './data/data';
 import userState from './states/UserState';
 import Loading from './components/Loading/Loading';
+import personal from './Pages/Profile/Personal/Personal';
 
 import router from '.';
 import header from './components/Header/Header';
+import { ProductsForPage } from './data/constants';
 
 class Api {
   async getAccessToken() {
@@ -16,7 +18,7 @@ class Api {
         {},
         {
           headers: {
-            Authorization: 'Basic MnB2RWxuSk9OVzJfbWQyM0hrekJiNnYtOkhUTW9Vc1g2LTg3RmhnZ0ViMTFoRDE1bVdjYnZzWUNl',
+            Authorization: 'Basic V05TYU9QOUtJVlhhenVyNEFzRnhfeHdvOm1nSk1idTc2QXFSb05KZUE5MGVxQWo4ZHMzQlVKSWN4',
           },
         },
       );
@@ -36,7 +38,7 @@ class Api {
         {},
         {
           headers: {
-            Authorization: 'Basic MnB2RWxuSk9OVzJfbWQyM0hrekJiNnYtOkhUTW9Vc1g2LTg3RmhnZ0ViMTFoRDE1bVdjYnZzWUNl',
+            Authorization: 'Basic V05TYU9QOUtJVlhhenVyNEFzRnhfeHdvOm1nSk1idTc2QXFSb05KZUE5MGVxQWo4ZHMzQlVKSWN4',
           },
         },
       );
@@ -60,6 +62,10 @@ class Api {
         },
       });
       userState.setUserName(response.data.customer.firstName);
+      userState.setUserId(response.data.customer.id);
+      userState.setUserVersion(response.data.customer.version);
+      personal.updateContent();
+
       loading.remove();
       new Modal(modalProps.modalSuccess);
 
@@ -91,7 +97,11 @@ class Api {
       });
 
       await this.obtainTokens(payload);
+
       userState.setUserName(response.data.customer.firstName);
+      userState.setUserId(response.data.customer.id);
+      userState.setUserVersion(response.data.customer.version);
+      personal.updateContent();
       loading.remove();
       header.renderNav();
       router.navigateTo('/');
@@ -106,6 +116,26 @@ class Api {
     }
   }
 
+  async hiddenLogin(payload: ICustomerLogin) {
+    try {
+      const token = userState.getAccessToken();
+      const response = await axios.post(`${process.env.API_URL}/${process.env.PROJECT_KEY}/login`, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      await this.obtainTokens(payload);
+
+      userState.setUserName(response.data.customer.firstName);
+      userState.setUserId(response.data.customer.id);
+      userState.setUserVersion(response.data.customer.version);
+      personal.updateContent();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async isRefreshTokenExist() {
     if (userState.getRefreshToken()) {
       return;
@@ -114,7 +144,456 @@ class Api {
       userState.removeUserName();
     }
   }
+
+  async queryProducts() {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=100`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      result = response.data.results;
+    } catch (error) {
+      console.error(error);
+      result = error;
+      console.log(error);
+    }
+    return result;
+  }
+
+  async getProductsForPage(page = 1) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
+
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+      console.log(error);
+    }
+    return result;
+  }
+
+  async getSelectedProducts(page: number, filter: string, sorting: string) {
+    await this.getAccessToken();
+    await this.isRefreshTokenExist();
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections/search?${filter}&${sorting}&limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}&expand=categories[*].ancestors[*]`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+      console.log(error);
+    }
+    return result;
+  }
+
+  async getAllCategories() {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/categories`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      result = response.data.results;
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  async getCategory(id: string) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/categories/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      result = response.data.name['en-US' as keyof typeof response.data.name];
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  async getExtendedProducts() {
+    await this.getAccessToken();
+    await this.isRefreshTokenExist();
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections?limit=200&expand=categories[*].ancestors[*]`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      result = response.data.results;
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  async getCustomerById(id: string) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      result = response;
+    } catch (error) {
+      console.log(error);
+    }
+    return result;
+  }
+
+  async changeCustomerPersonalData(data: IPersonalData) {
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/${userState.getUserId()}`,
+        {
+          version: userState.getUserVersion(),
+          actions: [
+            {
+              action: 'setFirstName',
+              firstName: data.firstName,
+            },
+            {
+              action: 'setLastName',
+              lastName: data.lastName,
+            },
+            {
+              action: 'setDateOfBirth',
+              dateOfBirth: data.dateOfBirth,
+            },
+            {
+              action: 'changeEmail',
+              email: data.email,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      userState.setUserVersion(response.data.version);
+      userState.setUserName(response.data.firstName);
+      new Modal(modalProps.modalSuccessUpdate);
+    } catch (error) {
+      console.error(error);
+      if (error instanceof AxiosError) {
+        if (error.response?.data.message === 'There is already an existing customer with the provided email.') {
+          new Modal(modalProps.modalUserChangeEmail);
+        }
+      }
+    }
+  }
+
+  async changeCustomerPassword(data: string[]) {
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/password`,
+        {
+          id: userState.getUserId(),
+          version: userState.getUserVersion(),
+          currentPassword: data[0],
+          newPassword: data[1],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      userState.setUserVersion(response.data.version);
+
+      const payload = {
+        email: response.data.email,
+        password: data[1],
+      };
+
+      await this.getAccessToken();
+      await this.hiddenLogin(payload);
+
+      new Modal(modalProps.modalUserChangePasswordSuccess);
+    } catch (error) {
+      console.error(error);
+      if (error instanceof AxiosError) {
+        if (error.response?.data.message === 'The given current password does not match.') {
+          new Modal(modalProps.modalUserWrongCurrentPassword);
+        }
+      }
+    }
+  }
+
+  async addNewCustomerAddress(data: IAddress) {
+    let newAddressId;
+
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/${userState.getUserId()}`,
+        {
+          version: userState.getUserVersion(),
+          actions: [
+            {
+              action: 'addAddress',
+              address: {
+                title: '',
+                salutation: '',
+                firstName: '',
+                lastName: '',
+                streetName: data.streetName,
+                streetNumber: '',
+                additionalStreetInfo: '',
+                postalCode: data.postalCode,
+                city: data.city,
+                region: '',
+                state: '',
+                country: data.country,
+                company: '',
+                department: '',
+                building: '',
+                apartment: '',
+                pOBox: '',
+                phone: '',
+                mobile: '',
+                email: '',
+                fax: '',
+                additionalAddressInfo: '',
+                externalId: 'none',
+              },
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      newAddressId = response.data.addresses[response.data.addresses.length - 1].id;
+
+      userState.setUserVersion(response.data.version);
+      new Modal(modalProps.modalSuccessNewAddress);
+    } catch (error) {
+      console.error(error);
+    }
+
+    return newAddressId;
+  }
+
+  async changeCustomerAddress(data: IAddress, id: string) {
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/${userState.getUserId()}`,
+        {
+          version: userState.getUserVersion(),
+          actions: [
+            {
+              action: 'changeAddress',
+              addressId: id,
+              address: {
+                title: '',
+                salutation: '',
+                firstName: '',
+                lastName: '',
+                streetName: data.streetName,
+                streetNumber: '',
+                additionalStreetInfo: '',
+                postalCode: data.postalCode,
+                city: data.city,
+                region: '',
+                state: '',
+                country: data.country,
+                company: '',
+                department: '',
+                building: '',
+                apartment: '',
+                pOBox: '',
+                phone: '',
+                mobile: '',
+                email: '',
+                fax: '',
+                additionalAddressInfo: '',
+                externalId: 'none',
+              },
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      userState.setUserVersion(response.data.version);
+      new Modal(modalProps.modalSuccessUpdate);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async removeAddressById(id: string) {
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/${userState.getUserId()}`,
+        {
+          version: userState.getUserVersion(),
+          actions: [
+            {
+              action: 'removeAddress',
+              addressId: id,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      userState.setUserVersion(response.data.version);
+      new Modal(modalProps.modalSuccessDelete);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async setDefaultBillingAddress(id: string) {
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/${userState.getUserId()}`,
+        {
+          version: userState.getUserVersion(),
+          actions: [
+            {
+              action: 'setDefaultBillingAddress',
+              addressId: id,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      userState.setUserVersion(response.data.version);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async setDefaultShippingAddress(id: string) {
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/customers/${userState.getUserId()}`,
+        {
+          version: userState.getUserVersion(),
+          actions: [
+            {
+              action: 'setDefaultShippingAddress',
+              addressId: id,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      userState.setUserVersion(response.data.version);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async getProductByKey(key: string) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/products/key=${key}?expand=masterData.current.categories[*].obj&expand=masterData.current.masterVariant.prices[*].discountedPrice`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      result = response.data.masterData.current;
+      // console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+    return result;
+  }
+  async getProductDiscountByKey(key: string) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/{projectKey}/product-discounts/key=${key}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      result = response.data.masterData;
+      // console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+    return result;
+  }
 }
+
 const api = new Api();
 
 export default api;

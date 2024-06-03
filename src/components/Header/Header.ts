@@ -1,5 +1,5 @@
+import './Header.scss';
 import Div from '../../ui-components/Div/Div';
-import './header.scss';
 import Link from '../../ui-components/Link/Link';
 import NavUnauth from './Nav/NavUnauth';
 import NavAuth from './Nav/NavAuth';
@@ -22,17 +22,18 @@ class Header {
     this.logoContainer = new Div('header__logo', this.element);
     this.logoLink = new Link('/', '', this.logoContainer.get());
     this.logoImg = document.createElement('img');
-    this.logoImg.src = 'assets/testLogo.png';
-    this.logoImg.addEventListener('click', (e) => {
-      e.preventDefault();
-      router.navigateTo('/');
-    });
+    this.logoImg.src = 'assets/siteLogo.svg';
     this.logoLink.get().append(this.logoImg);
     this.navDiv = new Div('header__navDiv');
     this.navUnAuth = new NavUnauth('header__nav');
   }
 
   render(parentElement: HTMLElement) {
+    this.logoImg.addEventListener('click', (e) => {
+      e.preventDefault();
+      router.navigateTo('/');
+    });
+
     this.navDiv.render(this.element);
     this.renderNav();
     basket.render(this.element);
