@@ -1,9 +1,8 @@
 import { IRoute } from '../interfaces/interfaces';
-import Page404 from '../pages/404/404';
+import Page404 from '../Pages/404/404';
 import MainPage from '../Pages/Main/Main';
-//import ProductsPage from '../../pages/Products/Products';
-import Login from '../pages/Login/Login';
-import Registration from '../pages/Registration/Registration';
+import Login from '../Pages/Login/Login';
+import Registration from '../Pages/Registration/Registration';
 import {
   popCatalog,
   marvelCatalog,

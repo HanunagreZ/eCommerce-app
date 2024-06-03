@@ -1,4 +1,4 @@
-import './Registration.scss';
+import './Registration';
 import InputField from '../../components/InputField/InputField';
 import { ICustomerRegistration, IRegistrationData, IAddress } from '../../interfaces/interfaces';
 import { constants } from '../../data/data';

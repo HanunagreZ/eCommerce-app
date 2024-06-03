@@ -35,6 +35,7 @@ class Router {
   }
 
   private async route() {
+    // const patcs = await this.updateRoutes()
     await this.updateRoutes();
     const { pathname } = window.location;
     async function executeRouting(path: string, routes: IRoute[], root: HTMLElement) {
