@@ -16,6 +16,7 @@ class App {
   }
 
   async render() {
+    await api.getAccessToken();
     await api.isRefreshTokenExist();
     header.render(document.body);
     document.body.append(this.element);

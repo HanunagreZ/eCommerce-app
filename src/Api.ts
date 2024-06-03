@@ -188,6 +188,8 @@ class Api {
   }
 
   async getSelectedProducts(page: number, filter: string, sorting: string) {
+    await this.getAccessToken();
+    await this.isRefreshTokenExist();
     let result;
     try {
       const accessToken = userState.getAccessToken();
@@ -244,6 +246,8 @@ class Api {
   }
 
   async getExtendedProducts() {
+    await this.getAccessToken();
+    await this.isRefreshTokenExist();
     let result;
     try {
       const accessToken = userState.getAccessToken();
