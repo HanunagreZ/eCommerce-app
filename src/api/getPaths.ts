@@ -10,7 +10,7 @@ async function getPaths() {
   const subCategoryPaths: string[] = [];
   const productKeys: string[] = [];
 
-  info.forEach((product: Product) => {
+  await info.forEach((product: Product) => {
     let productPath = '';
     let subCategory = '';
     let category = '';

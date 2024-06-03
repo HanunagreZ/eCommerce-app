@@ -15,8 +15,8 @@ class App {
     return this.element;
   }
 
-  render() {
-    api.isRefreshTokenExist();
+  async render() {
+    await api.isRefreshTokenExist();
     header.render(document.body);
     document.body.append(this.element);
     footer.render(document.body);
