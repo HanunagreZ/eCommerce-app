@@ -189,13 +189,13 @@ export class AddressItem {
       this.defaultBillAddrCheck.get().checked
     ) {
       await api.setDefaultBillingAddress(this.addressData.id);
-      addresses.updateContent();
     }
     if (
       this.defaultShipAddrCheck.get().checked !== this.addressData.isDefaultShipping &&
       this.defaultShipAddrCheck.get().checked
     ) {
       await api.setDefaultShippingAddress(this.addressData.id);
+    }
       addresses.updateContent();
     }
   }
