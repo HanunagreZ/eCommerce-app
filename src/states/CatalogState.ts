@@ -17,6 +17,7 @@ export class CatalogState {
   async getSelectedData(page: number, filter: string, sorting: string) {
     const data = await api.getSelectedProducts(page, filter, sorting);
     const products = data.results;
+    console.log(data);
     this.productsCount = data.total;
     const productsData: IProductCard[] = products.map((el: IProductResponseData) => {
       return {
@@ -26,7 +27,11 @@ export class CatalogState {
         category: this.setCategoryName(el),
         name: el.name['en-US' as keyof typeof el.name],
         price: el.masterVariant.prices[0].value.centAmount,
-        discountedPrice: el.masterVariant.prices[1] !== undefined ? el.masterVariant.prices[1].value.centAmount : 0,
+
+        discountedPrice:
+          el.masterVariant.prices[0].discounted !== undefined
+            ? el.masterVariant.prices[0].discounted.value.centAmount
+            : 0,
       };
     });
     return productsData;

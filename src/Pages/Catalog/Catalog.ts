@@ -38,7 +38,7 @@ export default class Catalog {
     });
     this.filter = new Select('catalog__filter');
     this.filter.addListener(async () => {
-      const field = this.filter.get().value.toLowerCase().replace(/\s+/g, '');
+      const field = this.filter.get().value.toLowerCase().replace(' ', '-');
       await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
       if (field === 'pop!') {
         router.navigateTo('catalog/pop');
@@ -181,6 +181,8 @@ export default class Catalog {
       this.activePage++;
       await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
     }
+    /* 😎 костыль 🤙 */
+    window.scrollTo(0, 0);
   }
 
   async filterByCategory() {

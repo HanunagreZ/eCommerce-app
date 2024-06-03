@@ -26,7 +26,7 @@ export const routes: IRoute[] = [
   { path: '/catalog/accessories', component: accessoriesCatalog },
   { path: '/catalog/pop/marvel', component: marvelCatalog },
   { path: '/catalog/pop/anime', component: animeCatalog },
-  { path: '/catalog/pop/starwars', component: starWarsCatalog },
+  { path: '/catalog/pop/star-wars', component: starWarsCatalog },
   { path: '/profile', component: new Profile().render() },
   // { path: '/products[id]', component: '<h1>Single Product Page</h1>' },
 

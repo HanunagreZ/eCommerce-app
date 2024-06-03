@@ -36,7 +36,7 @@ export class ProductCard {
       if (!clickedElement.classList.contains('catalog__cart-btn'))
         if (productData.productType === 'pop') {
           router.navigateTo(
-            `/catalog/${productData.productType}/${productData.category.toLowerCase()}/${productData.key}`,
+            `/catalog/${productData.productType}/${productData.category.toLowerCase().replace(' ', '-')}/${productData.key}`,
           );
         } else {
           router.navigateTo(`/catalog/${productData.productType}/${productData.key}`);

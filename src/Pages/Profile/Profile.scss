@@ -9,7 +9,9 @@
   max-width: 1360px;
   height: 100%;
   display: flex;
-  margin-top: 30px;
+  //margin-top: 30px;
+  //margin-bottom: 60px;
+  margin: 30px 40px 60px 40px;
   background-color: white;
   padding: 20px;
   gap: 70px;
@@ -31,7 +33,7 @@
     }
 
     .registration__country_label {
-      margin: 0;
+      margin: 5px 0;
     }
     .registration__country {
       width: 100%;
@@ -111,5 +113,19 @@
   .profile {
     flex-direction: column;
     padding: 0;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .profile {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+}
+
+@media screen and (max-width: 766px) {
+  .profile {
+    margin-left: 20px;
+    margin-right: 20px;
   }
 }
