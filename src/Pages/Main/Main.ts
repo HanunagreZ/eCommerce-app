@@ -11,8 +11,10 @@ export default class MainPage {
     this.element = new Div('main');
     this.imageContainer = new Div('main__imageContainer', this.element.get());
     new MainAdBlock(mainAdBlock.marvel, this.element.get());
+    new MainAdBlock(mainAdBlock.allPromocode, this.element.get());
     new MainAdBlock(mainAdBlock.starwars, this.element.get());
     new MainAdBlock(mainAdBlock.anime, this.element.get());
+    new MainAdBlock(mainAdBlock.animePromocode, this.element.get());
   }
 
   render() {
