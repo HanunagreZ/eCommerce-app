@@ -667,7 +667,6 @@ class Api {
   }
 
   // при повторном отправлении запроса по одному и тому же товару, его quantity увеличивается на 1
-  // При каждом добавлении нового товара необходимо обновлять версию
   async addLineItem(cartId: string, cartVersion: number, productSku: string, quantity = 1) {
     let result;
     const token = userState.getAccessToken();
