@@ -77,23 +77,6 @@ class UserState {
     localStorage.removeItem('userVersion');
   }
 
-  // access token from the anonymous session flow
-
-  // setAnonAccessToken(data: string) {
-  //   localStorage.setItem('anonAccessToken', data);
-  // }
-  // getAnonAccessToken(): string | null {
-  //   const accessToken = localStorage.getItem('anonAccessToken');
-  //   return accessToken;
-  // }
-  // removeAnonAccessToken() {
-  //   localStorage.removeItem('anonAccessToken');
-  // }
-
-  // setAnonymousCartId(data: string) {
-  //   localStorage.setItem('anonimousCartId', data);
-  // }
-
   setAnonymousCartId(data: string) {
     localStorage.setItem('anonymousCartId', data);
   }
