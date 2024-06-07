@@ -216,6 +216,30 @@ export const mainAdBlock = {
       router.navigateTo('/catalog/pop/star-wars');
     },
   },
+  animePromocode: {
+    containerClass: 'main__adBlock--animePromocode',
+    image: 'assets/main/animePromocode.svg',
+    imageClass: 'main__image--animePromocode',
+    blockClass: 'main__block--animePromocode',
+    title: 'PROMO CODE',
+    description: 'Get a discount on Anime collection (click on button to copy text to your clipboard)',
+    btn: 'ANIMEALL10',
+    addEvent: () => {
+      navigator.clipboard.writeText('ANIMEALL10');
+    },
+  },
+  allPromocode: {
+    containerClass: 'main__adBlock--allPromocode',
+    image: 'assets/main/allPromocode.svg',
+    imageClass: 'main__image--allPromocode',
+    blockClass: 'main__block--allPromocode',
+    title: 'PROMO CODE',
+    description: 'Get a discount on all products\n(click on button to copy text to your clipboard)',
+    btn: 'FUNKOALL5',
+    addEvent: () => {
+      navigator.clipboard.writeText('FUNKOALL5');
+    },
+  },
   anime: {
     containerClass: 'main__adBlock--anime',
     image: 'assets/main/inuyasha.svg',
