@@ -227,3 +227,12 @@ export interface ITypeEndpoints {
   starwars: string;
   anime: string;
 }
+export interface IPerson {
+  nickname: string;
+  name: string;
+  role: string;
+  bio: string;
+  github: string;
+  imgUrl: string;
+  icoUrl: string;
+}
