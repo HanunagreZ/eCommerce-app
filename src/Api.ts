@@ -9,12 +9,34 @@ import personal from './Pages/Profile/Personal/Personal';
 import router from '.';
 import header from './components/Header/Header';
 import { ProductsForPage } from './data/constants';
+import basket from './components/Header/Basket/Basket';
 
 class Api {
+  // async getAccessToken() {
+  //   try {
+  //     const response = await axios.post(
+  //       `${process.env.AUTH_URL}/oauth/token?grant_type=client_credentials`,
+  //       {},
+  //       {
+  //         headers: {
+  //           Authorization: 'Basic V05TYU9QOUtJVlhhenVyNEFzRnhfeHdvOm1nSk1idTc2QXFSb05KZUE5MGVxQWo4ZHMzQlVKSWN4',
+  //         },
+  //       },
+  //     );
+  //     userState.setAccessToken(response.data.access_token);
+  //   } catch (error) {
+  //     console.error(error);
+  //     if (error instanceof AxiosError) {
+  //       console.log(error.response?.data.message);
+  //     }
+  //   }
+  // }
+
   async getAccessToken() {
+    let result;
     try {
       const response = await axios.post(
-        `${process.env.AUTH_URL}/oauth/token?grant_type=client_credentials`,
+        `${process.env.AUTH_URL}/oauth/${process.env.PROJECT_KEY}/anonymous/token?grant_type=client_credentials`,
         {},
         {
           headers: {
@@ -22,13 +44,13 @@ class Api {
           },
         },
       );
+      result = response.data.access_token; //anonimous_access_token
       userState.setAccessToken(response.data.access_token);
     } catch (error) {
       console.error(error);
-      if (error instanceof AxiosError) {
-        console.log(error.response?.data.message);
-      }
+      result = error;
     }
+    return result;
   }
 
   async obtainTokens(payload: ICustomerLogin) {
@@ -589,6 +611,261 @@ class Api {
       // console.log(response);
     } catch (error) {
       console.error(error);
+    }
+    return result;
+  }
+
+  //===== методы для корзины =====
+
+  async createCart() {
+    let result;
+    const token = userState.getAccessToken();
+
+    try {
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/carts`,
+        {
+          currency: 'USD',
+          // customerId: '',
+          //"customerEmail": '',
+          //"anonymousId": '',
+          //"lineItems": [],
+          //"discountCodes": [],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  // метод для получения корзины по её ID
+  async getCartByID(id: string) {
+    let result;
+
+    const token = userState.getAccessToken();
+
+    try {
+      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/carts/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  // при повторном отправлении запроса по одному и тому же товару, его quantity увеличивается на 1
+  // При каждом добавлении нового товара необходимо обновлять версию
+  async addLineItem(cartId: string, cartVersion: number, productSku: string, quantity = 1) {
+    let result;
+    const token = userState.getAccessToken();
+
+    try {
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/carts/${cartId}`,
+        {
+          version: cartVersion,
+          actions: [
+            {
+              action: 'addLineItem',
+              sku: productSku,
+              quantity: quantity,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      basket.reRenderCount(response.data.totalLineItemQuantity);
+      if (userState.getAnonymousCartId()) {
+        userState.setAnonymousCartVersion(response.data.version);
+      } else {
+        userState.setCustomerCartVersion(response.data.version);
+      }
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  async removeLineItem(cartId: string, cartVersion: number, lineItemId: string, quantity = 1) {
+    let result;
+    const token = userState.getAccessToken();
+
+    try {
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/carts/${cartId}`,
+        {
+          version: cartVersion,
+          actions: [
+            {
+              action: 'removeLineItem',
+              lineItemId: lineItemId,
+              quantity: quantity,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      basket.reRenderCount(response.data.totalLineItemQuantity);
+      if (userState.getAnonymousCartId()) {
+        userState.setAnonymousCartVersion(response.data.version);
+      } else {
+        userState.setCustomerCartVersion(response.data.version);
+      }
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  async changeLineItemQuantity(cartId: string, cartVersion: number, lineItemId: string, quantity: number) {
+    let result;
+    const token = userState.getAccessToken();
+
+    try {
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/carts/${cartId}`,
+        {
+          version: cartVersion,
+          actions: [
+            {
+              action: 'changeLineItemQuantity',
+              lineItemId: lineItemId,
+              quantity: quantity,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      basket.reRenderCount(response.data.totalLineItemQuantity);
+      if (userState.getAnonymousCartId()) {
+        userState.setAnonymousCartVersion(response.data.version);
+      } else {
+        userState.setCustomerCartVersion(response.data.version);
+      }
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  async addDiscountCode(cartId: string, cartVersion: number, discountCode: string) {
+    let result;
+    const token = userState.getAccessToken();
+
+    try {
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/carts/${cartId}`,
+        {
+          version: cartVersion,
+          actions: [
+            {
+              action: 'addDiscountCode',
+              code: discountCode,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (userState.getAnonymousCartId()) {
+        userState.setAnonymousCartVersion(response.data.version);
+      } else {
+        userState.setCustomerCartVersion(response.data.version);
+      }
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  async setCustomerIdForCart(cartId: string, version: number, customerId: string) {
+    let result;
+    const token = userState.getAccessToken();
+
+    try {
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/carts/${cartId}`,
+        {
+          version: version,
+          actions: [
+            {
+              action: 'setCustomerId',
+              customerId: customerId,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      userState.setCustomerCartVersion(response.data.version);
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  async getCartByCustomerId() {
+    let result;
+    const token = userState.getAccessToken();
+    const customerId = userState.getUserId();
+    try {
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/carts/customer-id=${customerId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
     }
     return result;
   }

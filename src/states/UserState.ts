@@ -40,6 +40,10 @@ class UserState {
     this.removeUserName();
     this.removeUserId();
     this.removeUserVersion();
+    this.removeCustomerCartId();
+    this.removeCustomerCartVersion();
+    this.removeAnonymousCartId();
+    this.removeAnonymousCartVersion();
   }
   getCookie(name: string): string | null {
     const cookie = document.cookie.split('; ').find((el) => el.startsWith(name + '='));
@@ -71,6 +75,71 @@ class UserState {
 
   removeUserVersion() {
     localStorage.removeItem('userVersion');
+  }
+
+  // access token from the anonymous session flow
+
+  // setAnonAccessToken(data: string) {
+  //   localStorage.setItem('anonAccessToken', data);
+  // }
+  // getAnonAccessToken(): string | null {
+  //   const accessToken = localStorage.getItem('anonAccessToken');
+  //   return accessToken;
+  // }
+  // removeAnonAccessToken() {
+  //   localStorage.removeItem('anonAccessToken');
+  // }
+
+  // setAnonymousCartId(data: string) {
+  //   localStorage.setItem('anonimousCartId', data);
+  // }
+
+  setAnonymousCartId(data: string) {
+    localStorage.setItem('anonymousCartId', data);
+  }
+  getAnonymousCartId(): string | null {
+    const cartId = localStorage.getItem('anonymousCartId');
+    return cartId;
+  }
+
+  setAnonymousCartVersion(data: string) {
+    localStorage.setItem('anonymousCartVersion', data);
+  }
+  getAnonymousCartVersion(): string | null {
+    const cartId = localStorage.getItem('anonymousCartVersion');
+    return cartId;
+  }
+
+  removeAnonymousCartId() {
+    localStorage.removeItem('anonymousCartId');
+  }
+
+  removeAnonymousCartVersion() {
+    localStorage.removeItem('anonymousCartVersion');
+  }
+
+  setCustomerCartId(data: string) {
+    localStorage.setItem('customerCartId', data);
+  }
+  getCustomerCartId(): string | null {
+    const cartId = localStorage.getItem('customerCartId');
+    return cartId;
+  }
+
+  setCustomerCartVersion(data: string) {
+    localStorage.setItem('customerCartVersion', data);
+  }
+  getCustomerCartVersion(): string | null {
+    const cartId = localStorage.getItem('customerCartVersion');
+    return cartId;
+  }
+
+  removeCustomerCartId() {
+    localStorage.removeItem('customerCartId');
+  }
+
+  removeCustomerCartVersion() {
+    localStorage.removeItem('customerCartVersion');
   }
 }
 

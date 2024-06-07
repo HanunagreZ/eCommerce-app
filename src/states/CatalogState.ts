@@ -15,6 +15,7 @@ export class CatalogState {
     this.productsCount = data.total;
     const productsData: IProductCard[] = products.map((el: IProductResponseData) => {
       return {
+        sku: el.masterVariant.sku,
         productType: this.setProductType(el),
         key: el.key,
         imgSrc: el.masterVariant.images[0].url,

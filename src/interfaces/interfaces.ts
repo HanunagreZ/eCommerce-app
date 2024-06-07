@@ -43,6 +43,7 @@ export interface IModalProps {
 }
 
 export interface IProductCard {
+  sku: string;
   productType: string;
   key: string;
   imgSrc: string;
@@ -69,6 +70,7 @@ export interface IProductResponseData {
     'en-US': string;
   };
   masterVariant: {
+    sku: string;
     images: {
       url: string;
     }[];

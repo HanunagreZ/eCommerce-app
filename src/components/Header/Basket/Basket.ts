@@ -1,3 +1,6 @@
+import router from '../../..';
+import api from '../../../Api';
+import userState from '../../../states/UserState';
 import Span from '../../../ui-components/Span/Span';
 
 class Basket {
@@ -8,6 +11,11 @@ class Basket {
   constructor() {
     this.element = document.createElement('div');
     this.element.classList.add('header__basket');
+
+    this.element.addEventListener('click', () => {
+      router.navigateTo('/cart');
+    });
+
     this.basketIcon = document.createElement('img');
     this.basketIcon.classList.add('header__basket-icon');
     this.basketIcon.src = 'assets/icons/iconBasket.svg';
@@ -23,7 +31,17 @@ class Basket {
     this.basketCount.get().textContent = count.toString();
   }
 
-  render(parentElement: HTMLElement) {
+  async render(parentElement: HTMLElement) {
+    this.basketCount.get().textContent = '0';
+    const cartId = userState.getAnonymousCartId()
+      ? String(userState.getAnonymousCartId())
+      : String(userState.getCustomerCartId());
+    if (cartId !== 'null') {
+      const response = await api.getCartByID(cartId);
+      if (response.totalLineItemQuantity) {
+        this.reRenderCount(response.totalLineItemQuantity);
+      }
+    }
     parentElement.append(this.element);
   }
 }

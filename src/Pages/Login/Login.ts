@@ -8,6 +8,9 @@ import Button from '../../ui-components/Button/Button';
 import Link from '../../ui-components/Link/Link';
 import { CheckInputs } from '../../utils/checkInputs';
 import api from '../../Api';
+import userState from '../../states/UserState';
+import { CopyAnonItems } from '../../utils/CopyAnonItems';
+import basket from '../../components/Header/Basket/Basket';
 
 export default class Login {
   private form: HTMLFormElement;
@@ -17,7 +20,7 @@ export default class Login {
     this.form = document.createElement('form');
     this.form.classList.add('login__form');
     this.button = new Button(constants.login.buttonTitle, 'button');
-    this.button.addListener((e) => this.login(e));
+    this.button.addListener(async (e) => this.login(e));
   }
 
   addInputs(data: IRegistrationData[]) {
@@ -54,7 +57,7 @@ export default class Login {
     return formWrapper.get();
   }
 
-  login(e: Event | undefined) {
+  async login(e: Event | undefined) {
     e?.preventDefault();
     let isValidForm = false;
     isValidForm = CheckInputs(this.inputFields);
@@ -66,8 +69,20 @@ export default class Login {
         password: inputValues[1],
       };
 
-      api.login(payload);
+      await api.login(payload);
       this.inputFields?.map((el) => (el.input.get().value = ''));
+
+      await this.createCart();
     }
+  }
+
+  async createCart() {
+    //получаем корзину зарегистрированного пользователя
+    const cart = await api.getCartByCustomerId();
+    basket.reRenderCount(cart.totalLineItemQuantity);
+    userState.setCustomerCartId(cart.id);
+    userState.setCustomerCartVersion(cart.version);
+
+    await CopyAnonItems(cart.id);
   }
 }

@@ -1,6 +1,8 @@
 import router from '../..';
+import api from '../../Api';
 import { catalogTitles } from '../../data/data';
 import { IProductCard } from '../../interfaces/interfaces';
+import userState from '../../states/UserState';
 import Button from '../../ui-components/Button/Button';
 import Div from '../../ui-components/Div/Div';
 import Img from '../../ui-components/Img/Img';
@@ -29,7 +31,7 @@ export class ProductCard {
     } else {
       new Span(`$${(productData.price / 100).toFixed(2)}`, 'catalog__product-price', priceContainer.get());
     }
-    new Button(catalogTitles.cartBtn, 'catalog__cart-btn', card.get());
+    const addToCart = new Button(catalogTitles.cartBtn, 'catalog__cart-btn', card.get());
 
     card.get().addEventListener('click', (e) => {
       const clickedElement = e.target as HTMLElement;
@@ -41,6 +43,25 @@ export class ProductCard {
         } else {
           router.navigateTo(`/catalog/${productData.productType}/${productData.key}`);
         }
+    });
+
+    addToCart.addListener(async () => {
+      let cartId: string = '';
+      let cartVersion: number;
+      if (userState.getCustomerCartId()) {
+        cartId = String(userState.getCustomerCartId());
+        cartVersion = Number(userState.getCustomerCartVersion());
+        await api.addLineItem(cartId, cartVersion, productData.sku);
+      } else {
+        if (!userState.getAnonymousCartId()) {
+          const cart = await api.createCart();
+          userState.setAnonymousCartId(cart.id);
+          userState.setAnonymousCartVersion(cart.version);
+        }
+        cartId = String(userState.getAnonymousCartId());
+        cartVersion = Number(userState.getAnonymousCartVersion());
+        await api.addLineItem(cartId, cartVersion, productData.sku);
+      }
     });
     return card.get();
   }
