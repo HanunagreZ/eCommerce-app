@@ -698,6 +698,7 @@ class Api {
         userState.setCustomerCartVersion(response.data.version);
       }
       result = response.data;
+      console.log(result);
     } catch (error) {
       console.error(error);
       result = error;

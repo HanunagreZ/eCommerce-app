@@ -1,7 +1,39 @@
 @import '../../styles.scss';
 
-.basket {
+.cart {
   width: 94%;
-  height: 200px;
+  display: flex;
+}
+
+.cart__items-container {
+  width: 45%;
+  background-color: #e295cb;
+}
+
+.cart__details-container {
+  width: 45%;
   background-color: aquamarine;
+}
+
+.cart__item {
+  display: flex;
+}
+
+.cart__item-img {
+  width: 100px;
+}
+
+.cart__item-remove-btn {
+  height: 18px;
+  width: 18px;
+  border: none;
+  background-image: url('../../assets/profile/iconRemove.svg');
+  background-position: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #6e41e2;
+    color: #fafafa;
+    transition: 0.3s;
+  }
 }

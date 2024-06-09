@@ -229,3 +229,47 @@ export interface ITypeEndpoints {
   starwars: string;
   anime: string;
 }
+
+export interface ApiLineItem {
+  id: string;
+  variant: { images: { url: string }[] };
+  name: {
+    'en-US': string;
+  };
+  quantity: number;
+  price: {
+    value: {
+      centAmount: number;
+    };
+    discounted:
+      | {
+          value: {
+            centAmount: number;
+          };
+        }
+      | undefined;
+  };
+}
+
+export interface CartApiData {
+  lineItems: ApiLineItem[];
+  totalLineItemQuantity: number;
+  totalPrice: {
+    centAmount: number;
+  };
+}
+
+export interface CartItemData {
+  id: string;
+  imgUrl: string;
+  name: string;
+  quantity: number;
+  price: number;
+  discountedPrice?: number;
+}
+
+export interface ICartData {
+  lineItems: CartItemData[];
+  totalQuantity: number;
+  totalPrice: number;
+}
