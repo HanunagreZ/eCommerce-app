@@ -1,4 +1,5 @@
 import api from '../../Api';
+import basket from '../../components/Header/Basket/Basket';
 import { MaxQuantity } from '../../data/constants';
 import { CartItemData } from '../../interfaces/interfaces';
 import cartState from '../../states/CartState';
@@ -81,9 +82,14 @@ export default class CartItem {
     );
     this.container.get().innerHTML = '';
     this.container.get().remove();
-    console.log(response);
-    const data = getNeededCartData(response);
-
-    cart.renderCostContainer(data);
+    if (response.lineItems.length > 0) {
+      const data = getNeededCartData(response);
+      console.log(data);
+      cart.renderCostContainer(data);
+      basket.reRenderCount(data.totalQuantity);
+    } else {
+      cart.renderEmptyPage();
+      basket.reRenderCount(0);
+    }
   }
 }

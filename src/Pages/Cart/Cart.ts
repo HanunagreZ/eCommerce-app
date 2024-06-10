@@ -48,14 +48,22 @@ export class Cart {
   }
 
   async renderCartState() {
-    if (cartState.getCartId() === 'null' || cartState.getCartVersion() === 1) {
+    if (cartState.getCartId() === 'null') {
       await this.renderEmptyPage();
     } else {
-      await this.renderCustomerCart();
+      const response = await api.getCartByID(cartState.getCartId());
+      const cartData: ICartData = getNeededCartData(response);
+      if (cartData.lineItems.length === 0) {
+        this.renderEmptyPage();
+      } else {
+        await this.renderCustomerCart(cartData);
+      }
+
+      // await this.renderCustomerCart();
     }
   }
 
-  async renderCustomerCart() {
+  async renderCustomerCart(cartData: ICartData) {
     this.container.get().innerHTML = '';
     const titleContainer = new Div('cart__title-container', this.container.get());
     const title = document.createElement('h1');
@@ -77,8 +85,8 @@ export class Cart {
     new Div('cart__products-container', this.container.get())
       .get()
       .append(this.itemsContainer.get(), this.detailsContainer.get());
-    const response = await api.getCartByID(cartState.getCartId());
-    const cartData: ICartData = getNeededCartData(response);
+    // const response = await api.getCartByID(cartState.getCartId());
+    // const cartData: ICartData = getNeededCartData(response);
 
     await this.renderItemsContainer(cartData);
     await this.renderDetailsContainer(cartData);
