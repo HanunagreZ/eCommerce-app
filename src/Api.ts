@@ -10,6 +10,7 @@ import router from '.';
 import header from './components/Header/Header';
 import { ProductsForPage } from './data/constants';
 import basket from './components/Header/Basket/Basket';
+import cartState from './states/CartState';
 
 class Api {
   // async getAccessToken() {
@@ -646,6 +647,57 @@ class Api {
     return result;
   }
 
+  async setCustomerIdForCart(cartId: string, version: number, customerId: string) {
+    let result;
+    const token = userState.getAccessToken();
+
+    try {
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/carts/${cartId}`,
+        {
+          version: version,
+          actions: [
+            {
+              action: 'setCustomerId',
+              customerId: customerId,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      userState.setCustomerCartVersion(response.data.version);
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  async getCartByCustomerId() {
+    let result;
+    const token = userState.getAccessToken();
+    const customerId = userState.getUserId();
+    try {
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/carts/customer-id=${customerId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
   // метод для получения корзины по её ID
   async getCartByID(id: string) {
     let result;
@@ -730,7 +782,7 @@ class Api {
         },
       );
 
-      basket.reRenderCount(response.data.totalLineItemQuantity);
+      // basket.reRenderCount(response.data.totalLineItemQuantity);
       if (userState.getAnonymousCartId()) {
         userState.setAnonymousCartVersion(response.data.version);
       } else {
@@ -818,51 +870,22 @@ class Api {
     return result;
   }
 
-  async setCustomerIdForCart(cartId: string, version: number, customerId: string) {
+  async deleteCartById() {
     let result;
     const token = userState.getAccessToken();
-
+    const cartId = cartState.getCartId();
+    const cartVersion = cartState.getCartVersion();
     try {
-      const response = await axios.post(
-        `${process.env.API_URL}/${process.env.PROJECT_KEY}/carts/${cartId}`,
-        {
-          version: version,
-          actions: [
-            {
-              action: 'setCustomerId',
-              customerId: customerId,
-            },
-          ],
-        },
+      const response = await axios.delete(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/carts/${cartId}?version=${cartVersion}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         },
       );
-      userState.setCustomerCartVersion(response.data.version);
-      result = response.data;
-    } catch (error) {
-      console.error(error);
-      result = error;
-    }
-    return result;
-  }
-
-  async getCartByCustomerId() {
-    let result;
-    const token = userState.getAccessToken();
-    const customerId = userState.getUserId();
-    try {
-      const response = await axios.get(
-        `${process.env.API_URL}/${process.env.PROJECT_KEY}/carts/customer-id=${customerId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      result = response.data;
+      result = response;
+      console.log(response);
     } catch (error) {
       console.error(error);
       result = error;

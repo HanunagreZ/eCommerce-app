@@ -14,6 +14,16 @@ class CartState {
       : Number(userState.getCustomerCartVersion());
     return cartVersion;
   }
+
+  setCartId(cartId: string) {
+    if (userState.getAnonymousCartId()) userState.setAnonymousCartId(cartId);
+    if (userState.getCustomerCartId()) userState.setCustomerCartId(cartId);
+  }
+
+  setCartVersion(cartVersion: string) {
+    if (userState.getAnonymousCartId()) userState.setAnonymousCartVersion(cartVersion);
+    if (userState.getCustomerCartId()) userState.setCustomerCartVersion(cartVersion);
+  }
 }
 
 const cartState = new CartState();

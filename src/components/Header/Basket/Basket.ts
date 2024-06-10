@@ -1,5 +1,6 @@
 import router from '../../..';
 import api from '../../../Api';
+import cart from '../../../Pages/Cart/Cart';
 import userState from '../../../states/UserState';
 import Span from '../../../ui-components/Span/Span';
 
@@ -12,8 +13,9 @@ class Basket {
     this.element = document.createElement('div');
     this.element.classList.add('header__basket');
 
-    this.element.addEventListener('click', () => {
+    this.element.addEventListener('click', async () => {
       router.navigateTo('/cart');
+      await cart.renderCartState();
     });
 
     this.basketIcon = document.createElement('img');

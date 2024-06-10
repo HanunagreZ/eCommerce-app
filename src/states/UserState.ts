@@ -124,6 +124,19 @@ class UserState {
   removeCustomerCartVersion() {
     localStorage.removeItem('customerCartVersion');
   }
+
+  setPromo(promo: string) {
+    localStorage.setItem('promo', promo);
+  }
+
+  getPromo() {
+    const promo = localStorage.getItem('promo');
+    return promo;
+  }
+
+  removePromo() {
+    localStorage.removeItem('promo');
+  }
 }
 
 const userState = new UserState();

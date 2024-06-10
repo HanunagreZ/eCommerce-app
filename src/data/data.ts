@@ -317,3 +317,23 @@ export const profile = {
   defaultShipAddr: 'Default shipping address',
   addNewAddresBtn: 'Add new Address',
 };
+
+export const cartTitles = {
+  title: 'My Cart',
+  clearBtn: 'CLEAR CART',
+  colTitles: {
+    itemCol: 'ITEM',
+    quantityCol: 'QTY',
+    totalCol: 'TOTAL',
+  },
+  promoTitle: 'HAVE A PROMO CODE?',
+  promoPlaceholder: 'Enter promo code here',
+  promoBtn: 'APPLY',
+  summary: 'SUMMARY',
+  subtotal: 'SUBTOTAL',
+  shipping: 'SHIPPING',
+  discounts: 'DISCOUNTS AND PROMO',
+  total: 'TOTAL',
+  empty: 'Cart is empty!',
+  catalogBtn: 'Go shopping',
+};

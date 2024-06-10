@@ -21,9 +21,9 @@ export default class CartItem {
     this.container = new Div('cart__item');
     this.quantity = new Select('cart__item-quantity');
     this.quantity.addListener(() => this.changeQuantity());
-    this.price = new Span(String((data.price * this.data.quantity).toFixed(2)), 'cart__item-price');
+    this.price = new Span(`$${(data.price * this.data.quantity).toFixed(2)}`, 'cart__item-price');
     this.discountedPrice = data.discountedPrice
-      ? new Span(String((data.discountedPrice * this.data.quantity).toFixed(2)), 'cart__item-discounted-price')
+      ? new Span(`$${(data.discountedPrice * this.data.quantity).toFixed(2)}`, 'cart__item-discounted-price')
       : undefined;
   }
 
@@ -56,9 +56,9 @@ export default class CartItem {
 
   async changeQuantity() {
     const newQuantity = Number(this.quantity.get().value);
-    this.price.get().innerText = (this.data.price * newQuantity).toFixed(2);
+    this.price.get().innerText = `$${(this.data.price * newQuantity).toFixed(2)}`;
     if (this.discountedPrice && this.data.discountedPrice)
-      this.discountedPrice.get().innerText = (this.data.discountedPrice * newQuantity).toFixed(2);
+      this.discountedPrice.get().innerText = `$${(this.data.discountedPrice * newQuantity).toFixed(2)}`;
     this.data.quantity = newQuantity;
     const response = await api.changeLineItemQuantity(
       cartState.getCartId(),
@@ -81,7 +81,9 @@ export default class CartItem {
     );
     this.container.get().innerHTML = '';
     this.container.get().remove();
+    console.log(response);
     const data = getNeededCartData(response);
+
     cart.renderCostContainer(data);
   }
 }
