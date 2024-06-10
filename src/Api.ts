@@ -621,7 +621,6 @@ class Api {
     return result;
   }
 
-  // метод для получения корзины по её ID
   async getCartByID(id: string) {
     let result;
 
