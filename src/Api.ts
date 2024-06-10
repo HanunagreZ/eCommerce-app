@@ -12,26 +12,6 @@ import { ProductsForPage } from './data/constants';
 import basket from './components/Header/Basket/Basket';
 
 class Api {
-  // async getAccessToken() {
-  //   try {
-  //     const response = await axios.post(
-  //       `${process.env.AUTH_URL}/oauth/token?grant_type=client_credentials`,
-  //       {},
-  //       {
-  //         headers: {
-  //           Authorization: 'Basic V05TYU9QOUtJVlhhenVyNEFzRnhfeHdvOm1nSk1idTc2QXFSb05KZUE5MGVxQWo4ZHMzQlVKSWN4',
-  //         },
-  //       },
-  //     );
-  //     userState.setAccessToken(response.data.access_token);
-  //   } catch (error) {
-  //     console.error(error);
-  //     if (error instanceof AxiosError) {
-  //       console.log(error.response?.data.message);
-  //     }
-  //   }
-  // }
-
   async getAccessToken() {
     let result;
     try {
@@ -626,11 +606,6 @@ class Api {
         `${process.env.API_URL}/${process.env.PROJECT_KEY}/carts`,
         {
           currency: 'USD',
-          // customerId: '',
-          //"customerEmail": '',
-          //"anonymousId": '',
-          //"lineItems": [],
-          //"discountCodes": [],
         },
         {
           headers: {
@@ -666,7 +641,6 @@ class Api {
     return result;
   }
 
-  // при повторном отправлении запроса по одному и тому же товару, его quantity увеличивается на 1
   async addLineItem(cartId: string, cartVersion: number, productSku: string, quantity = 1) {
     let result;
     const token = userState.getAccessToken();
