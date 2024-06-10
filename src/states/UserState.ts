@@ -51,7 +51,6 @@ class UserState {
     return cookie ? cookie.split('=')[1] : null;
   }
 
-  /* Добавил в рамках реализации профиля пользователя */
   setUserId(data: string) {
     localStorage.setItem('userId', data);
   }

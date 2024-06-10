@@ -192,7 +192,7 @@
 }
 
 .cart__promo-btn {
-   width: 28%;
+  width: 28%;
   padding: 13px 5%;
   font-size: 16px;
   background-color: rgb(110, 65, 226);
@@ -319,8 +319,7 @@
 
 @media (max-width: 450px) {
   .cart__item-name,
-  .cart__item-quantity
-   {
+  .cart__item-quantity {
     font-size: 0.7em;
   }
 }

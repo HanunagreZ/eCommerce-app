@@ -178,6 +178,13 @@ export const modalProps = {
       //router.navigateTo('/profile');
     },
   },
+  modalIncorrectPromo: {
+    icon: 'assets/icons/iconAlert.svg',
+    title: 'Incorrect promocode',
+    description: 'Please enter another promocode',
+    btn: 'Back',
+    addEvent: () => {},
+  },
 };
 
 export const catalogTitles = {
@@ -339,6 +346,6 @@ export const cartTitles = {
 };
 
 export const promocodes = {
-  FUNKOALLll5: '5e9000b5-22d2-4c4d-be2a-63f583835706',
+  FUNKOALL5: '5e9000b5-22d2-4c4d-be2a-63f583835706',
   ANIMEALL10: '332b67b0-95e3-4965-84d5-53bc6c588220',
 };

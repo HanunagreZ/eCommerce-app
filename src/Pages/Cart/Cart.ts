@@ -10,9 +10,11 @@ import { CartItemData, ICartData } from '../../interfaces/interfaces';
 import Span from '../../ui-components/Span/Span';
 import { getNeededCartData } from '../../utils/GetNeededCartData';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
-import { breadProps, cartTitles, promocodes } from '../../data/data';
+import { breadProps, cartTitles, modalProps, promocodes } from '../../data/data';
 import Img from '../../ui-components/Img/Img';
 import router from '../..';
+import basket from '../../components/Header/Basket/Basket';
+import Modal from '../../components/Modal/Modal';
 
 export class Cart {
   private container: Div;
@@ -139,32 +141,32 @@ export class Cart {
     new Div('cart__cost-line', this.costContainer.get())
       .get()
       .append(
-        new Span('Summary', 'cart__details-title', this.costContainer.get()).get(),
+        new Span(cartTitles.summary, 'cart__details-title', this.costContainer.get()).get(),
         (this.totalQuantity.get().innerText = `${cartData.totalQuantity} items`),
       );
 
     new Div('cart__cost-line', this.costContainer.get())
       .get()
       .append(
-        new Span('Subtotal', 'cart__details-title', this.costContainer.get()).get(),
+        new Span(cartTitles.subtotal, 'cart__details-title', this.costContainer.get()).get(),
         (this.subtotal.get().innerText = `$${this.calculateSubtotal(cartData.lineItems).toFixed(2)}`),
       );
     new Div('cart__cost-line', this.costContainer.get())
       .get()
       .append(
-        new Span('Shipping', 'cart__details-title', this.costContainer.get()).get(),
+        new Span(cartTitles.shipping, 'cart__details-title', this.costContainer.get()).get(),
         new Span('$5.00', 'cart__details-cost').get(),
       );
     new Div('cart__cost-line', this.costContainer.get())
       .get()
       .append(
-        new Span('Discounts and promo', 'cart__details-title', this.costContainer.get()).get(),
+        new Span(cartTitles.discounts, 'cart__details-title', this.costContainer.get()).get(),
         (this.discounts.get().innerText = `-$${(this.calculateSubtotal(cartData.lineItems) - cartData.totalPrice).toFixed(2)}`),
       );
     new Div('cart__cost-line', this.costContainer.get())
       .get()
       .append(
-        new Span('Total', 'cart__details-title', this.costContainer.get()).get(),
+        new Span(cartTitles.total, 'cart__details-title', this.costContainer.get()).get(),
         (this.total.get().innerText = `$${(cartData.totalPrice + 5).toFixed(2)}`),
       );
   }
@@ -178,17 +180,21 @@ export class Cart {
   async applyPromo(value: string, e: Event | undefined) {
     e?.preventDefault();
     if (value !== '') {
-      // if (userState.getPromo() !== null) {
-      //   api.removeDiscountCode(cartState.getCartId(), cartState.getCartVersion(), String(userState.getPromo()));
-      // }
+      if (userState.getPromo() !== null) {
+        const c = await api.removeDiscountCode(
+          cartState.getCartId(),
+          cartState.getCartVersion(),
+          String(userState.getPromo()),
+        );
+        console.log(c);
+      }
       const response = await api.addDiscountCode(
         String(cartState.getCartId()),
         Number(cartState.getCartVersion()),
         value.toUpperCase(),
       );
       if (response.response !== undefined && response.response.status === 400) {
-        //TODO add modal with incorrect promo
-        console.log('incorrect promo');
+        new Modal(modalProps.modalIncorrectPromo);
       } else {
         console.log(response);
         const data = getNeededCartData(response);
@@ -222,6 +228,7 @@ export class Cart {
       userState.setAnonymousCartVersion(cart.version);
     }
     this.renderEmptyPage();
+    userState.removePromo();
   }
 
   async renderEmptyPage() {
@@ -237,6 +244,8 @@ export class Cart {
     new Button(cartTitles.catalogBtn, 'cart__shopping-btn', emptyContainer.get()).addListener(() => {
       router.navigateTo('/catalog');
     });
+
+    basket.reRenderCount(0);
   }
 }
 

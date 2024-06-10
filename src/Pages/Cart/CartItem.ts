@@ -88,8 +88,7 @@ export default class CartItem {
       cart.renderCostContainer(data);
       basket.reRenderCount(data.totalQuantity);
     } else {
-      cart.renderEmptyPage();
-      basket.reRenderCount(0);
+      cart.clearCart();
     }
   }
 }
