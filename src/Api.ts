@@ -790,7 +790,7 @@ class Api {
     return result;
   }
 
-  async setCustomerIdForCart(cartId: string, version: number, customerId: string) {
+  async bindCartToCustomer(cartId: string, version: number, customerId: string) {
     let result;
     const token = userState.getAccessToken();
 
