@@ -210,14 +210,12 @@ export default class Registration {
       this.billAddrCheck.get().checked = false;
       this.sameAddrCheck.get().checked = false;
 
-      //создаем корзину для зарегистрированного пользователя
       const newCart = await api.createCart();
-      const customerCart = await api.setCustomerIdForCart(newCart.id, newCart.version, String(userState.getUserId()));
+      const customerCart = await api.bindCartToCustomer(newCart.id, newCart.version, String(userState.getUserId()));
 
       userState.setCustomerCartId(customerCart.id);
 
       await CopyAnonItems(customerCart.id);
-      console.log(customerCart);
     }
   }
 }

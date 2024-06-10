@@ -70,7 +70,7 @@ export default class CartItem {
 
     const data = getNeededCartData(response);
     cart.renderCostContainer(data);
-    // cartState.getCartData();
+    basket.reRenderCount(response.data.totalLineItemQuantity);
   }
 
   async removeItem() {
@@ -84,7 +84,6 @@ export default class CartItem {
     this.container.get().remove();
     if (response.lineItems.length > 0) {
       const data = getNeededCartData(response);
-      console.log(data);
       cart.renderCostContainer(data);
       basket.reRenderCount(data.totalQuantity);
     } else {

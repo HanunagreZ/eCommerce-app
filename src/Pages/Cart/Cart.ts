@@ -44,7 +44,6 @@ export class Cart {
     const cartWrapper = new Div('cart');
     new Breadcrumbs().render(breadProps.cart, new Div('breadcrumbs', cartWrapper.get()).get());
     this.container.render(cartWrapper.get());
-
     this.renderCartState();
     return cartWrapper.get();
   }
@@ -60,8 +59,6 @@ export class Cart {
       } else {
         await this.renderCustomerCart(cartData);
       }
-
-      // await this.renderCustomerCart();
     }
   }
 
@@ -72,32 +69,20 @@ export class Cart {
     title.classList.add('cart__title');
     title.innerText = cartTitles.title;
     titleContainer.get().append(title);
-
     new Button('Clear Cart', 'cart__clear-btn', titleContainer.get()).addListener(() => this.clearCart());
-
     const colTitles = new Div('cart__col-titles-container', this.container.get());
     for (const key in cartTitles.colTitles) {
       new Span(cartTitles.colTitles[key as keyof typeof cartTitles.colTitles], 'cart__col-title', colTitles.get());
-      // if (Object.prototype.hasOwnProperty.call(cartTitles.colTitles, key)) {
-      //   const element = cartTitles.colTitles[key as keyof typeof cartTitles.colTitles];
-      //   cartTitles.colTitles.
-      // }
     }
-
     new Div('cart__products-container', this.container.get())
       .get()
       .append(this.itemsContainer.get(), this.detailsContainer.get());
-    // const response = await api.getCartByID(cartState.getCartId());
-    // const cartData: ICartData = getNeededCartData(response);
-
     await this.renderItemsContainer(cartData);
     await this.renderDetailsContainer(cartData);
   }
+
   async renderItemsContainer(cartData: ICartData) {
     this.itemsContainer.get().innerHTML = '';
-
-    // this.renderItemsContainer();
-
     cartData.lineItems.map((item) => {
       const newItem = new CartItem(item);
       this.cartItems.push(newItem);
@@ -107,10 +92,14 @@ export class Cart {
 
   async renderDetailsContainer(cartData: ICartData) {
     this.detailsContainer.get().innerHTML = '';
-    //promo container
+    this.renderPromoContainer(cartData);
+    this.costContainer.render(this.detailsContainer.get());
+    this.renderCostContainer(cartData);
+  }
+
+  renderPromoContainer(cartData: ICartData) {
     const promoContainer = new Div('cart__promo-container', this.detailsContainer.get());
     new Div('cart__promo-title', promoContainer.get()).get().innerHTML = cartTitles.promoTitle;
-
     this.usedPromo.render(promoContainer.get());
     this.usedPromo.get().innerHTML = '';
     const promoText = Object.keys(promocodes).find(
@@ -119,25 +108,18 @@ export class Cart {
     if (promoText) {
       this.usedPromo.get().innerHTML = promoText;
     }
-
     const promoForm = document.createElement('form');
     promoForm.classList.add('cart__promo-form');
-
     const promo = new Input(cartTitles.promoPlaceholder, 'cart__promo-input', promoForm);
     new Button(cartTitles.promoBtn, 'cart__promo-btn', promoForm).addListener(async (e?: Event) => {
       await this.applyPromo(promo.get().value, e);
       promo.get().value = '';
     });
-
     promoContainer.get().append(promoForm);
-
-    this.costContainer.render(this.detailsContainer.get());
-    this.renderCostContainer(cartData);
   }
 
   renderCostContainer(cartData: ICartData) {
     this.costContainer.get().innerHTML = '';
-
     new Div('cart__cost-line', this.costContainer.get())
       .get()
       .append(
@@ -170,6 +152,7 @@ export class Cart {
         (this.total.get().innerText = `$${(cartData.totalPrice + 5).toFixed(2)}`),
       );
   }
+
   calculateSubtotal(lineItems: CartItemData[]) {
     let sum = 0;
     lineItems.forEach((element) => {
@@ -177,16 +160,16 @@ export class Cart {
     });
     return sum;
   }
+  
   async applyPromo(value: string, e: Event | undefined) {
     e?.preventDefault();
     if (value !== '') {
       if (userState.getPromo() !== null) {
-        const c = await api.removeDiscountCode(
+        await api.removeDiscountCode(
           cartState.getCartId(),
           cartState.getCartVersion(),
           String(userState.getPromo()),
         );
-        console.log(c);
       }
       const response = await api.addDiscountCode(
         String(cartState.getCartId()),
@@ -196,9 +179,7 @@ export class Cart {
       if (response.response !== undefined && response.response.status === 400) {
         new Modal(modalProps.modalIncorrectPromo);
       } else {
-        console.log(response);
         const data = getNeededCartData(response);
-
         this.usedPromo.get().innerHTML = '';
         const promoText = Object.keys(promocodes).find(
           (k) => promocodes[k as keyof typeof promocodes] === data.promoCode,
@@ -206,7 +187,6 @@ export class Cart {
         if (promoText) {
           this.usedPromo.get().innerHTML = promoText;
         }
-
         userState.setPromo(data.promoCode);
         this.renderCostContainer(data);
       }
@@ -217,10 +197,8 @@ export class Cart {
     await api.deleteCartById();
 
     if (userState.getCustomerCartId()) {
-      console.log('customer');
       const newCart = await api.createCart();
-      const customerCart = await api.setCustomerIdForCart(newCart.id, newCart.version, String(userState.getUserId()));
-
+      const customerCart = await api.bindCartToCustomer(newCart.id, newCart.version, String(userState.getUserId()));
       userState.setCustomerCartId(customerCart.id);
     } else {
       const cart = await api.createCart();
@@ -244,7 +222,6 @@ export class Cart {
     new Button(cartTitles.catalogBtn, 'cart__shopping-btn', emptyContainer.get()).addListener(() => {
       router.navigateTo('/catalog');
     });
-
     basket.reRenderCount(0);
   }
 }

@@ -5,34 +5,12 @@ import { modalProps } from './data/data';
 import userState from './states/UserState';
 import Loading from './components/Loading/Loading';
 import personal from './Pages/Profile/Personal/Personal';
-
 import router from '.';
 import header from './components/Header/Header';
 import { ProductsForPage } from './data/constants';
-import basket from './components/Header/Basket/Basket';
 import cartState from './states/CartState';
 
 class Api {
-  // async getAccessToken() {
-  //   try {
-  //     const response = await axios.post(
-  //       `${process.env.AUTH_URL}/oauth/token?grant_type=client_credentials`,
-  //       {},
-  //       {
-  //         headers: {
-  //           Authorization: 'Basic V05TYU9QOUtJVlhhenVyNEFzRnhfeHdvOm1nSk1idTc2QXFSb05KZUE5MGVxQWo4ZHMzQlVKSWN4',
-  //         },
-  //       },
-  //     );
-  //     userState.setAccessToken(response.data.access_token);
-  //   } catch (error) {
-  //     console.error(error);
-  //     if (error instanceof AxiosError) {
-  //       console.log(error.response?.data.message);
-  //     }
-  //   }
-  // }
-
   async getAccessToken() {
     let result;
     try {
@@ -627,11 +605,6 @@ class Api {
         `${process.env.API_URL}/${process.env.PROJECT_KEY}/carts`,
         {
           currency: 'USD',
-          // customerId: '',
-          //"customerEmail": '',
-          //"anonymousId": '',
-          //"lineItems": [],
-          //"discountCodes": [],
         },
         {
           headers: {
@@ -647,7 +620,7 @@ class Api {
     return result;
   }
 
-  async setCustomerIdForCart(cartId: string, version: number, customerId: string) {
+  async bindCartToCustomer(cartId: string, version: number, customerId: string) {
     let result;
     const token = userState.getAccessToken();
 
@@ -698,7 +671,7 @@ class Api {
     }
     return result;
   }
-  // метод для получения корзины по её ID
+
   async getCartByID(id: string) {
     let result;
 
@@ -718,7 +691,6 @@ class Api {
     return result;
   }
 
-  // при повторном отправлении запроса по одному и тому же товару, его quantity увеличивается на 1
   async addLineItem(cartId: string, cartVersion: number, productSku: string, quantity = 1) {
     let result;
     const token = userState.getAccessToken();
@@ -743,14 +715,8 @@ class Api {
         },
       );
 
-      basket.reRenderCount(response.data.totalLineItemQuantity);
-      if (userState.getAnonymousCartId()) {
-        userState.setAnonymousCartVersion(response.data.version);
-      } else {
-        userState.setCustomerCartVersion(response.data.version);
-      }
+      cartState.setCartVersion(response.data.version);
       result = response.data;
-      console.log(result);
     } catch (error) {
       console.error(error);
       result = error;
@@ -782,12 +748,7 @@ class Api {
         },
       );
 
-      // basket.reRenderCount(response.data.totalLineItemQuantity);
-      if (userState.getAnonymousCartId()) {
-        userState.setAnonymousCartVersion(response.data.version);
-      } else {
-        userState.setCustomerCartVersion(response.data.version);
-      }
+      cartState.setCartVersion(response.data.version);
       result = response.data;
     } catch (error) {
       console.error(error);
@@ -820,12 +781,7 @@ class Api {
         },
       );
 
-      basket.reRenderCount(response.data.totalLineItemQuantity);
-      if (userState.getAnonymousCartId()) {
-        userState.setAnonymousCartVersion(response.data.version);
-      } else {
-        userState.setCustomerCartVersion(response.data.version);
-      }
+      cartState.setCartVersion(response.data.version);
       result = response.data;
     } catch (error) {
       console.error(error);
@@ -857,11 +813,7 @@ class Api {
         },
       );
 
-      if (userState.getAnonymousCartId()) {
-        userState.setAnonymousCartVersion(response.data.version);
-      } else {
-        userState.setCustomerCartVersion(response.data.version);
-      }
+      cartState.setCartVersion(response.data.version);
       result = response.data;
     } catch (error) {
       console.error(error);
@@ -896,11 +848,7 @@ class Api {
         },
       );
 
-      if (userState.getAnonymousCartId()) {
-        userState.setAnonymousCartVersion(response.data.version);
-      } else {
-        userState.setCustomerCartVersion(response.data.version);
-      }
+      cartState.setCartVersion(response.data.version);
       result = response.data;
     } catch (error) {
       console.error(error);

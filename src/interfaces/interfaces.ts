@@ -194,20 +194,12 @@ export interface IPersonalData {
   dateOfBirth: string;
 }
 
-// export interface ICountryCode {
-//   US: string;
-//   CA: string;
-// }
-
 export interface IAddressData {
   id: string;
   countryCode: string;
   city: string;
   streetName: string;
   postalCode: string;
-  //типы адресов: billing или shipping
-  //isBillingAddress: boolean;
-  //isShippingAddress: boolean;
   isDefaultBilling?: boolean;
   isDefaultShipping?: boolean;
 }
@@ -242,12 +234,12 @@ export interface ApiLineItem {
       centAmount: number;
     };
     discounted:
-      | {
-          value: {
-            centAmount: number;
-          };
-        }
-      | undefined;
+    | {
+      value: {
+        centAmount: number;
+      };
+    }
+    | undefined;
   };
 }
 
