@@ -15,10 +15,10 @@ class CartState {
     return cartVersion;
   }
 
-  setCartId(cartId: string) {
-    if (userState.getAnonymousCartId()) userState.setAnonymousCartId(cartId);
-    if (userState.getCustomerCartId()) userState.setCustomerCartId(cartId);
-  }
+  // setCartId(cartId: string) {
+  //   if (userState.getAnonymousCartId()) userState.setAnonymousCartId(cartId);
+  //   if (userState.getCustomerCartId()) userState.setCustomerCartId(cartId);
+  // }
 
   setCartVersion(cartVersion: string) {
     if (userState.getAnonymousCartId()) userState.setAnonymousCartVersion(cartVersion);

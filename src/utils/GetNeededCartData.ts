@@ -14,10 +14,10 @@ export function getNeededCartData(cartData: CartApiData): ICartData {
     });
   });
 
-  // console.log(lineItems);
   return {
     lineItems: lineitems,
     totalQuantity: cartData.totalLineItemQuantity,
     totalPrice: cartData.totalPrice.centAmount / 100,
+    promoCode: cartData.discountCodes.length > 0 ? cartData.discountCodes[0].discountCode.id : '',
   };
 }

@@ -870,6 +870,45 @@ class Api {
     return result;
   }
 
+  async removeDiscountCode(cartId: string, cartVersion: number, codeId: string) {
+    let result;
+    const token = userState.getAccessToken();
+
+    try {
+      const response = await axios.post(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/carts/${cartId}`,
+        {
+          version: cartVersion,
+          actions: [
+            {
+              action: 'removeDiscountCode',
+              discountCode: {
+                typeId: 'discount-code',
+                id: codeId,
+              },
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (userState.getAnonymousCartId()) {
+        userState.setAnonymousCartVersion(response.data.version);
+      } else {
+        userState.setCustomerCartVersion(response.data.version);
+      }
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
   async deleteCartById() {
     let result;
     const token = userState.getAccessToken();

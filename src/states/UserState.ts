@@ -44,6 +44,7 @@ class UserState {
     this.removeCustomerCartVersion();
     this.removeAnonymousCartId();
     this.removeAnonymousCartVersion();
+    this.removePromo();
   }
   getCookie(name: string): string | null {
     const cookie = document.cookie.split('; ').find((el) => el.startsWith(name + '='));
@@ -129,7 +130,7 @@ class UserState {
     localStorage.setItem('promo', promo);
   }
 
-  getPromo() {
+  getPromo(): string | null {
     const promo = localStorage.getItem('promo');
     return promo;
   }

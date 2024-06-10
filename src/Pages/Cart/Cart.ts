@@ -10,7 +10,9 @@ import { CartItemData, ICartData } from '../../interfaces/interfaces';
 import Span from '../../ui-components/Span/Span';
 import { getNeededCartData } from '../../utils/GetNeededCartData';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
-import { breadProps, cartTitles } from '../../data/data';
+import { breadProps, cartTitles, promocodes } from '../../data/data';
+import Img from '../../ui-components/Img/Img';
+import router from '../..';
 
 export class Cart {
   private container: Div;
@@ -100,7 +102,14 @@ export class Cart {
     new Div('cart__promo-title', promoContainer.get()).get().innerHTML = cartTitles.promoTitle;
 
     this.usedPromo.render(promoContainer.get());
-    this.usedPromo.get().innerHTML = 'promo';
+    this.usedPromo.get().innerHTML = '';
+    const promoText = Object.keys(promocodes).find(
+      (k) => promocodes[k as keyof typeof promocodes] === cartData.promoCode,
+    );
+    if (promoText) {
+      this.usedPromo.get().innerHTML = promoText;
+    }
+
     const promoForm = document.createElement('form');
     promoForm.classList.add('cart__promo-form');
 
@@ -161,6 +170,9 @@ export class Cart {
   async applyPromo(value: string, e: Event | undefined) {
     e?.preventDefault();
     if (value !== '') {
+      // if (userState.getPromo() !== null) {
+      //   api.removeDiscountCode(cartState.getCartId(), cartState.getCartVersion(), String(userState.getPromo()));
+      // }
       const response = await api.addDiscountCode(
         String(cartState.getCartId()),
         Number(cartState.getCartVersion()),
@@ -173,6 +185,15 @@ export class Cart {
         console.log(response);
         const data = getNeededCartData(response);
 
+        this.usedPromo.get().innerHTML = '';
+        const promoText = Object.keys(promocodes).find(
+          (k) => promocodes[k as keyof typeof promocodes] === data.promoCode,
+        );
+        if (promoText) {
+          this.usedPromo.get().innerHTML = promoText;
+        }
+
+        userState.setPromo(data.promoCode);
         this.renderCostContainer(data);
       }
     }
@@ -197,7 +218,17 @@ export class Cart {
 
   async renderEmptyPage() {
     this.container.get().innerHTML = '';
-    this.container.get().innerHTML = 'Empty page';
+    const titleContainer = new Div('cart__title-container', this.container.get());
+    const title = document.createElement('h1');
+    title.classList.add('cart__title');
+    title.innerText = cartTitles.title;
+    titleContainer.get().append(title);
+    const emptyContainer = new Div('cart__empty-container', this.container.get());
+    new Img('cart__empty-img', './../../assets/cart/emptyCart.png', 'empty cart image', emptyContainer.get());
+    new Div('cart__empty-text', emptyContainer.get()).get().innerHTML = cartTitles.empty;
+    new Button(cartTitles.catalogBtn, 'cart__shopping-btn', emptyContainer.get()).addListener(() => {
+      router.navigateTo('/catalog');
+    });
   }
 }
 

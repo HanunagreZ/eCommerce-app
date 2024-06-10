@@ -257,6 +257,7 @@ export interface CartApiData {
   totalPrice: {
     centAmount: number;
   };
+  discountCodes: { discountCode: { id: string } }[];
 }
 
 export interface CartItemData {
@@ -272,4 +273,5 @@ export interface ICartData {
   lineItems: CartItemData[];
   totalQuantity: number;
   totalPrice: number;
+  promoCode: string;
 }

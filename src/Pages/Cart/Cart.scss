@@ -7,13 +7,12 @@
 
 .cart__container {
   width: 96%;
-  padding: 0 2%;
+  padding: 20px 2%;
   background-color: rgb(185, 187, 222, 0.6);
 }
 
 .cart__title-container {
   width: 100%;
-  padding-top: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -164,7 +163,14 @@
 }
 
 .cart__promo-title {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+}
+
+.cart__used-promo {
+  height: 20px;
+  font-weight: Regular;
+  font-size: 14px;
+  color: rgb(255, 104, 104);
 }
 
 .cart__promo-form {
@@ -211,8 +217,6 @@
   padding: 10px 3%;
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
-
-  
 }
 
 .cart__cost-line {
@@ -232,7 +236,7 @@
 .cart__details-title {
   font-weight: bold;
   font-size: 16px;
-  
+
   text-transform: uppercase;
 }
 
@@ -245,3 +249,53 @@
   font-weight: Regular;
   font-size: 18px;
 }
+
+.cart__empty-container {
+  width: 96%;
+  margin: 20px auto;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+}
+
+.cart__empty-text{
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.cart__shopping-btn {
+  width: 200px;
+  padding: 13px 20px;
+  font-weight: bold;
+  font-size: 16px;
+  background-color: rgb(110, 65, 226);  
+  font-size: 16px;
+  color: rgb(255, 255, 255);
+  border: 0;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: rgb(110, 65, 226, 0.16);
+    color: rgb(110, 65, 226);
+  }
+
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+}
+// t titleContainer = new Div('cart__title-container', this.container.get());
+//     const title = document.createElement('h1');
+//     title.classList.add('cart__title');
+//     title.innerText = cartTitles.title;
+//     titleContainer.get().append(title);
+//     const emptyContainer = new Div('cart__empty-container', this.container.get());
+//     new Img('cart__empty-img', './../../assets/cart/emptyCart.png', 'empty cart image', emptyContainer.get());
+//     new Div('cart__empty-text', emptyContainer.get()).get().innerHTML = cartTitles.empty;
+//     new Button(cartTitles.catalogBtn, 'cart__shopping-btn', emptyContainer.get())
