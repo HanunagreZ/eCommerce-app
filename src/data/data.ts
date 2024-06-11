@@ -279,6 +279,10 @@ export const breadProps = {
     href: ['/', '/catalog', '/catalog/pop', '/catalog/pop/marvel'],
     text: ['Funko', 'Catalog', 'Pop!', 'Marvel'],
   },
+  cart: {
+    href: ['/', '/cart'],
+    text: ['Funko', 'Cart'],
+  },
 };
 
 export const profile = {
