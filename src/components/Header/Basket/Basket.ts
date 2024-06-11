@@ -44,9 +44,7 @@ class Basket {
       : String(userState.getCustomerCartId());
     if (cartId !== 'null') {
       const response = await api.getCartByID(cartId);
-      // if (response.totalLineItemQuantity) {
       this.reRenderCount(response.totalLineItemQuantity);
-      // }
     }
     parentElement.append(this.element);
   }

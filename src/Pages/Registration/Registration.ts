@@ -46,6 +46,7 @@ export default class Registration {
     this.sameAddrCheck.addListener(() => this.fillBillingAddress());
     this.button = this.button = new Button(constants.registration.buttonTitle, 'button');
     this.button.addListener(async (e) => this.register(e));
+    this.button.addListener(async (e) => this.register(e));
   }
 
   addInputs(data: IRegistrationData[]) {
@@ -166,7 +167,7 @@ export default class Registration {
     isValidForm = isValidGeneralData && isValidDate && isValidAddresses;
     return isValidForm;
   }
-
+  
   async register(e: Event | undefined) {
     e?.preventDefault();
     if (this.validateForm()) {
@@ -203,6 +204,7 @@ export default class Registration {
         defaultBillingAddress: this.billAddrCheck.get().checked ? billingAddressIndex : null,
         billingAddresses: [billingAddressIndex],
       };
+      await api.createCustomer(requestData);
       await api.createCustomer(requestData);
       this.inputFields?.map((el) => (el.input.get().value = ''));
       this.dateOfBirth.input.get().value = '';
