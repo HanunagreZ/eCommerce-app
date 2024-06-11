@@ -235,4 +235,5 @@ export interface IPerson {
   github: string;
   imgUrl: string;
   icoUrl: string;
+  hobbitIcoNum?: string;
 }

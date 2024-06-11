@@ -53,6 +53,11 @@ export default class Journey {
     this.rsImg.src = './../../../assets/about/rs-logo.png';
     this.rsImg.alt = 'RS Logo';
   }
+
+  get() {
+    return this.container;
+  }
+
   render() {
     this.journeyDescription
       .get()

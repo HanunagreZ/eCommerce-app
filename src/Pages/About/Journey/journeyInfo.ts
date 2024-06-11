@@ -35,3 +35,21 @@ export function createJourneyText(text: string, classList: string): HTMLParagrap
   elem.textContent = text;
   return elem;
 }
+
+export const EvgHobbits = [
+  './../../../assets/about/hobbits1-shine.png',
+  './../../../assets/about/hobbits2.png',
+  './../../../assets/about/hobbits3.png',
+];
+
+export const AlexHobbits = [
+  './../../../assets/about/hobbits1.png',
+  './../../../assets/about/hobbits2-shine.png',
+  './../../../assets/about/hobbits3.png',
+];
+
+export const VitHobbits = [
+  './../../../assets/about/hobbits1.png',
+  './../../../assets/about/hobbits2.png',
+  './../../../assets/about/hobbits3-shine.png',
+];

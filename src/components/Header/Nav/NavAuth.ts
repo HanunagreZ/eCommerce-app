@@ -23,7 +23,7 @@ export default class NavAuth {
     const list = document.createElement('ul');
     list.classList.add('header__nav-list');
     this.element.append(list);
-    this.aboutLink = new Link('#', 'About us', new Li(list).get());
+    this.aboutLink = new Link('/about', 'About us', new Li(list).get());
     this.dropDownLi = new Li(list);
     this.dropDown = new DropDown();
     this.catalogLink = new Link('#', 'Catalog', this.dropDownLi.get());
