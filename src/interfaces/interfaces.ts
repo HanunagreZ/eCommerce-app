@@ -235,12 +235,12 @@ export interface ApiLineItem {
       centAmount: number;
     };
     discounted:
-      | {
-          value: {
-            centAmount: number;
-          };
-        }
-      | undefined;
+    | {
+      value: {
+        centAmount: number;
+      };
+    }
+    | undefined;
   };
 }
 
