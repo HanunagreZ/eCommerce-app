@@ -12,10 +12,10 @@ export class CatalogState {
   }
 
   async getSelectedData(page: number, filter: string, sorting: string) {
-    let productsInCard: string[];
+    let productsInCart: string[] = [];
     if (cartState.getCartId() !== null) {
       const response = await api.getCartByID(String(cartState.getCartId()));
-      productsInCard = getNeededCartData(response).lineItems.map((el) => el.name);
+      productsInCart = getNeededCartData(response).lineItems.map((el) => el.name);
     }
     const data = await api.getSelectedProducts(page, filter, sorting);
     const products = data.results;
@@ -29,7 +29,10 @@ export class CatalogState {
         category: el.categories[0].obj.name['en-US'],
         name: el.name['en-US' as keyof typeof el.name],
         price: el.masterVariant.prices[0].value.centAmount,
-        isInCart: productsInCard.includes(el.name['en-US' as keyof typeof el.name]),
+        isInCart:
+          productsInCart.length === 0 || !productsInCart.includes(el.name['en-US' as keyof typeof el.name])
+            ? false
+            : true,
         discountedPrice:
           el.masterVariant.prices[0].discounted !== undefined
             ? el.masterVariant.prices[0].discounted.value.centAmount

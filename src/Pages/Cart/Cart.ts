@@ -163,7 +163,10 @@ export class Cart {
 
   async applyPromo(value: string, e: Event | undefined) {
     e?.preventDefault();
-    if (value !== '') {
+    if (value === '') return;
+    const enteredPromo = value.toUpperCase();
+    const promoCodes = Object.keys(promocodes);
+    if (promoCodes.includes(enteredPromo)) {
       if (userState.getPromo() !== null) {
         await api.removeDiscountCode(
           String(cartState.getCartId()),
@@ -174,23 +177,44 @@ export class Cart {
       const response = await api.addDiscountCode(
         String(cartState.getCartId()),
         Number(cartState.getCartVersion()),
-        value.toUpperCase(),
+        enteredPromo,
       );
-      if (response.response !== undefined && response.response.status === 400) {
-        new Modal(modalProps.modalIncorrectPromo);
-      } else {
-        const data = getNeededCartData(response);
-        this.usedPromo.get().innerHTML = '';
-        const promoText = Object.keys(promocodes).find(
-          (k) => promocodes[k as keyof typeof promocodes] === data.promoCode,
-        );
-        if (promoText) {
-          this.usedPromo.get().innerHTML = promoText;
-        }
-        userState.setPromo(data.promoCode);
-        this.renderCostContainer(data);
-      }
+      const data = getNeededCartData(response);
+      this.usedPromo.get().innerHTML = enteredPromo;
+      userState.setPromo(data.promoCode);
+      this.renderCostContainer(data);
+    } else {
+      new Modal(modalProps.modalIncorrectPromo);
     }
+
+    // if (value !== '') {
+    //   if (userState.getPromo() !== null) {
+    //     await api.removeDiscountCode(
+    //       String(cartState.getCartId()),
+    //       Number(cartState.getCartVersion()),
+    //       String(userState.getPromo()),
+    //     );
+    //   }
+    //   const response = await api.addDiscountCode(
+    //     String(cartState.getCartId()),
+    //     Number(cartState.getCartVersion()),
+    //     value.toUpperCase(),
+    //   );
+    //   if (response.response !== undefined && response.response.status === 400) {
+    //     new Modal(modalProps.modalIncorrectPromo);
+    //   } else {
+    //     const data = getNeededCartData(response);
+    //     this.usedPromo.get().innerHTML = '';
+    //     const promoText = Object.keys(promocodes).find(
+    //       (k) => promocodes[k as keyof typeof promocodes] === data.promoCode,
+    //     );
+    //     if (promoText) {
+    //       this.usedPromo.get().innerHTML = promoText;
+    //     }
+    //     userState.setPromo(data.promoCode);
+    //     this.renderCostContainer(data);
+    //   }
+    // }
   }
 
   async clearCart() {

@@ -9,7 +9,7 @@ class CartState {
 
   getCartVersion(): number | null {
     if (userState.getAnonymousCartVersion()) return Number(userState.getAnonymousCartVersion());
-    if (userState.getAnonymousCartVersion()) return Number(userState.getAnonymousCartVersion());
+    if (userState.getCustomerCartVersion()) return Number(userState.getCustomerCartVersion());
     return null;
   }
 

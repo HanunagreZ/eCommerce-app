@@ -9,6 +9,7 @@ import router from '.';
 import header from './components/Header/Header';
 import { ProductsForPage } from './data/constants';
 import cartState from './states/CartState';
+import basket from './components/Header/Basket/Basket';
 
 class Api {
   async getAccessToken() {
@@ -716,6 +717,7 @@ class Api {
       );
 
       cartState.setCartVersion(response.data.version);
+      basket.reRenderCount(response.data.totalLineItemQuantity);
       result = response.data;
     } catch (error) {
       console.error(error);
