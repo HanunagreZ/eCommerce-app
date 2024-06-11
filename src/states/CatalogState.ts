@@ -13,10 +13,9 @@ export class CatalogState {
 
   async getSelectedData(page: number, filter: string, sorting: string) {
     let productsInCard: string[];
-    if (cartState.getCartId() !== 'null') {
-      const response = await api.getCartByID(cartState.getCartId());
+    if (cartState.getCartId() !== null) {
+      const response = await api.getCartByID(String(cartState.getCartId()));
       productsInCard = getNeededCartData(response).lineItems.map((el) => el.name);
-      console.log(productsInCard);
     }
     const data = await api.getSelectedProducts(page, filter, sorting);
     const products = data.results;

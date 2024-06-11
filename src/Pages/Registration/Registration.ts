@@ -167,7 +167,7 @@ export default class Registration {
     isValidForm = isValidGeneralData && isValidDate && isValidAddresses;
     return isValidForm;
   }
-  
+
   async register(e: Event | undefined) {
     e?.preventDefault();
     if (this.validateForm()) {

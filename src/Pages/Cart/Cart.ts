@@ -49,10 +49,10 @@ export class Cart {
   }
 
   async renderCartState() {
-    if (cartState.getCartId() === 'null') {
+    if (cartState.getCartId() === null) {
       await this.renderEmptyPage();
     } else {
-      const response = await api.getCartByID(cartState.getCartId());
+      const response = await api.getCartByID(String(cartState.getCartId()));
       const cartData: ICartData = getNeededCartData(response);
       if (cartData.lineItems.length === 0) {
         this.renderEmptyPage();
@@ -165,7 +165,11 @@ export class Cart {
     e?.preventDefault();
     if (value !== '') {
       if (userState.getPromo() !== null) {
-        await api.removeDiscountCode(cartState.getCartId(), cartState.getCartVersion(), String(userState.getPromo()));
+        await api.removeDiscountCode(
+          String(cartState.getCartId()),
+          Number(cartState.getCartVersion()),
+          String(userState.getPromo()),
+        );
       }
       const response = await api.addDiscountCode(
         String(cartState.getCartId()),

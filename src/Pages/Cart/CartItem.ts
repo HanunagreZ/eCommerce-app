@@ -62,8 +62,8 @@ export default class CartItem {
       this.discountedPrice.get().innerText = `$${(this.data.discountedPrice * newQuantity).toFixed(2)}`;
     this.data.quantity = newQuantity;
     const response = await api.changeLineItemQuantity(
-      cartState.getCartId(),
-      cartState.getCartVersion(),
+      String(cartState.getCartId()),
+      Number(cartState.getCartVersion()),
       this.data.id,
       newQuantity,
     );
@@ -75,8 +75,8 @@ export default class CartItem {
 
   async removeItem() {
     const response = await api.removeLineItem(
-      cartState.getCartId(),
-      cartState.getCartVersion(),
+      String(cartState.getCartId()),
+      Number(cartState.getCartVersion()),
       this.data.id,
       this.data.quantity,
     );

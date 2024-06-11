@@ -61,16 +61,17 @@ export class ProductCard {
   }
 
   async addToCart(productData: IProductCard) {
-    // let cartId: string = '';
-    // let cartVersion: number;
-    // let res;
     this.disableBtn();
-    if (cartState.getCartId() === 'null') {
+    if (cartState.getCartId() === null) {
       const cart = await api.createCart();
       userState.setAnonymousCartId(cart.id);
       userState.setAnonymousCartVersion(cart.version);
     }
-    const response = await api.addLineItem(cartState.getCartId(), cartState.getCartVersion(), productData.sku);
+    const response = await api.addLineItem(
+      String(cartState.getCartId()),
+      Number(cartState.getCartVersion()),
+      productData.sku,
+    );
 
     const data = getNeededCartData(response);
     basket.reRenderCount(data.totalQuantity);

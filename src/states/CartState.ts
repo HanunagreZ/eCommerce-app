@@ -1,24 +1,17 @@
 import userState from './UserState';
 
 class CartState {
-  getCartId() {
-    const cartId = userState.getAnonymousCartId()
-      ? String(userState.getAnonymousCartId())
-      : String(userState.getCustomerCartId());
-    return cartId;
+  getCartId(): string | null {
+    if (userState.getAnonymousCartId()) return userState.getAnonymousCartId();
+    if (userState.getCustomerCartId()) return userState.getCustomerCartId();
+    return null;
   }
 
-  getCartVersion() {
-    const cartVersion = userState.getAnonymousCartVersion()
-      ? Number(userState.getAnonymousCartVersion())
-      : Number(userState.getCustomerCartVersion());
-    return cartVersion;
+  getCartVersion(): number | null {
+    if (userState.getAnonymousCartVersion()) return Number(userState.getAnonymousCartVersion());
+    if (userState.getAnonymousCartVersion()) return Number(userState.getAnonymousCartVersion());
+    return null;
   }
-
-  // setCartId(cartId: string) {
-  //   if (userState.getAnonymousCartId()) userState.setAnonymousCartId(cartId);
-  //   if (userState.getCustomerCartId()) userState.setCustomerCartId(cartId);
-  // }
 
   setCartVersion(cartVersion: string) {
     if (userState.getAnonymousCartId()) userState.setAnonymousCartVersion(cartVersion);
