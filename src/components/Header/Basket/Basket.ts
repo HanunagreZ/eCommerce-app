@@ -29,8 +29,12 @@ class Basket {
     return this.element;
   }
 
-  reRenderCount(count: number) {
-    this.basketCount.get().textContent = count.toString();
+  reRenderCount(count: number | undefined) {
+    if (count !== undefined) {
+      this.basketCount.get().textContent = count.toString();
+    } else {
+      this.basketCount.get().textContent = '0';
+    }
   }
 
   async render(parentElement: HTMLElement) {
@@ -40,9 +44,9 @@ class Basket {
       : String(userState.getCustomerCartId());
     if (cartId !== 'null') {
       const response = await api.getCartByID(cartId);
-      if (response.totalLineItemQuantity) {
-        this.reRenderCount(response.totalLineItemQuantity);
-      }
+      // if (response.totalLineItemQuantity) {
+      this.reRenderCount(response.totalLineItemQuantity);
+      // }
     }
     parentElement.append(this.element);
   }

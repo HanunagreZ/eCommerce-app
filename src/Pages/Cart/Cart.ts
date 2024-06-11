@@ -160,16 +160,12 @@ export class Cart {
     });
     return sum;
   }
-  
+
   async applyPromo(value: string, e: Event | undefined) {
     e?.preventDefault();
     if (value !== '') {
       if (userState.getPromo() !== null) {
-        await api.removeDiscountCode(
-          cartState.getCartId(),
-          cartState.getCartVersion(),
-          String(userState.getPromo()),
-        );
+        await api.removeDiscountCode(cartState.getCartId(), cartState.getCartVersion(), String(userState.getPromo()));
       }
       const response = await api.addDiscountCode(
         String(cartState.getCartId()),

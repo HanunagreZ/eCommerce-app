@@ -190,6 +190,7 @@ export const modalProps = {
 export const catalogTitles = {
   all: 'Show all',
   cartBtn: 'Add to cart',
+  inCartBtn: 'In cart',
   sortingOptions: ['Sort by', 'Name: A - Z', 'Name: Z - A', 'Price Low To High', 'Price High to Low'],
   filterOptions: ['Series', 'Marvel', 'Star Wars', 'Anime'],
   catalogOptions: ['Categories', 'Pop!', 'Accessories'],

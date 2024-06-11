@@ -1,6 +1,8 @@
 import api from '../Api';
 import { productTypeID } from '../data/productsEndpoints';
 import { IProductCard, IProductResponseData } from '../interfaces/interfaces';
+import { getNeededCartData } from '../utils/GetNeededCartData';
+import cartState from './CartState';
 
 export class CatalogState {
   public productsCount = 0;
@@ -10,6 +12,12 @@ export class CatalogState {
   }
 
   async getSelectedData(page: number, filter: string, sorting: string) {
+    let productsInCard: string[];
+    if (cartState.getCartId() !== 'null') {
+      const response = await api.getCartByID(cartState.getCartId());
+      productsInCard = getNeededCartData(response).lineItems.map((el) => el.name);
+      console.log(productsInCard);
+    }
     const data = await api.getSelectedProducts(page, filter, sorting);
     const products = data.results;
     this.productsCount = data.total;
@@ -22,7 +30,7 @@ export class CatalogState {
         category: el.categories[0].obj.name['en-US'],
         name: el.name['en-US' as keyof typeof el.name],
         price: el.masterVariant.prices[0].value.centAmount,
-
+        isInCart: productsInCard.includes(el.name['en-US' as keyof typeof el.name]),
         discountedPrice:
           el.masterVariant.prices[0].discounted !== undefined
             ? el.masterVariant.prices[0].discounted.value.centAmount

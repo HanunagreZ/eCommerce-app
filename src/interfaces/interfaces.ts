@@ -50,6 +50,7 @@ export interface IProductCard {
   category: string;
   name: string;
   price: number;
+  isInCart: boolean;
   discountedPrice?: number;
 }
 
@@ -234,12 +235,12 @@ export interface ApiLineItem {
       centAmount: number;
     };
     discounted:
-    | {
-      value: {
-        centAmount: number;
-      };
-    }
-    | undefined;
+      | {
+          value: {
+            centAmount: number;
+          };
+        }
+      | undefined;
   };
 }
 
