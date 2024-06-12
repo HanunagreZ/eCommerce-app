@@ -5,6 +5,7 @@ import addModal from './modal';
 import addBreadcrumbs from './addBreadCrumbs';
 import createPriceElement from './createPriceElement';
 import { IProduct } from '../../interfaces/interfaces';
+
 export default class ProductPage {
   private pageContainer: Div;
   private container: HTMLDivElement;
@@ -55,6 +56,7 @@ export default class ProductPage {
     this.button = document.createElement('button');
     this.button.classList.add('product__button');
     this.button.textContent = 'Add to cart';
+
     this.button.addEventListener('click', () => console.log('Buy'));
     // Product Description
     this.productDescription = document.createElement('p');

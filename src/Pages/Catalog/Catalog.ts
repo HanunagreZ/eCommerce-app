@@ -15,6 +15,7 @@ import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import Button from '../../ui-components/Button/Button';
 
 export default class Catalog {
+  private container: Div;
   private breadcrumbs: Div;
   private filterSearch: Div;
   private sorting: Select;
@@ -29,6 +30,7 @@ export default class Catalog {
   activeSorting: string;
 
   constructor() {
+    this.container = new Div('catalog__container');
     this.breadcrumbs = new Div('catalog__breadcrumb');
     this.filterSearch = new Div('catalog__filter-search');
     this.sorting = new Select('catalog__sorting');
@@ -66,12 +68,17 @@ export default class Catalog {
     this.pageNavigation.get().addEventListener('click', (e) => this.switchPages(e, this.pagesCount));
   }
 
-  render() {
-    const container = new Div('catalog__container');
+  async render(typeEndpoint?: string) {
+    //const container = new Div('catalog__container');
     const productsContainer = new Div('catalog__products');
     productsContainer.get().append(this.filterSearch.get(), this.cardsWrapper.get());
-    container.get().append(this.breadcrumbs.get(), productsContainer.get(), this.pageNavigation.get());
-    return container.get();
+    this.container.get().append(this.breadcrumbs.get(), productsContainer.get(), this.pageNavigation.get());
+    if (typeEndpoint) this.showProducts(typeEndpoint);
+    return this.container.get();
+  }
+
+  async reRender(typeEndpoint?: string) {
+    await this.render(typeEndpoint ? typeEndpoint : this.activeType);
   }
 
   async showProducts(typeEndpoint: string) {
@@ -134,6 +141,7 @@ export default class Catalog {
 
   async renderProducts(page: number, filter: string, sorting: string) {
     this.cardsWrapper.get().innerHTML = '';
+
     const products = await catalogState.getSelectedData(page, filter, sorting);
     products.map((data) => {
       new ProductCard(data, this.cardsWrapper.get());
@@ -239,6 +247,8 @@ export default class Catalog {
         break;
       case TypeEndpoints.pop:
         this.breadcrumbs = new Breadcrumbs().render(breadProps.pop, this.breadcrumbs.get());
+        //this.container.get().replaceChild(this.breadcrumbs.get(), this.container.get().firstChild as Node);
+        //this.container.get().replaceChild(this.breadcrumbs.get(), this.container.get().firstChild as Node);
         break;
       case TypeEndpoints.accessories:
         this.breadcrumbs = new Breadcrumbs().render(breadProps.accessories, this.breadcrumbs.get());

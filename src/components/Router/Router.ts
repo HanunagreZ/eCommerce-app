@@ -3,6 +3,7 @@ import userState from '../../states/UserState';
 import Loading from '../Loading/Loading';
 import getPaths from '../../api/getPaths';
 import api from '../../Api';
+import { reRenderCatalogs } from '../../Pages/Catalog/CatalogPages';
 // import Loading from '../Loading/Loading';
 // import app from '../App';
 
@@ -92,6 +93,7 @@ class Router {
   }
 
   public navigateTo(path: string) {
+    reRenderCatalogs();
     if (window.location.pathname !== path) {
       window.history.pushState({}, '', path);
       this.route();

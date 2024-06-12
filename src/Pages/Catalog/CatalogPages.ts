@@ -25,4 +25,30 @@ const starWarsPage = new Catalog();
 starWarsPage.showProducts(TypeEndpoints.starwars);
 const starWarsCatalog = starWarsPage.render();
 
+export function reRenderCatalogs() {
+  allCatalog.then(() => {
+    allProducts.renderProducts(1, TypeEndpoints.all, '');
+  });
+
+  popCatalog.then(() => {
+    popPage.renderProducts(1, TypeEndpoints.pop, '');
+  });
+
+  accessoriesCatalog.then(() => {
+    accessoriesPage.renderProducts(1, TypeEndpoints.accessories, '');
+  });
+
+  marvelCatalog.then(() => {
+    marvelPage.renderProducts(1, TypeEndpoints.marvel, '');
+  });
+
+  animeCatalog.then(() => {
+    animePage.renderProducts(1, TypeEndpoints.anime, '');
+  });
+
+  starWarsCatalog.then(() => {
+    starWarsPage.renderProducts(1, TypeEndpoints.starwars, '');
+  });
+}
+
 export { allCatalog, popCatalog, marvelCatalog, accessoriesCatalog, animeCatalog, starWarsCatalog };

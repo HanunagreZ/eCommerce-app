@@ -80,6 +80,7 @@ export default class CartItem {
       this.data.id,
       this.data.quantity,
     );
+
     this.container.get().innerHTML = '';
     this.container.get().remove();
     if (response.lineItems.length > 0) {
