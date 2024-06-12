@@ -44,13 +44,13 @@ class UserState {
     this.removeCustomerCartVersion();
     this.removeAnonymousCartId();
     this.removeAnonymousCartVersion();
+    this.removePromo();
   }
   getCookie(name: string): string | null {
     const cookie = document.cookie.split('; ').find((el) => el.startsWith(name + '='));
     return cookie ? cookie.split('=')[1] : null;
   }
 
-  /* Добавил в рамках реализации профиля пользователя */
   setUserId(data: string) {
     localStorage.setItem('userId', data);
   }
@@ -123,6 +123,19 @@ class UserState {
 
   removeCustomerCartVersion() {
     localStorage.removeItem('customerCartVersion');
+  }
+
+  setPromo(promo: string) {
+    localStorage.setItem('promo', promo);
+  }
+
+  getPromo(): string | null {
+    const promo = localStorage.getItem('promo');
+    return promo;
+  }
+
+  removePromo() {
+    localStorage.removeItem('promo');
   }
 }
 

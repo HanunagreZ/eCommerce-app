@@ -46,6 +46,7 @@ export default class Registration {
     this.sameAddrCheck.addListener(() => this.fillBillingAddress());
     this.button = this.button = new Button(constants.registration.buttonTitle, 'button');
     this.button.addListener(async (e) => this.register(e));
+    this.button.addListener(async (e) => this.register(e));
   }
 
   addInputs(data: IRegistrationData[]) {
@@ -204,20 +205,19 @@ export default class Registration {
         billingAddresses: [billingAddressIndex],
       };
       await api.createCustomer(requestData);
+      await api.createCustomer(requestData);
       this.inputFields?.map((el) => (el.input.get().value = ''));
       this.dateOfBirth.input.get().value = '';
       this.shipAddrCheck.get().checked = false;
       this.billAddrCheck.get().checked = false;
       this.sameAddrCheck.get().checked = false;
 
-      //создаем корзину для зарегистрированного пользователя
       const newCart = await api.createCart();
-      const customerCart = await api.setCustomerIdForCart(newCart.id, newCart.version, String(userState.getUserId()));
+      const customerCart = await api.bindCartToCustomer(newCart.id, newCart.version, String(userState.getUserId()));
 
       userState.setCustomerCartId(customerCart.id);
 
       await CopyAnonItems(customerCart.id);
-      console.log(customerCart);
     }
   }
 }

@@ -178,11 +178,19 @@ export const modalProps = {
       //router.navigateTo('/profile');
     },
   },
+  modalIncorrectPromo: {
+    icon: 'assets/icons/iconAlert.svg',
+    title: 'Incorrect promocode',
+    description: 'Please enter another promocode',
+    btn: 'Back',
+    addEvent: () => {},
+  },
 };
 
 export const catalogTitles = {
   all: 'Show all',
   cartBtn: 'Add to cart',
+  inCartBtn: 'In cart',
   sortingOptions: ['Sort by', 'Name: A - Z', 'Name: Z - A', 'Price Low To High', 'Price High to Low'],
   filterOptions: ['Series', 'Marvel', 'Star Wars', 'Anime'],
   catalogOptions: ['Categories', 'Pop!', 'Accessories'],
@@ -340,4 +348,29 @@ export const profile = {
   defaultBillAdr: 'Default billing address',
   defaultShipAddr: 'Default shipping address',
   addNewAddresBtn: 'Add new Address',
+};
+
+export const cartTitles = {
+  title: 'My Cart',
+  clearBtn: 'CLEAR CART',
+  colTitles: {
+    itemCol: 'ITEM',
+    quantityCol: 'QTY',
+    totalCol: 'TOTAL',
+  },
+  promoTitle: 'HAVE A PROMO CODE?',
+  promoPlaceholder: 'Enter promo code here',
+  promoBtn: 'APPLY',
+  summary: 'SUMMARY',
+  subtotal: 'SUBTOTAL',
+  shipping: 'SHIPPING',
+  discounts: 'DISCOUNTS AND PROMO',
+  total: 'TOTAL',
+  empty: 'Cart is empty!',
+  catalogBtn: 'Go shopping',
+};
+
+export const promocodes = {
+  FUNKOALL5: '5e9000b5-22d2-4c4d-be2a-63f583835706',
+  ANIMEALL10: '332b67b0-95e3-4965-84d5-53bc6c588220',
 };

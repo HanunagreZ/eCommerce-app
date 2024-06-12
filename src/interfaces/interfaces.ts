@@ -50,6 +50,7 @@ export interface IProductCard {
   category: string;
   name: string;
   price: number;
+  isInCart: boolean;
   discountedPrice?: number;
 }
 
@@ -194,20 +195,12 @@ export interface IPersonalData {
   dateOfBirth: string;
 }
 
-// export interface ICountryCode {
-//   US: string;
-//   CA: string;
-// }
-
 export interface IAddressData {
   id: string;
   countryCode: string;
   city: string;
   streetName: string;
   postalCode: string;
-  //типы адресов: billing или shipping
-  //isBillingAddress: boolean;
-  //isShippingAddress: boolean;
   isDefaultBilling?: boolean;
   isDefaultShipping?: boolean;
 }
@@ -228,4 +221,50 @@ export interface ITypeEndpoints {
   marvel: string;
   starwars: string;
   anime: string;
+}
+
+export interface ApiLineItem {
+  id: string;
+  variant: { images: { url: string }[] };
+  name: {
+    'en-US': string;
+  };
+  quantity: number;
+  price: {
+    value: {
+      centAmount: number;
+    };
+    discounted:
+    | {
+      value: {
+        centAmount: number;
+      };
+    }
+    | undefined;
+  };
+}
+
+export interface CartApiData {
+  lineItems: ApiLineItem[];
+  totalLineItemQuantity: number;
+  totalPrice: {
+    centAmount: number;
+  };
+  discountCodes: { discountCode: { id: string } }[];
+}
+
+export interface CartItemData {
+  id: string;
+  imgUrl: string;
+  name: string;
+  quantity: number;
+  price: number;
+  discountedPrice?: number;
+}
+
+export interface ICartData {
+  lineItems: CartItemData[];
+  totalQuantity: number;
+  totalPrice: number;
+  promoCode: string;
 }

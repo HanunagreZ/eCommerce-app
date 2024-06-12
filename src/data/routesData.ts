@@ -13,7 +13,7 @@ import {
 } from '../Pages/Catalog/CatalogPages';
 
 import Profile from '../Pages/Profile/Profile';
-import { Cart } from '../Pages/Cart/Cart';
+import cart from '../Pages/Cart/Cart';
 
 // Сюда импортируются вьюшки страниц, и прописываются в "component"
 // При определенноп path: прорисовывается такая-то страница
@@ -31,7 +31,7 @@ export const routes: IRoute[] = [
   { path: '/profile', component: new Profile().render() },
   // { path: '/products[id]', component: '<h1>Single Product Page</h1>' },
 
-  { path: '/cart', component: new Cart().render() },
+  { path: '/cart', component: cart.render() },
   // { path: '/about', component: '<h1>About Us Page</h1>' },
   { path: '/404 ', component: new Page404().render() },
 ];
