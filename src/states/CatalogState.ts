@@ -18,6 +18,7 @@ export class CatalogState {
       productsInCart = getNeededCartData(response).lineItems.map((el) => el.name);
     }
     const data = await api.getSelectedProducts(page, filter, sorting);
+    console.log(data);
     const products = data.results;
     this.productsCount = data.total;
     const productsData: IProductCard[] = products.map((el: IProductResponseData) => {

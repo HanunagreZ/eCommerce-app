@@ -25,6 +25,8 @@ class Router {
   }
 
   public addRoute(route: IRoute) {
+    this.routes = this.routes.filter((el) => el.path !== route.path);
+
     if (!this.routes.includes(route)) this.routes.push(route);
   }
 
@@ -41,6 +43,8 @@ class Router {
     const { pathname } = window.location;
     async function executeRouting(path: string, routes: IRoute[], root: HTMLElement) {
       const matchedRoute = routes.find((route) => route.path === pathname);
+
+      //const matchedRoute = routes.findLast((route) => route.path === pathname);
       if (!matchedRoute) {
         const page404 = routes.find((route) => route.path.includes('404'));
         if (page404) {
@@ -88,12 +92,24 @@ class Router {
     //   const loader = await new Loading();
 
     //   await executeRouting();
-    //   loader.remove();
+    //  loader.remove();
     // }
+    console.log('end');
   }
 
   public navigateTo(path: string) {
     reRenderCatalogs();
+
+    // const pathObj = this.routes.find((elemet) => elemet.path === path);
+    // if (pathObj && pathObj.path.split('/').length > 3) console.log(pathObj);
+
+    // let oldPathObj: IRoute | undefined;
+    // let NewPathObj: IRoute | undefined;
+    // if (path.split('/').length > 3) oldPathObj = this.routes.find((elemet) => elemet.path === path);
+    // if(oldPathObj){
+    //   NewPathObj = {}
+    // }
+
     if (window.location.pathname !== path) {
       window.history.pushState({}, '', path);
       this.route();

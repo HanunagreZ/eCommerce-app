@@ -751,6 +751,7 @@ class Api {
       );
 
       cartState.setCartVersion(response.data.version);
+      basket.reRenderCount(response.data.totalLineItemQuantity);
       result = response.data;
     } catch (error) {
       console.error(error);

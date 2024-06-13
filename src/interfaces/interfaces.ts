@@ -95,6 +95,9 @@ export interface IProduct {
   prices: { discounted: { value: { centAmount: number } }; value: { centAmount: number } };
   description: string;
   img: { url: string }[];
+  sku: string;
+
+  isInCart: boolean;
 }
 
 export interface Product {
@@ -142,6 +145,7 @@ export interface IProductData {
     'en-US': string;
   };
   masterVariant: {
+    sku: string;
     images: {
       url: string;
     }[];
@@ -235,12 +239,12 @@ export interface ApiLineItem {
       centAmount: number;
     };
     discounted:
-    | {
-      value: {
-        centAmount: number;
-      };
-    }
-    | undefined;
+      | {
+          value: {
+            centAmount: number;
+          };
+        }
+      | undefined;
   };
 }
 
