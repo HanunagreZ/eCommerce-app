@@ -16,8 +16,6 @@ export default class About {
   private slidesContainer: Div;
   private sliderButtons: Div;
   private aboutContainer: Div;
-  private buttonLeft: HTMLButtonElement;
-  private buttonRight: HTMLButtonElement;
   constructor() {
     this.container = new Div('about-us');
     this.aboutContainer = new Div('about-us__container');
@@ -48,53 +46,17 @@ export default class About {
         el.classList.add('about-slider__button_active');
         if (currentSlide === 1) {
           window.scrollTo(0, 0);
+        } else {
+          window.scrollTo(0, 200);
         }
       });
-    });
-    this.buttonLeft = document.createElement('button');
-    this.buttonLeft.classList.add('slider__arrow-left', 'about__slider-arrow');
-    this.buttonLeft.textContent = '←';
-    this.buttonRight = document.createElement('button');
-    this.buttonRight.classList.add('slider__arrow-right', 'about__slider-arrow');
-    this.buttonRight.textContent = '→';
-    this.buttonRight.addEventListener('click', () => {
-      if (currentSlide < 4) {
-        this.slidesContainer.get().style.transform = `translateX(-${currentSlide * 100}%)`;
-        currentSlide++;
-      } else if (currentSlide === 4) {
-        currentSlide = 1;
-        this.slidesContainer.get().style.transform = 'translateX(0)';
-        window.scrollTo(0, 0);
-      }
-      sliderButtonsArray.forEach((el) => {
-        el.classList.remove('about-slider__button_active');
-      });
-      sliderButtonsArray[currentSlide - 1].classList.add('about-slider__button_active');
-    });
-    this.buttonLeft.addEventListener('click', () => {
-      console.log(currentSlide);
-      if (currentSlide === 1) {
-        currentSlide = 4;
-        this.slidesContainer.get().style.transform = 'translateX(-300%)';
-      } else if (currentSlide > 1) {
-        currentSlide--;
-        this.slidesContainer.get().style.transform = `translateX(-${(currentSlide - 1) * 100}%)`;
-        if (currentSlide === 1) {
-          window.scrollTo(0, 0);
-        }
-      }
-      sliderButtonsArray.forEach((el) => {
-        el.classList.remove('about-slider__button_active');
-      });
-      sliderButtonsArray[currentSlide - 1].classList.add('about-slider__button_active');
     });
   }
   render() {
     this.slidesContainer.get().append(this.journey.render(), this.Evg.render(), this.Alx.render(), this.Vit.render());
-    this.slider.get().append(this.slidesContainer.get());
-    //append
-    this.contentContainer.get().append(this.slider.get(), this.buttonLeft, this.buttonRight);
-    this.aboutContainer.get().append(this.contentContainer.get(), this.sliderButtons.get());
+    this.slider.get().append(this.slidesContainer.get(), this.sliderButtons.get());
+    this.contentContainer.get().append(this.slider.get());
+    this.aboutContainer.get().append(this.contentContainer.get());
     this.container.get().append(this.aboutContainer.get());
     return this.container.get();
   }

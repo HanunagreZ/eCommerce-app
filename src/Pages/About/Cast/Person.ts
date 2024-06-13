@@ -13,12 +13,18 @@ export default class Person {
   private infoHeader: HTMLHeadingElement;
   private infoContent: HTMLParagraphElement;
   private ico: HTMLImageElement;
+  private personContent: Div;
   private description: Div;
+  private pageHeader: HTMLHeadingElement;
   // private descriptionText: HTMLHeadingElement;
   private hobbitsBlock: HTMLDivElement;
   constructor(personInfo: IPerson, hobbitsImgUrls: string[]) {
     this.container = new Div('person');
+    this.personContent = new Div('person__content');
     this.personDescription = new Div('person__description');
+    this.pageHeader = document.createElement('h2');
+    this.pageHeader.classList.add('about-us__header');
+    this.pageHeader.textContent = 'About Us';
     this.container.get().classList.add('about-us__element');
     this.imgBlock = new Div('person__img-container');
     this.img = document.createElement('img');
@@ -44,7 +50,8 @@ export default class Person {
     this.infoBlock.get().append(this.infoHeader, this.infoContent, this.ico);
     this.personDescription.get().append(this.imgBlock.get(), this.infoBlock.get());
     this.description.get().append(this.hobbitsBlock);
-    this.container.get().append(this.personDescription.get(), this.description.get());
+    this.personContent.get().append(this.personDescription.get(), this.description.get());
+    this.container.get().append(this.pageHeader, this.personContent.get());
     return this.container.get();
   }
 }

@@ -1,44 +1,21 @@
-pre {
-  @media (max-width: 500px) {
-    font-size: 14px;
-  }
-  @media (max-width: 400px) {
-    font-size: 13px;
-  }
-}
-
 .about-us {
   width: 100%;
   max-width: 1360px;
   margin: 0 auto;
   background-color: rgb(185, 187, 222, 0.6);
   box-sizing: border-box;
-  padding-top: 50px;
+  padding: 30px;
   p {
-    padding: 25px;
-    @media (max-width: 900px) {
-      padding: 20px;
-      padding-top: 40px;
-    }
-    @media (max-width: 600px) {
-      font-size: 14px;
-      padding: 20px;
-      padding-top: 40px;
-    }
+    padding: 20px;
     @media (max-width: 500px) {
       font-size: 14px;
-      padding: 0;
-      padding-top: 40px;
+      padding: 12px;
     }
   }
-
   @media (max-width: 900px) {
-    padding: 10px;
-    padding-top: 20px;
+    padding: 60px 0;
   }
   @media (max-width: 500px) {
-    padding: 0px;
-    padding-top: 20px;
   }
 
   transition: all 0.5s;
@@ -66,7 +43,8 @@ pre {
   overflow: hidden;
   box-sizing: border-box;
   position: relative;
-  // padding: 20px;
+  background-color: rgb(255, 255, 255);
+  padding-bottom: 20px;
 }
 
 .about-us__slides-container {
@@ -107,20 +85,16 @@ pre {
   height: 160px;
   display: flex;
   justify-content: space-around;
+  align-items: center;
   border-radius: 20px;
   transition: all 0.5s;
-  @media (max-width: 670px) {
-    // max-width: 550px;
-    width: auto;
-    gap: 30px;
-  }
-  @media (max-width: 600px) {
-    height: auto;
-    gap: 10px;
+  @media (max-width: 620px) {
+    width: 300px;
+    height: 125px;
   }
   img {
     transition: all 0.5s;
-    @media (max-width: 540px) {
+    @media (max-width: 620px) {
       height: 100px;
       max-width: 80px;
     }
@@ -143,10 +117,20 @@ pre {
 .journey__path {
   background-color: rgb(240, 215, 215);
   margin-bottom: 25px;
+  align-items: center;
+}
+
+.journey__path__img:nth-child(3) {
+  max-width: 140px;
+  max-height: 105px;
+  @media (max-width: 620px) {
+    width: 84px;
+    height: 63px;
+  }
 }
 
 .journey__hobbits__img {
-  @media (max-width: 500px) {
+  @media (max-width: 620px) {
     max-width: 80px;
   }
 }
@@ -168,7 +152,33 @@ pre {
 .person {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 30px;
+}
+
+.about-us__header {
+  font-size: 40px;
+}
+
+.person:nth-child(2) {
+  .person__content {
+    background-color: rgba(255, 200, 1, 0.3);
+  }
+}
+.person:nth-child(3) {
+  .person__content {
+    background-color: rgba(67, 153, 13, 0.3);
+  }
+}
+.person:nth-child(4) {
+  .person__content {
+    background-color: rgba(0, 110, 255, 0.3);
+  }
+}
+
+.person__content {
+  padding: 20px 0;
+  border-radius: 20px;
 }
 
 .person__description {
@@ -183,6 +193,16 @@ pre {
     gap: 30px;
     flex-direction: column;
     align-items: center;
+  }
+  p {
+    padding: 12px;
+    @media (max-width: 540px) {
+      font-size: 13px;
+    }
+    @media (max-width: 450px) {
+      padding: 0;
+      font-size: 12px;
+    }
   }
 }
 
@@ -223,6 +243,9 @@ pre {
   background-color: rgb(236, 237, 246);
   border-radius: 20px;
   padding: 25px;
+  @media (max-width: 450px) {
+    font-size: 12px;
+  }
 }
 
 .person__ico {
@@ -234,6 +257,21 @@ pre {
   }
 }
 
+.person__hobbits {
+  margin-top: 30px;
+  @media (max-width: 660px) {
+    width: 300px;
+    height: 125px;
+  }
+  img {
+    transition: all 0.5s;
+    @media (max-width: 660px) {
+      height: 100px;
+      max-width: 80px;
+    }
+  }
+}
+
 .person__hobbits__img {
   max-width: 130px;
   @media (max-width: 500px) {
@@ -242,15 +280,11 @@ pre {
 }
 
 .about-slider__buttons {
-  position: absolute;
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 30px;
-  top: 90px;
-  left: 50%;
-  transform: translate(-50%, 0);
-  @media (max-width: 500px) {
-    bottom: 10px;
-  }
+  padding-top: 15px;
 }
 
 .about-slider__button {
@@ -282,43 +316,4 @@ pre {
 
 .about-slider__button_active {
   border: 5px solid black;
-}
-
-.about__slider-arrow {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  background-color: rgba(185, 187, 222, 0.6);
-  border-radius: 15px;
-  position: fixed;
-  top: 50%;
-  font-size: 16px;
-  font-weight: 900;
-  padding: 0;
-  transform: translateY(-50%);
-  @media (min-width: 1200px) {
-    width: 80px;
-    height: 80px;
-    border-radius: 40px;
-    font-size: 50px;
-    font-weight: 90;
-    padding: 10px;
-  }
-}
-
-.slider__arrow-left {
-  left: 10px;
-  @media (min-width: 1200px) {
-    left: 10%;
-  }
-}
-
-.slider__arrow-right {
-  right: 10px;
-  @media (min-width: 1200px) {
-    right: 10%;
-  }
 }
