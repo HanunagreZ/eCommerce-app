@@ -6,6 +6,7 @@ import userState from '../../../states/UserState';
 import router from '../../..';
 import api from '../../../Api';
 import DropDown from './DropDown';
+import basket from '../Basket/Basket';
 
 export default class NavAuth {
   private element: HTMLElement;
@@ -57,6 +58,7 @@ export default class NavAuth {
       header.renderNav();
       api.getAccessToken();
       router.navigateTo('/');
+      basket.reRenderCount(0);
     });
   }
 

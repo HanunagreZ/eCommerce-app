@@ -178,11 +178,19 @@ export const modalProps = {
       //router.navigateTo('/profile');
     },
   },
+  modalIncorrectPromo: {
+    icon: 'assets/icons/iconAlert.svg',
+    title: 'Incorrect promocode',
+    description: 'Please enter another promocode',
+    btn: 'Back',
+    addEvent: () => {},
+  },
 };
 
 export const catalogTitles = {
   all: 'Show all',
   cartBtn: 'Add to cart',
+  inCartBtn: 'In cart',
   sortingOptions: ['Sort by', 'Name: A - Z', 'Name: Z - A', 'Price Low To High', 'Price High to Low'],
   filterOptions: ['Series', 'Marvel', 'Star Wars', 'Anime'],
   catalogOptions: ['Categories', 'Pop!', 'Accessories'],
@@ -214,6 +222,30 @@ export const mainAdBlock = {
     btn: 'See collection',
     addEvent: () => {
       router.navigateTo('/catalog/pop/star-wars');
+    },
+  },
+  animePromocode: {
+    containerClass: 'main__adBlock--animePromocode',
+    image: 'assets/main/animePromocode.svg',
+    imageClass: 'main__image--animePromocode',
+    blockClass: 'main__block--animePromocode',
+    title: 'PROMO CODE',
+    description: 'Get a discount on Anime collection (click on button to copy text to your clipboard)',
+    btn: 'ANIMEALL10',
+    addEvent: () => {
+      navigator.clipboard.writeText('ANIMEALL10');
+    },
+  },
+  allPromocode: {
+    containerClass: 'main__adBlock--allPromocode',
+    image: 'assets/main/allPromocode.svg',
+    imageClass: 'main__image--allPromocode',
+    blockClass: 'main__block--allPromocode',
+    title: 'PROMO CODE',
+    description: 'Get a discount on all products\n(click on button to copy text to your clipboard)',
+    btn: 'FUNKOALL5',
+    addEvent: () => {
+      navigator.clipboard.writeText('FUNKOALL5');
     },
   },
   anime: {
@@ -254,6 +286,10 @@ export const breadProps = {
   marvel: {
     href: ['/', '/catalog', '/catalog/pop', '/catalog/pop/marvel'],
     text: ['Funko', 'Catalog', 'Pop!', 'Marvel'],
+  },
+  cart: {
+    href: ['/', '/cart'],
+    text: ['Funko', 'Cart'],
   },
 };
 
@@ -312,4 +348,29 @@ export const profile = {
   defaultBillAdr: 'Default billing address',
   defaultShipAddr: 'Default shipping address',
   addNewAddresBtn: 'Add new Address',
+};
+
+export const cartTitles = {
+  title: 'My Cart',
+  clearBtn: 'CLEAR CART',
+  colTitles: {
+    itemCol: 'ITEM',
+    quantityCol: 'QTY',
+    totalCol: 'TOTAL',
+  },
+  promoTitle: 'HAVE A PROMO CODE?',
+  promoPlaceholder: 'Enter promo code here',
+  promoBtn: 'APPLY',
+  summary: 'SUMMARY',
+  subtotal: 'SUBTOTAL',
+  shipping: 'SHIPPING',
+  discounts: 'DISCOUNTS AND PROMO',
+  total: 'TOTAL',
+  empty: 'Cart is empty!',
+  catalogBtn: 'Go shopping',
+};
+
+export const promocodes = {
+  FUNKOALL5: '5e9000b5-22d2-4c4d-be2a-63f583835706',
+  ANIMEALL10: '332b67b0-95e3-4965-84d5-53bc6c588220',
 };

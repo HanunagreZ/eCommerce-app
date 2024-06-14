@@ -13,6 +13,8 @@ import { CheckAge } from '../../utils/checkAge';
 import Address from './Address';
 import Link from '../../ui-components/Link/Link';
 import api from '../../Api';
+import userState from '../../states/UserState';
+import { CopyAnonItems } from '../../utils/CopyAnonItems';
 
 export const registrationError = {
   count: 0,
@@ -43,7 +45,8 @@ export default class Registration {
     this.sameAddrCheck = new Input('', 'registration__address_checkbox');
     this.sameAddrCheck.addListener(() => this.fillBillingAddress());
     this.button = this.button = new Button(constants.registration.buttonTitle, 'button');
-    this.button.addListener((e) => this.register(e));
+    this.button.addListener(async (e) => this.register(e));
+    this.button.addListener(async (e) => this.register(e));
   }
 
   addInputs(data: IRegistrationData[]) {
@@ -165,7 +168,7 @@ export default class Registration {
     return isValidForm;
   }
 
-  register(e: Event | undefined) {
+  async register(e: Event | undefined) {
     e?.preventDefault();
     if (this.validateForm()) {
       const inputValues = this.inputFields?.map((el) => el.input.get().value);
@@ -201,12 +204,20 @@ export default class Registration {
         defaultBillingAddress: this.billAddrCheck.get().checked ? billingAddressIndex : null,
         billingAddresses: [billingAddressIndex],
       };
-      api.createCustomer(requestData);
+      await api.createCustomer(requestData);
+      await api.createCustomer(requestData);
       this.inputFields?.map((el) => (el.input.get().value = ''));
       this.dateOfBirth.input.get().value = '';
       this.shipAddrCheck.get().checked = false;
       this.billAddrCheck.get().checked = false;
       this.sameAddrCheck.get().checked = false;
+
+      const newCart = await api.createCart();
+      const customerCart = await api.bindCartToCustomer(newCart.id, newCart.version, String(userState.getUserId()));
+
+      userState.setCustomerCartId(customerCart.id);
+
+      await CopyAnonItems(customerCart.id);
     }
   }
 }

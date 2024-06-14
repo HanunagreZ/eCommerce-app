@@ -1,3 +1,7 @@
+import router from '../../..';
+import api from '../../../Api';
+import cart from '../../../Pages/Cart/Cart';
+import userState from '../../../states/UserState';
 import Span from '../../../ui-components/Span/Span';
 
 class Basket {
@@ -8,6 +12,12 @@ class Basket {
   constructor() {
     this.element = document.createElement('div');
     this.element.classList.add('header__basket');
+
+    this.element.addEventListener('click', async () => {
+      router.navigateTo('/cart');
+      await cart.renderCartState();
+    });
+
     this.basketIcon = document.createElement('img');
     this.basketIcon.classList.add('header__basket-icon');
     this.basketIcon.src = 'assets/icons/iconBasket.svg';
@@ -19,11 +29,23 @@ class Basket {
     return this.element;
   }
 
-  reRenderCount(count: number) {
-    this.basketCount.get().textContent = count.toString();
+  reRenderCount(count: number | undefined) {
+    if (count !== undefined) {
+      this.basketCount.get().textContent = count.toString();
+    } else {
+      this.basketCount.get().textContent = '0';
+    }
   }
 
-  render(parentElement: HTMLElement) {
+  async render(parentElement: HTMLElement) {
+    this.basketCount.get().textContent = '0';
+    const cartId = userState.getAnonymousCartId()
+      ? String(userState.getAnonymousCartId())
+      : String(userState.getCustomerCartId());
+    if (cartId !== 'null') {
+      const response = await api.getCartByID(cartId);
+      this.reRenderCount(response.totalLineItemQuantity);
+    }
     parentElement.append(this.element);
   }
 }
