@@ -1,5 +1,5 @@
 import Catalog from './Catalog';
-import { TypeEndpoints } from '../../data/productsEndpoints';
+import { SortEndpoints, TypeEndpoints } from '../../data/productsEndpoints';
 
 const allProducts = new Catalog();
 allProducts.showProducts(TypeEndpoints.all);
@@ -27,27 +27,27 @@ const starWarsCatalog = starWarsPage.render();
 
 export function reRenderCatalogs() {
   allCatalog.then(() => {
-    allProducts.renderProducts(1, TypeEndpoints.all, '');
+    allProducts.renderProducts(1, TypeEndpoints.all, SortEndpoints.nameAZ);
   });
 
   popCatalog.then(() => {
-    popPage.renderProducts(1, TypeEndpoints.pop, '');
+    popPage.renderProducts(1, TypeEndpoints.pop, SortEndpoints.nameAZ);
   });
 
   accessoriesCatalog.then(() => {
-    accessoriesPage.renderProducts(1, TypeEndpoints.accessories, '');
+    accessoriesPage.renderProducts(1, TypeEndpoints.accessories, SortEndpoints.nameAZ);
   });
 
   marvelCatalog.then(() => {
-    marvelPage.renderProducts(1, TypeEndpoints.marvel, '');
+    marvelPage.renderProducts(1, TypeEndpoints.marvel, SortEndpoints.nameAZ);
   });
 
   animeCatalog.then(() => {
-    animePage.renderProducts(1, TypeEndpoints.anime, '');
+    animePage.renderProducts(1, TypeEndpoints.anime, SortEndpoints.nameAZ);
   });
 
   starWarsCatalog.then(() => {
-    starWarsPage.renderProducts(1, TypeEndpoints.starwars, '');
+    starWarsPage.renderProducts(1, TypeEndpoints.starwars, SortEndpoints.nameAZ);
   });
 }
 

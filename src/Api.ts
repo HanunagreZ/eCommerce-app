@@ -205,6 +205,7 @@ class Api {
       );
 
       result = response.data;
+      console.log(result);
     } catch (error) {
       console.error(error);
       result = error;

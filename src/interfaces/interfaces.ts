@@ -40,6 +40,8 @@ export interface IModalProps {
   description: string;
   btn: string;
   addEvent: () => void;
+  secondBtn?: string;
+  addsecondEvent?: () => void;
 }
 
 export interface IProductCard {

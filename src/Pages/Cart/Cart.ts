@@ -15,6 +15,7 @@ import Img from '../../ui-components/Img/Img';
 import router from '../..';
 import basket from '../../components/Header/Basket/Basket';
 import Modal from '../../components/Modal/Modal';
+import EnchansedModal from '../../components/Modal/EnchansedModal';
 
 export class Cart {
   private container: Div;
@@ -69,7 +70,9 @@ export class Cart {
     title.classList.add('cart__title');
     title.innerText = cartTitles.title;
     titleContainer.get().append(title);
-    new Button('Clear Cart', 'cart__clear-btn', titleContainer.get()).addListener(() => this.clearCart());
+    new Button('Clear Cart', 'cart__clear-btn', titleContainer.get()).addListener(() => {
+      new EnchansedModal(modalProps.modalSureToClearCart);
+    });
     const colTitles = new Div('cart__col-titles-container', this.container.get());
     for (const key in cartTitles.colTitles) {
       new Span(cartTitles.colTitles[key as keyof typeof cartTitles.colTitles], 'cart__col-title', colTitles.get());

@@ -34,7 +34,7 @@ export default class Catalog {
     this.breadcrumbs = new Div('catalog__breadcrumb');
     this.filterSearch = new Div('catalog__filter-search');
     this.sorting = new Select('catalog__sorting');
-    this.activeSorting = '';
+    this.activeSorting = SortEndpoints.nameAZ;
     this.sorting.addListener(async () => {
       await this.sortProducts();
     });
@@ -77,12 +77,8 @@ export default class Catalog {
     return this.container.get();
   }
 
-  async reRender(typeEndpoint?: string) {
-    await this.render(typeEndpoint ? typeEndpoint : this.activeType);
-  }
-
   async showProducts(typeEndpoint: string) {
-    this.activeSorting = '';
+    this.activeSorting = SortEndpoints.nameAZ;
     this.activePage = 1;
     this.activeType = typeEndpoint;
     this.setBreadCrumbs(typeEndpoint);
