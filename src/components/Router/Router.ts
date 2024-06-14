@@ -1,9 +1,10 @@
 import { IRoute } from '../../interfaces/interfaces';
 import userState from '../../states/UserState';
-import Loading from '../Loading/Loading';
+// import Loading from '../Loading/Loading';
 import getPaths from '../../api/getPaths';
 import api from '../../Api';
 import { reRenderCatalogs } from '../../Pages/Catalog/CatalogPages';
+import AsyncLoading from '../Loading/AsyncLoading';
 // import Loading from '../Loading/Loading';
 // import app from '../App';
 
@@ -42,6 +43,7 @@ class Router {
     await api.isRefreshTokenExist();
     const { pathname } = window.location;
     async function executeRouting(path: string, routes: IRoute[], root: HTMLElement) {
+      const loader = new AsyncLoading();
       const matchedRoute = routes.find((route) => route.path === pathname);
 
       //const matchedRoute = routes.findLast((route) => route.path === pathname);
@@ -59,6 +61,7 @@ class Router {
       root.innerHTML = '';
       const resolvedComponent = await component;
       root.appendChild(resolvedComponent);
+      await loader.remove();
     }
 
     if (pathname.includes('/catalog')) {
@@ -71,12 +74,12 @@ class Router {
       //   loader.remove();
       // }, 1000);
       window.scrollTo(0, 0);
-      const loader = new Loading();
+      const loader = new AsyncLoading();
       const asyncFn = async () => {
         await api.getAccessToken();
         await this.updateRoutes();
         executeRouting(pathname, this.routes, this.root);
-        loader.remove();
+        await loader.remove();
       };
       asyncFn();
     } else if (
