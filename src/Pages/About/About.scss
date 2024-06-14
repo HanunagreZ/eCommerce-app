@@ -138,10 +138,14 @@
 .school__info-container {
   display: flex;
   align-items: center;
-}
-
-.school__info-container {
   transition: all 0.5s;
+
+  h3 {
+    @media (max-width: 500px) {
+      font-size: 16px;
+    }
+  }
+
   img {
     @media (max-width: 500px) {
       max-width: 160px;
@@ -189,7 +193,7 @@
   @media (max-width: 900px) {
     gap: 10px;
   }
-  @media (max-width: 767px) {
+  @media (max-width: 810px) {
     gap: 30px;
     flex-direction: column;
     align-items: center;
@@ -200,8 +204,13 @@
       font-size: 13px;
     }
     @media (max-width: 450px) {
-      padding: 0;
+      padding: 5px;
       font-size: 12px;
+    }
+  }
+  pre {
+    pre {
+      margin: 0;
     }
   }
 }
@@ -245,6 +254,9 @@
   padding: 25px;
   @media (max-width: 450px) {
     font-size: 12px;
+  }
+  a {
+    text-decoration: none;
   }
 }
 

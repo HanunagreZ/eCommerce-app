@@ -6,13 +6,16 @@ export default function createTextInfo(personInfo: IPerson): HTMLParagraphElemen
   const info = document.createElement('pre');
   const link = document.createElement('a');
   link.href = personInfo.github;
-  link.textContent = personInfo.github;
-  info.innerHTML = `  const ${personInfo.nickname} = {
+  link.textContent = ` ${link}`;
+  info.textContent = `  const ${personInfo.nickname} = {
     name: ${personInfo.name},
     role: ${personInfo.role},
     bio: ${personInfo.bio},
-    github: ${link}
-  }`;
+    github:`;
+  const additionalText = document.createElement('pre');
+  additionalText.textContent = '  }';
+  info.append(link, additionalText);
+  // info.textContent += '}';
   elem.append(info);
   return elem;
 }
