@@ -27,6 +27,7 @@ export default class About {
     this.Evg = new Person(EvgeniyaInfo, EvgHobbits);
     this.Alx = new Person(AlekseyInfo, AlexHobbits);
     this.Vit = new Person(VitalInfo, VitHobbits);
+    // Page slider
     this.sliderButtons = new Div('about-slider__buttons');
     const sliderButtonsArray: HTMLButtonElement[] = [];
     for (let i = 0; i < 4; i += 1) {

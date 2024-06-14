@@ -15,7 +15,6 @@ export default function createTextInfo(personInfo: IPerson): HTMLParagraphElemen
   const additionalText = document.createElement('pre');
   additionalText.textContent = '  }';
   info.append(link, additionalText);
-  // info.textContent += '}';
   elem.append(info);
   return elem;
 }

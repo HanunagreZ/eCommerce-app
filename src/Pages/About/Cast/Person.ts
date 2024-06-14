@@ -2,7 +2,6 @@ import { IPerson } from '../../../interfaces/interfaces';
 import Div from '../../../ui-components/Div/Div';
 import createTextInfo from './createInfoText';
 import createImgBlock from '../Journey/createImgBlock';
-// import { journeyInfo } from '../Journemy/journeyInfo';
 
 export default class Person {
   private container: Div;
@@ -16,7 +15,6 @@ export default class Person {
   private personContent: Div;
   private description: Div;
   private pageHeader: HTMLHeadingElement;
-  // private descriptionText: HTMLHeadingElement;
   private hobbitsBlock: HTMLDivElement;
   constructor(personInfo: IPerson, hobbitsImgUrls: string[]) {
     this.container = new Div('person');
@@ -40,9 +38,6 @@ export default class Person {
     this.ico.src = personInfo.icoUrl;
     this.ico.alt = personInfo.nickname;
     this.description = new Div('person-journey__description');
-    // this.descriptionText = document.createElement('h3');
-    // this.descriptionText.classList.add('person-journey__description');
-    // this.descriptionText.textContent = journeyInfo;
     this.hobbitsBlock = createImgBlock(hobbitsImgUrls, 'person__hobbits');
   }
   render() {
