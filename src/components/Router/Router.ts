@@ -98,7 +98,6 @@ class Router {
     //   await executeRouting();
     //  loader.remove();
     // }
-    console.log('end');
   }
 
   public navigateTo(path: string) {
