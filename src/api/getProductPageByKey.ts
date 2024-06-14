@@ -27,4 +27,3 @@ export default async function getProductPageByKey(productKey: string) {
   const page = new ProductPage(productInfo).render();
   return page;
 }
-
