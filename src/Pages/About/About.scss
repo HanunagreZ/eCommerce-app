@@ -1,63 +1,65 @@
 .about-us {
+  box-sizing: border-box;
   width: 100%;
   max-width: 1360px;
+  padding: 30px;
   margin: 0 auto;
   background-color: rgb(185, 187, 222, 0.6);
-  box-sizing: border-box;
-  padding: 30px;
-  p {
-    padding: 20px;
-    @media (max-width: 500px) {
-      font-size: 14px;
-      padding: 12px;
-    }
-  }
+  transition: all 0.5s;
+
   @media (max-width: 900px) {
     padding: 60px 0;
   }
+
   @media (max-width: 500px) {
   }
 
-  transition: all 0.5s;
+  p {
+    padding: 20px;
+    @media (max-width: 500px) {
+      padding: 12px;
+      font-size: 14px;
+    }
+  }
 }
 
 .about-us__container {
   margin: 20px;
   border-radius: 15px;
   transition: all 0.5s;
+
   @media (max-width: 500px) {
     margin: 5px;
   }
 }
 
 .about-us__content {
+  box-sizing: border-box;
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  box-sizing: border-box;
 }
 
 .about-us__slider {
+  position: relative;
+  box-sizing: border-box;
   max-width: 900px;
   border-radius: 20px;
-  overflow: hidden;
-  box-sizing: border-box;
-  position: relative;
-  background-color: rgb(255, 255, 255);
   padding-bottom: 20px;
+  overflow: hidden;
+  background-color: rgb(255, 255, 255);
 }
 
 .about-us__slides-container {
   display: flex;
-  transition: all 0.5s ease-in-out;
-  // gap: 30px;
   width: 100%;
+  transition: all 0.5s ease-in-out;
 }
 
 .about-us__element {
-  width: 100%;
-  box-sizing: border-box;
   flex-shrink: 0;
+  box-sizing: border-box;
+  width: 100%;
   padding: 20px;
   background-color: rgb(255, 255, 255);
 }
@@ -65,35 +67,38 @@
 .journey {
   display: flex;
   flex-direction: column;
-  gap: 11px;
   align-items: center;
   justify-content: center;
+  gap: 11px;
 }
 
 .journey__description {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(236, 237, 246);
-  border-radius: 15px;
   padding: 20px;
+  border-radius: 15px;
+  background-color: rgb(236, 237, 246);
 }
 
 .journey__img-block {
-  max-width: 550px;
-  width: 550px;
-  height: 160px;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  max-width: 550px;
+  width: 550px;
+  height: 160px;
   border-radius: 20px;
   transition: all 0.5s;
+
   @media (max-width: 620px) {
     width: 300px;
     height: 125px;
   }
+
   img {
     transition: all 0.5s;
+
     @media (max-width: 620px) {
       height: 100px;
       max-width: 80px;
@@ -101,9 +106,12 @@
   }
 }
 
-.journey__hobbits,
-.journey__img-block {
+.journey__hobbits {
   background-color: rgb(179, 205, 186);
+}
+
+.person__hobbits {
+  background-color: rgb(236, 237, 246);
 }
 
 .journey__enemies {
@@ -123,6 +131,7 @@
 .journey__path__img:nth-child(3) {
   max-width: 140px;
   max-height: 105px;
+
   @media (max-width: 620px) {
     width: 84px;
     height: 63px;
@@ -164,19 +173,11 @@
   font-size: 40px;
 }
 
-.person:nth-child(2) {
-  .person__content {
-    background-color: rgba(255, 200, 1, 0.3);
-  }
-}
-.person:nth-child(3) {
-  .person__content {
-    background-color: rgba(67, 153, 13, 0.3);
-  }
-}
+.person:nth-child(2),
+.person:nth-child(3),
 .person:nth-child(4) {
   .person__content {
-    background-color: rgba(0, 110, 255, 0.3);
+    background-color: rgb(193, 205, 237);
   }
 }
 
@@ -190,21 +191,26 @@
   justify-content: space-around;
   gap: 30px;
   transition: all 0.5s;
+
   @media (max-width: 900px) {
     gap: 10px;
   }
+
   @media (max-width: 810px) {
     gap: 30px;
     flex-direction: column;
     align-items: center;
   }
+
   p {
     padding: 12px;
+
     @media (max-width: 540px) {
       font-size: 13px;
     }
+
     @media (max-width: 450px) {
-      padding: 5px;
+      padding: 8px;
       font-size: 12px;
     }
   }
@@ -230,10 +236,12 @@
   max-width: 325px;
   min-height: 290px;
   transition: all 1s;
+
   @media (max-width: 900px) {
     max-width: 250px;
     min-height: 224px;
   }
+
   @media (max-width: 820px) {
     max-width: 250px;
     min-height: 224px;
@@ -249,21 +257,24 @@
 }
 
 .person__info-content {
-  background-color: rgb(236, 237, 246);
-  border-radius: 20px;
   padding: 25px;
+  border-radius: 20px;
+  background-color: rgb(236, 237, 246);
+
   @media (max-width: 450px) {
     font-size: 12px;
   }
+
   a {
     text-decoration: none;
   }
 }
 
 .person__ico {
-  max-width: 170px;
   align-self: center;
+  max-width: 170px;
   transition: all 0.5s;
+
   @media (max-width: 900px) {
     max-width: 150px;
   }
@@ -271,12 +282,15 @@
 
 .person__hobbits {
   margin-top: 30px;
+
   @media (max-width: 660px) {
     width: 300px;
     height: 125px;
   }
+
   img {
     transition: all 0.5s;
+
     @media (max-width: 660px) {
       height: 100px;
       max-width: 80px;
@@ -286,6 +300,7 @@
 
 .person__hobbits__img {
   max-width: 130px;
+
   @media (max-width: 500px) {
     max-width: 100px;
   }
@@ -309,6 +324,7 @@
   border-radius: 100%;
   background-color: black;
   cursor: pointer;
+
   @media (max-width: 500px) {
     width: 25px;
     height: 25px;
