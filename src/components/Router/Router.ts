@@ -81,10 +81,11 @@ class Router {
       asyncFn();
     } else if (
       (pathname === '/login' && userState.getUserName()) ||
-      (pathname === '/registration' && userState.getUserName()) ||
-      (pathname === '/profile' && !userState.getUserName())
+      (pathname === '/registration' && userState.getUserName())
     ) {
       this.navigateTo('/');
+    } else if (pathname === '/profile' && !userState.getUserName()) {
+      this.navigateTo('/login');
     } else {
       executeRouting(pathname, this.routes, this.root);
     }

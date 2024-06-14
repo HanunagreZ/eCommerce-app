@@ -229,6 +229,17 @@ export interface ITypeEndpoints {
   anime: string;
 }
 
+export interface IPerson {
+  nickname: string;
+  name: string;
+  role: string;
+  bio: string;
+  github: string;
+  imgUrl: string;
+  icoUrl: string;
+  hobbitIcoNum?: string;
+}
+
 export interface ApiLineItem {
   id: string;
   variant: { images: { url: string }[] };
