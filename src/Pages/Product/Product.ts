@@ -139,7 +139,7 @@ export default class ProductPage {
       );
   }
 
-  render() {
+  async render() {
     this.productContainer.get().append(this.slider, this.descriptionContainer.get());
     this.container.append(this.breadcrumb.get(), this.productContainer.get());
     this.pageContainer.get().append(this.container);
