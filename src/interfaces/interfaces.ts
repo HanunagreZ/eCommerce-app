@@ -40,6 +40,8 @@ export interface IModalProps {
   description: string;
   btn: string;
   addEvent: () => void;
+  secondBtn?: string;
+  addsecondEvent?: () => void;
 }
 
 export interface IProductCard {
@@ -95,6 +97,9 @@ export interface IProduct {
   prices: { discounted: { value: { centAmount: number } }; value: { centAmount: number } };
   description: string;
   img: { url: string }[];
+  sku: string;
+
+  isInCart: boolean;
 }
 
 export interface Product {
@@ -142,6 +147,7 @@ export interface IProductData {
     'en-US': string;
   };
   masterVariant: {
+    sku: string;
     images: {
       url: string;
     }[];

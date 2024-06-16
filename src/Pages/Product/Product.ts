@@ -5,6 +5,13 @@ import addModal from './modal';
 import addBreadcrumbs from './addBreadCrumbs';
 import createPriceElement from './createPriceElement';
 import { IProduct } from '../../interfaces/interfaces';
+import cartState from '../../states/CartState';
+import userState from '../../states/UserState';
+import api from '../../Api';
+import { getNeededCartData } from '../../utils/GetNeededCartData';
+import basket from '../../components/Header/Basket/Basket';
+import { MaxQuantity } from '../../data/constants';
+
 export default class ProductPage {
   private pageContainer: Div;
   private container: HTMLDivElement;
@@ -18,6 +25,7 @@ export default class ProductPage {
   private priceContainer: Div;
   private productDescription: HTMLParagraphElement;
   private button: HTMLButtonElement;
+  private deleteButton: HTMLButtonElement;
 
   constructor(productInfo: IProduct) {
     this.pageContainer = new Div('product-page');
@@ -55,7 +63,23 @@ export default class ProductPage {
     this.button = document.createElement('button');
     this.button.classList.add('product__button');
     this.button.textContent = 'Add to cart';
-    this.button.addEventListener('click', () => console.log('Buy'));
+
+    this.deleteButton = document.createElement('button');
+    this.deleteButton.classList.add('product__button', 'hidden');
+    this.deleteButton.textContent = 'Remove From Cart';
+    // this.deleteBtn = document.createElement('button');
+    // this.deleteBtn.classList.add('product__button-delete');
+
+    if (productInfo.isInCart) {
+      this.disableButton();
+    }
+
+    this.button.addEventListener('click', async () => {
+      await this.addToCart(productInfo);
+    });
+    this.deleteButton.addEventListener('click', async () => {
+      await this.removeItemFromCart(productInfo);
+    });
     // Product Description
     this.productDescription = document.createElement('p');
     this.productDescription.textContent = productInfo.description;
@@ -105,13 +129,66 @@ export default class ProductPage {
 
     this.descriptionContainer
       .get()
-      .append(this.categoryName, this.productHeader, this.priceContainer.get(), this.button, this.productDescription);
+      .append(
+        this.categoryName,
+        this.productHeader,
+        this.priceContainer.get(),
+        this.button,
+        this.deleteButton,
+        this.productDescription,
+      );
   }
 
-  render() {
+  async render() {
     this.productContainer.get().append(this.slider, this.descriptionContainer.get());
     this.container.append(this.breadcrumb.get(), this.productContainer.get());
     this.pageContainer.get().append(this.container);
     return this.pageContainer.get();
+  }
+
+  async addToCart(productInfo: IProduct) {
+    console.log(productInfo);
+    this.disableButton();
+
+    if (cartState.getCartId() === null) {
+      const cart = await api.createCart();
+      userState.setAnonymousCartId(cart.id);
+      userState.setAnonymousCartVersion(cart.version);
+    }
+    const response = await api.addLineItem(
+      String(cartState.getCartId()),
+      Number(cartState.getCartVersion()),
+      productInfo.sku,
+    );
+
+    console.log(response);
+    const data = getNeededCartData(response);
+    basket.reRenderCount(data.totalQuantity);
+  }
+
+  disableButton() {
+    this.button.innerText = 'Already In Cart';
+    this.button.disabled = true;
+
+    this.deleteButton.classList.remove('hidden');
+  }
+
+  enableButton() {
+    this.button.innerText = 'Add to cart';
+    this.button.disabled = false;
+
+    this.deleteButton.classList.add('hidden');
+  }
+
+  async removeItemFromCart(productInfo: IProduct) {
+    const cartResponse = await api.getCartByID(String(cartState.getCartId()));
+    const lineitems = getNeededCartData(cartResponse).lineItems;
+    let id = '';
+    lineitems.forEach((el) => {
+      if (el.name === productInfo.name) id = el.id;
+    });
+    await api.removeLineItem(String(cartState.getCartId()), Number(cartState.getCartVersion()), id, MaxQuantity);
+
+    this.enableButton();
   }
 }

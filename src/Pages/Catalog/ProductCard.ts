@@ -2,6 +2,7 @@ import router from '../..';
 import api from '../../Api';
 import basket from '../../components/Header/Basket/Basket';
 import { catalogTitles } from '../../data/data';
+// import { routes } from '../../data/routesData';
 import { IProductCard } from '../../interfaces/interfaces';
 import cartState from '../../states/CartState';
 import userState from '../../states/UserState';
@@ -47,6 +48,7 @@ export class ProductCard {
 
     card.get().addEventListener('click', (e) => {
       const clickedElement = e.target as HTMLElement;
+
       if (!clickedElement.classList.contains('catalog__cart-btn'))
         if (productData.productType === 'pop') {
           router.navigateTo(

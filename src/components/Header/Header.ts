@@ -28,17 +28,17 @@ class Header {
     this.navUnAuth = new NavUnauth('header__nav');
   }
 
-  render(parentElement: HTMLElement) {
-    this.logoImg.addEventListener('click', (e) => {
+  async render(parentElement: HTMLElement) {
+    await this.logoImg.addEventListener('click', (e) => {
       e.preventDefault();
       router.navigateTo('/');
     });
 
-    this.navDiv.render(this.element);
-    this.renderNav();
-    basket.render(this.element);
-    burger.render(this.element);
-    parentElement.append(this.element);
+    await this.navDiv.render(this.element);
+    await this.renderNav();
+    await basket.render(this.element);
+    await burger.render(this.element);
+    await parentElement.append(this.element);
   }
 
   renderNav() {

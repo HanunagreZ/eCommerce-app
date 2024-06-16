@@ -1,5 +1,6 @@
 import header from '../components/Header/Header';
 import router from '..';
+import cart from '../Pages/Cart/Cart';
 
 export const constants = {
   registration: {
@@ -184,6 +185,17 @@ export const modalProps = {
     description: 'Please enter another promocode',
     btn: 'Back',
     addEvent: () => {},
+  },
+  modalSureToClearCart: {
+    icon: 'assets/icons/iconAlert.svg',
+    title: 'Clear cart',
+    description: 'Are you sure you want to clear the cart?',
+    btn: 'Back',
+    addEvent: () => {},
+    secondBtn: 'Clear cart',
+    addsecondEvent: () => {
+      cart.clearCart();
+    },
   },
 };
 

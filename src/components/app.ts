@@ -18,7 +18,7 @@ class App {
   async render() {
     await api.getAccessToken();
     await api.isRefreshTokenExist();
-    header.render(document.body);
+    await header.render(document.body);
     document.body.append(this.element);
     footer.render(document.body);
     // new Router(this.element, routes);
