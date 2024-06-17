@@ -1,7 +1,7 @@
-import api from '../Api';
-import { IRoute } from '../interfaces/interfaces';
-import { Product } from '../interfaces/interfaces';
-import getProductPageByKey from './getProductPageByKey';
+import api from '../../api/Api';
+import { IRoute } from '../../interfaces/interfaces';
+import { Product } from '../../interfaces/interfaces';
+import getProductPageByKey from '../../Pages/Product/getProductPageByKey';
 
 async function getPaths() {
   const newRoutes: IRoute[] = [];

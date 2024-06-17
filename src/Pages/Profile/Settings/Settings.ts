@@ -3,7 +3,7 @@ import Button from '../../../ui-components/Button/Button';
 import { profile } from '../../../data/data';
 import InputField from '../../../components/InputField/InputField';
 import { CheckInputs } from '../../../utils/checkInputs';
-import api from '../../../Api';
+import api from '../../../api/Api';
 import userState from '../../../states/UserState';
 
 class Settings {

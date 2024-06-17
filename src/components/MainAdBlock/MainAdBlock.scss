@@ -119,6 +119,67 @@
   }
 }
 
+.main__adBlock--allPromocode {
+  height: 400px;
+  flex-basis: 50%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #e6d8c9;
+
+  .main__image--allPromocode {
+    width: 220px;
+    height: 220px;
+    align-self: center;
+    margin-right: 20px;
+  }
+
+  .main__block--allPromocode {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #fff;
+    width: 350px;
+    height: 180px;
+    border-radius: 8px;
+    margin-left: 50px;
+    margin-top: 50px;
+    align-self: flex-start;
+
+    .adBlock__title {
+      text-align: start;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .adBlock__description {
+      width: 100%;
+      font-size: 16px;
+      text-align: start;
+      line-height: 24px;
+    }
+
+    .adBlock__btn {
+      width: 140px;
+      height: 44px;
+      border-radius: 4px;
+      font-size: 16px;
+      text-align: center;
+      color: #6e41e2;
+      background-color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+      border-color: #6e41e2;
+
+      &:hover {
+        background-color: #6e41e2;
+        color: #fff;
+        transition: 0.3s;
+      }
+    }
+  }
+}
+
 .main__adBlock--anime {
   height: 400px;
   flex-basis: 50%;
@@ -140,6 +201,67 @@
     background-color: #fff;
     width: 330px;
     height: 150px;
+    border-radius: 8px;
+    margin-left: 50px;
+    margin-top: 50px;
+    align-self: flex-start;
+
+    .adBlock__title {
+      text-align: start;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .adBlock__description {
+      width: 300px;
+      font-size: 16px;
+      text-align: start;
+      line-height: 24px;
+    }
+
+    .adBlock__btn {
+      width: 140px;
+      height: 44px;
+      border-radius: 4px;
+      font-size: 16px;
+      text-align: center;
+      color: #6e41e2;
+      background-color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+      border-color: #6e41e2;
+
+      &:hover {
+        background-color: #6e41e2;
+        color: #fff;
+        transition: 0.3s;
+      }
+    }
+  }
+}
+
+.main__adBlock--animePromocode {
+  height: 400px;
+  flex-basis: 50%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #eb9972;
+
+  .main__image--animePromocode {
+    width: 230px;
+    height: 230px;
+    align-self: center;
+    margin-right: 20px;
+  }
+
+  .main__block--animePromocode {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #fff;
+    width: 330px;
+    height: 170px;
     border-radius: 8px;
     margin-left: 50px;
     margin-top: 50px;
@@ -205,7 +327,9 @@
   }
 
   .main__adBlock--starwars,
-  .main__adBlock--anime {
+  .main__adBlock--anime,
+  .main__adBlock--animePromocode,
+  .main__adBlock--allPromocode {
     flex-basis: 100%;
   }
 }
@@ -243,6 +367,24 @@
     }
   }
 
+  .main__adBlock--animePromocode {
+    flex-direction: column-reverse;
+    height: 550px;
+
+    .main__block--animePromocode {
+      margin: 0;
+      align-self: center;
+      width: 300px;
+      height: 212px;
+      margin-bottom: 30px;
+    }
+
+    .main__image--animePromocode {
+      margin-top: 10px;
+      margin-right: 0;
+    }
+  }
+
   .main__adBlock--anime {
     flex-direction: column-reverse;
     height: 550px;
@@ -255,4 +397,60 @@
       margin-bottom: 30px;
     }
   }
+
+  .main__adBlock--allPromocode {
+    flex-direction: column-reverse;
+    height: 550px;
+
+    .main__block--allPromocode {
+      margin: 0;
+      align-self: center;
+      width: 300px;
+      height: 180px;
+      margin-bottom: 30px;
+    }
+
+    .main__image--allPromocode {
+      margin-top: 20px;
+      margin-right: 0;
+    }
+  }
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }

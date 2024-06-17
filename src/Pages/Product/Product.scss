@@ -148,8 +148,10 @@ p {
 }
 
 .product__button {
+  display: block;
   width: 270px;
   height: 44px;
+  margin-top: 20px;
   border: 0;
   border-radius: 5px;
   background-color: rgb(110, 65, 226);
@@ -157,6 +159,7 @@ p {
   font-size: 20px;
   cursor: pointer;
   transition: all 0.4s;
+  visibility: visible;
 
   &:active {
     position: relative;
@@ -166,6 +169,30 @@ p {
   &:hover {
     background-color: rgb(85, 31, 223);
   }
+
+  &:disabled {
+    background-color: #d6d6d6;
+    color: black;
+    cursor: default;
+
+    &:active {
+      position: relative;
+      top: 0px;
+    }
+  }
+
+  &.hidden {
+    margin-top: 0;
+    height: 1px;
+    visibility: hidden;
+    color: transparent;
+  }
+}
+
+.product__button-delete {
+  width: 44px;
+  height: 44px;
+  background-image: '../../assets/profile/iconRemove.svg';
 }
 
 .product__info {

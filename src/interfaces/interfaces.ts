@@ -40,15 +40,19 @@ export interface IModalProps {
   description: string;
   btn: string;
   addEvent: () => void;
+  secondBtn?: string;
+  addsecondEvent?: () => void;
 }
 
 export interface IProductCard {
+  sku: string;
   productType: string;
   key: string;
   imgSrc: string;
   category: string;
   name: string;
   price: number;
+  isInCart: boolean;
   discountedPrice?: number;
 }
 
@@ -69,6 +73,7 @@ export interface IProductResponseData {
     'en-US': string;
   };
   masterVariant: {
+    sku: string;
     images: {
       url: string;
     }[];
@@ -92,6 +97,9 @@ export interface IProduct {
   prices: { discounted: { value: { centAmount: number } }; value: { centAmount: number } };
   description: string;
   img: { url: string }[];
+  sku: string;
+
+  isInCart: boolean;
 }
 
 export interface Product {
@@ -139,6 +147,7 @@ export interface IProductData {
     'en-US': string;
   };
   masterVariant: {
+    sku: string;
     images: {
       url: string;
     }[];
@@ -192,20 +201,12 @@ export interface IPersonalData {
   dateOfBirth: string;
 }
 
-// export interface ICountryCode {
-//   US: string;
-//   CA: string;
-// }
-
 export interface IAddressData {
   id: string;
   countryCode: string;
   city: string;
   streetName: string;
   postalCode: string;
-  //типы адресов: billing или shipping
-  //isBillingAddress: boolean;
-  //isShippingAddress: boolean;
   isDefaultBilling?: boolean;
   isDefaultShipping?: boolean;
 }
@@ -226,4 +227,61 @@ export interface ITypeEndpoints {
   marvel: string;
   starwars: string;
   anime: string;
+}
+
+export interface IPerson {
+  nickname: string;
+  name: string;
+  role: string;
+  bio: string;
+  github: string;
+  imgUrl: string;
+  icoUrl: string;
+  hobbitIcoNum?: string;
+}
+
+export interface ApiLineItem {
+  id: string;
+  variant: { images: { url: string }[] };
+  name: {
+    'en-US': string;
+  };
+  quantity: number;
+  price: {
+    value: {
+      centAmount: number;
+    };
+    discounted:
+    | {
+      value: {
+        centAmount: number;
+      };
+    }
+    | undefined;
+  };
+}
+
+export interface CartApiData {
+  lineItems: ApiLineItem[];
+  totalLineItemQuantity: number;
+  totalPrice: {
+    centAmount: number;
+  };
+  discountCodes: { discountCode: { id: string } }[];
+}
+
+export interface CartItemData {
+  id: string;
+  imgUrl: string;
+  name: string;
+  quantity: number;
+  price: number;
+  discountedPrice?: number;
+}
+
+export interface ICartData {
+  lineItems: CartItemData[];
+  totalQuantity: number;
+  totalPrice: number;
+  promoCode: string;
 }

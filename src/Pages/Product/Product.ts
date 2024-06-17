@@ -5,6 +5,13 @@ import addModal from './modal';
 import addBreadcrumbs from './addBreadCrumbs';
 import createPriceElement from './createPriceElement';
 import { IProduct } from '../../interfaces/interfaces';
+import cartState from '../../states/CartState';
+import userState from '../../states/UserState';
+import api from '../../api/Api';
+import { getNeededCartData } from '../../utils/GetNeededCartData';
+import basket from '../../components/Header/Basket/Basket';
+import { MaxQuantity } from '../../data/constants';
+
 export default class ProductPage {
   private pageContainer: Div;
   private container: HTMLDivElement;
@@ -18,6 +25,7 @@ export default class ProductPage {
   private priceContainer: Div;
   private productDescription: HTMLParagraphElement;
   private button: HTMLButtonElement;
+  private deleteButton: HTMLButtonElement;
 
   constructor(productInfo: IProduct) {
     this.pageContainer = new Div('product-page');
@@ -33,13 +41,10 @@ export default class ProductPage {
     this.productHeader = document.createElement('h2');
     this.productHeader.textContent = productInfo.name;
     this.productHeader.classList.add('product__header');
-    //Prices
     this.priceContainer = new Div('price__container');
     const pricesElements: HTMLHeadingElement[] = [];
-    //Add Price
     const priceElement = createPriceElement(productInfo.prices.value.centAmount, 'price');
     pricesElements.push(priceElement);
-    //Add discount if exist
     if (productInfo.prices.discounted) {
       const saleBlock = document.createElement('h3');
       saleBlock.classList.add('product__sale');
@@ -51,16 +56,29 @@ export default class ProductPage {
     } else {
       this.priceContainer.get().append(pricesElements[0]);
     }
-    // Buy Button
     this.button = document.createElement('button');
     this.button.classList.add('product__button');
     this.button.textContent = 'Add to cart';
-    this.button.addEventListener('click', () => console.log('Buy'));
-    // Product Description
+
+    this.deleteButton = document.createElement('button');
+    this.deleteButton.classList.add('product__button', 'hidden');
+    this.deleteButton.textContent = 'Remove From Cart';
+
+    if (productInfo.isInCart) {
+      this.disableButton();
+    }
+
+    this.button.addEventListener('click', async () => {
+      await this.addToCart(productInfo);
+    });
+    this.deleteButton.addEventListener('click', async () => {
+      await this.removeItemFromCart(productInfo);
+    });
+
     this.productDescription = document.createElement('p');
     this.productDescription.textContent = productInfo.description;
     this.productDescription.classList.add('product__info');
-    //Images
+
     this.slider = document.createElement('div');
     this.slider.classList.add('product__slider');
     this.imgContainer = document.createElement('div');
@@ -82,7 +100,7 @@ export default class ProductPage {
       imgArray.push(image);
       sliderButtons.append(sliderButton);
     });
-    //Slider Mechanic
+
     if (sliderButtonsArray.length > 1) {
       sliderButtonsArray[0].classList.add('slider-button_active');
     }
@@ -93,7 +111,7 @@ export default class ProductPage {
         el.classList.add('slider-button_active');
       });
     });
-    // Modal Mechanic
+
     imgArray.forEach((img) => {
       img.addEventListener('click', () => {
         const image = this.slider.cloneNode(true) as HTMLElement;
@@ -105,13 +123,62 @@ export default class ProductPage {
 
     this.descriptionContainer
       .get()
-      .append(this.categoryName, this.productHeader, this.priceContainer.get(), this.button, this.productDescription);
+      .append(
+        this.categoryName,
+        this.productHeader,
+        this.priceContainer.get(),
+        this.button,
+        this.deleteButton,
+        this.productDescription,
+      );
   }
 
-  render() {
+  async render() {
     this.productContainer.get().append(this.slider, this.descriptionContainer.get());
     this.container.append(this.breadcrumb.get(), this.productContainer.get());
     this.pageContainer.get().append(this.container);
     return this.pageContainer.get();
+  }
+
+  async addToCart(productInfo: IProduct) {
+    this.disableButton();
+
+    if (cartState.getCartId() === null) {
+      const cart = await api.createCart();
+      userState.setAnonymousCartId(cart.id);
+      userState.setAnonymousCartVersion(cart.version);
+    }
+    const response = await api.addLineItem(
+      String(cartState.getCartId()),
+      Number(cartState.getCartVersion()),
+      productInfo.sku,
+    );
+
+    const data = getNeededCartData(response);
+    basket.reRenderCount(data.totalQuantity);
+  }
+
+  disableButton() {
+    this.button.innerText = 'Already In Cart';
+    this.button.disabled = true;
+    this.deleteButton.classList.remove('hidden');
+  }
+
+  enableButton() {
+    this.button.innerText = 'Add to cart';
+    this.button.disabled = false;
+    this.deleteButton.classList.add('hidden');
+  }
+
+  async removeItemFromCart(productInfo: IProduct) {
+    const cartResponse = await api.getCartByID(String(cartState.getCartId()));
+    const lineitems = getNeededCartData(cartResponse).lineItems;
+    let id = '';
+    lineitems.forEach((el) => {
+      if (el.name === productInfo.name) id = el.id;
+    });
+    await api.removeLineItem(String(cartState.getCartId()), Number(cartState.getCartVersion()), id, MaxQuantity);
+
+    this.enableButton();
   }
 }

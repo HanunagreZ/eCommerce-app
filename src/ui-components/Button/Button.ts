@@ -1,7 +1,6 @@
 export default class Button {
   private element: HTMLButtonElement;
 
-  //implement parentElement as optional parameter for creating element without rendering
   constructor(text: string, className: string, parentElement?: HTMLElement) {
     this.element = document.createElement('button');
     this.element.classList.add(className);
