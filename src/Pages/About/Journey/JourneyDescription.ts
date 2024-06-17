@@ -49,6 +49,7 @@ export default class Journey {
     this.rsSign.textContent = 'GO TO SCHOOL ->';
     this.rsLinkLogo = document.createElement('a');
     this.rsLinkLogo.href = 'https://rs.school';
+    this.rsLinkLogo.target = '_blank';
     this.rsImg = document.createElement('img');
     this.rsImg.src = './../../../assets/about/rs-logo.png';
     this.rsImg.alt = 'RS Logo';

@@ -1,4 +1,4 @@
-import api from '../../Api';
+import api from '../../api/Api';
 import basket from '../../components/Header/Basket/Basket';
 import { MaxQuantity } from '../../data/constants';
 import { CartItemData } from '../../interfaces/interfaces';

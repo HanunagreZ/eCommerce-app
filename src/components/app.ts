@@ -1,7 +1,7 @@
 import '../styles.scss';
 import header from './Header/Header';
 import footer from './Footer/Footer';
-import api from '../Api';
+import api from '../api/Api';
 
 class App {
   private element: HTMLDivElement;
@@ -21,7 +21,6 @@ class App {
     await header.render(document.body);
     document.body.append(this.element);
     footer.render(document.body);
-    // new Router(this.element, routes);
   }
 }
 

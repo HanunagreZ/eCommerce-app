@@ -4,7 +4,7 @@ import Button from '../../../ui-components/Button/Button';
 import header from '../Header';
 import userState from '../../../states/UserState';
 import router from '../../..';
-import api from '../../../Api';
+import api from '../../../api/Api';
 import DropDown from './DropDown';
 import basket from '../Basket/Basket';
 

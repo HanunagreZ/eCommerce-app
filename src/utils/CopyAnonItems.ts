@@ -1,8 +1,7 @@
-import api from '../Api';
+import api from '../api/Api';
 import userState from '../states/UserState';
 
 export async function CopyAnonItems(cartId: string) {
-  //добавляем товары из анонимной корзины в корзину залогиненого пользователя
   if (userState.getAnonymousCartId()) {
     const anonCart = await api.getCartByID(String(userState.getAnonymousCartId()));
     const itemsData = anonCart.lineItems.map((el: { variant: { sku: string }; quantity: number }) => {

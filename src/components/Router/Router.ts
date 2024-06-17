@@ -1,13 +1,10 @@
 import { IRoute } from '../../interfaces/interfaces';
 import userState from '../../states/UserState';
-// import Loading from '../Loading/Loading';
-import getPaths from '../../api/getPaths';
-import api from '../../Api';
+import getPaths from './getPaths';
+import api from '../../api/Api';
 import { reRenderCatalogs } from '../../Pages/Catalog/CatalogPages';
 import AsyncLoading from '../Loading/AsyncLoading';
-import getProductPageByKey from '../../api/getProductPageByKey';
-// import Loading from '../Loading/Loading';
-// import app from '../App';
+import getProductPageByKey from '../../Pages/Product/getProductPageByKey';
 
 class Router {
   private root: HTMLElement;

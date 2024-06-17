@@ -1,6 +1,6 @@
 import Div from '../../../ui-components/Div/Div';
 import Button from '../../../ui-components/Button/Button';
-import api from '../../../Api';
+import api from '../../../api/Api';
 import userState from '../../../states/UserState';
 import { AddressItem } from './AddressItem';
 import { IAddressData } from '../../../interfaces/interfaces';

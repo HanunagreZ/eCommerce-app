@@ -44,7 +44,6 @@ module.exports = ({ development }) => ({
   resolve: {
     extensions: ['.ts', '.js'],
   },
-  // ...devServer(development),
   devServer: {
     static: {
       directory: path.resolve(__dirname, './dist'),

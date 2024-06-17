@@ -175,9 +175,7 @@ export const modalProps = {
     title: 'Success',
     description: 'Address deleted',
     btn: 'Back',
-    addEvent: () => {
-      //router.navigateTo('/profile');
-    },
+    addEvent: () => {},
   },
   modalIncorrectPromo: {
     icon: 'assets/icons/iconAlert.svg',
@@ -333,9 +331,6 @@ export const profile = {
       clueText:
         'Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number, must not contain special characters',
       reg: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-
-      //(?=.*[!@#$%^&*()\-_=+{};:'",.<>?]): Positive lookahead to ensure there is at least one special character
-      // reg: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:'",.<>?])(?!.*\s).{8,}$/,
     },
     {
       labelText: 'New password',

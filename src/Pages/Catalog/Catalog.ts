@@ -69,7 +69,6 @@ export default class Catalog {
   }
 
   async render(typeEndpoint?: string) {
-    //const container = new Div('catalog__container');
     const productsContainer = new Div('catalog__products');
     productsContainer.get().append(this.filterSearch.get(), this.cardsWrapper.get());
     this.container.get().append(this.breadcrumbs.get(), productsContainer.get(), this.pageNavigation.get());
@@ -185,7 +184,7 @@ export default class Catalog {
       this.activePage++;
       await this.renderProducts(this.activePage, this.activeType, this.activeSorting);
     }
-    /* 😎 костыль 🤙 */
+
     window.scrollTo(0, 0);
   }
 
@@ -243,8 +242,6 @@ export default class Catalog {
         break;
       case TypeEndpoints.pop:
         this.breadcrumbs = new Breadcrumbs().render(breadProps.pop, this.breadcrumbs.get());
-        //this.container.get().replaceChild(this.breadcrumbs.get(), this.container.get().firstChild as Node);
-        //this.container.get().replaceChild(this.breadcrumbs.get(), this.container.get().firstChild as Node);
         break;
       case TypeEndpoints.accessories:
         this.breadcrumbs = new Breadcrumbs().render(breadProps.accessories, this.breadcrumbs.get());

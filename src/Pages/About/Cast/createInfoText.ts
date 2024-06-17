@@ -5,6 +5,7 @@ export default function createTextInfo(personInfo: IPerson): HTMLParagraphElemen
   elem.classList.add('person__info-content');
   const info = document.createElement('pre');
   const link = document.createElement('a');
+  link.target = '_blank';
   link.href = personInfo.github;
   link.textContent = ` ${link}`;
   info.textContent = `  const ${personInfo.nickname} = {

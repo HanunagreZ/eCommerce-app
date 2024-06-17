@@ -1,7 +1,7 @@
 import Div from '../../../ui-components/Div/Div';
 import Button from '../../../ui-components/Button/Button';
 import userState from '../../../states/UserState';
-import api from '../../../Api';
+import api from '../../../api/Api';
 import { profile } from '../../../data/data';
 import InputField from '../../../components/InputField/InputField';
 import { CheckInputs } from '../../../utils/checkInputs';
@@ -44,9 +44,7 @@ class Personal {
 
     this.container.get().append(this.form);
     this.addInputs(profile.profileGeneralData);
-
     this.disableInputs();
-
     this.dateOfBirth.render(this.form);
     FormatDate(this.dateOfBirth.input.get());
     this.updateContent();
@@ -97,10 +95,8 @@ class Personal {
 
   renderEditMode() {
     this.editButton.get().classList.add('hidden');
-
     this.cancelButton.get().classList.remove('hidden');
     this.saveButton.get().classList.remove('hidden');
-
     this.inputFields.map((el) => (el.input.get().disabled = false));
     this.dateOfBirth.input.get().disabled = false;
   }

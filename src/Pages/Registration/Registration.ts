@@ -12,7 +12,7 @@ import Label from '../../ui-components/Label/Label';
 import { CheckAge } from '../../utils/checkAge';
 import Address from './Address';
 import Link from '../../ui-components/Link/Link';
-import api from '../../Api';
+import api from '../../api/Api';
 import userState from '../../states/UserState';
 import { CopyAnonItems } from '../../utils/CopyAnonItems';
 

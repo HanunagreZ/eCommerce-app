@@ -1,8 +1,7 @@
 import router from '../..';
-import api from '../../Api';
+import api from '../../api/Api';
 import basket from '../../components/Header/Basket/Basket';
 import { catalogTitles } from '../../data/data';
-// import { routes } from '../../data/routesData';
 import { IProductCard } from '../../interfaces/interfaces';
 import cartState from '../../states/CartState';
 import userState from '../../states/UserState';
