@@ -1,4 +1,4 @@
-import api from '../Api';
+import api from '../api/Api';
 import { productTypeID } from '../data/productsEndpoints';
 import { IProductCard, IProductResponseData } from '../interfaces/interfaces';
 import { getNeededCartData } from '../utils/GetNeededCartData';

@@ -1,7 +1,7 @@
 import './Cart.scss';
 import Div from '../../ui-components/Div/Div';
 import Button from '../../ui-components/Button/Button';
-import api from '../../Api';
+import api from '../../api/Api';
 import userState from '../../states/UserState';
 import cartState from '../../states/CartState';
 import CartItem from './CartItem';

@@ -1,5 +1,5 @@
 import router from '../../..';
-import api from '../../../Api';
+import api from '../../../api/Api';
 import cart from '../../../Pages/Cart/Cart';
 import userState from '../../../states/UserState';
 import Span from '../../../ui-components/Span/Span';

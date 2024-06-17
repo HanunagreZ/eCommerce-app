@@ -1,8 +1,8 @@
-import api from '../Api';
-import ProductPage from '../Pages/Product/Product';
-import { IProductData, IProduct } from '../interfaces/interfaces';
-import cartState from '../states/CartState';
-import { getNeededCartData } from '../utils/GetNeededCartData';
+import api from '../../api/Api';
+import ProductPage from './Product';
+import { IProductData, IProduct } from '../../interfaces/interfaces';
+import cartState from '../../states/CartState';
+import { getNeededCartData } from '../../utils/GetNeededCartData';
 
 export default async function getProductPageByKey(productKey: string) {
   let productsInCart: string[] = [];

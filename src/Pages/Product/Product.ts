@@ -7,7 +7,7 @@ import createPriceElement from './createPriceElement';
 import { IProduct } from '../../interfaces/interfaces';
 import cartState from '../../states/CartState';
 import userState from '../../states/UserState';
-import api from '../../Api';
+import api from '../../api/Api';
 import { getNeededCartData } from '../../utils/GetNeededCartData';
 import basket from '../../components/Header/Basket/Basket';
 import { MaxQuantity } from '../../data/constants';
@@ -41,13 +41,10 @@ export default class ProductPage {
     this.productHeader = document.createElement('h2');
     this.productHeader.textContent = productInfo.name;
     this.productHeader.classList.add('product__header');
-    //Prices
     this.priceContainer = new Div('price__container');
     const pricesElements: HTMLHeadingElement[] = [];
-    //Add Price
     const priceElement = createPriceElement(productInfo.prices.value.centAmount, 'price');
     pricesElements.push(priceElement);
-    //Add discount if exist
     if (productInfo.prices.discounted) {
       const saleBlock = document.createElement('h3');
       saleBlock.classList.add('product__sale');
@@ -59,7 +56,6 @@ export default class ProductPage {
     } else {
       this.priceContainer.get().append(pricesElements[0]);
     }
-    // Buy Button
     this.button = document.createElement('button');
     this.button.classList.add('product__button');
     this.button.textContent = 'Add to cart';
@@ -67,8 +63,6 @@ export default class ProductPage {
     this.deleteButton = document.createElement('button');
     this.deleteButton.classList.add('product__button', 'hidden');
     this.deleteButton.textContent = 'Remove From Cart';
-    // this.deleteBtn = document.createElement('button');
-    // this.deleteBtn.classList.add('product__button-delete');
 
     if (productInfo.isInCart) {
       this.disableButton();
@@ -80,11 +74,11 @@ export default class ProductPage {
     this.deleteButton.addEventListener('click', async () => {
       await this.removeItemFromCart(productInfo);
     });
-    // Product Description
+
     this.productDescription = document.createElement('p');
     this.productDescription.textContent = productInfo.description;
     this.productDescription.classList.add('product__info');
-    //Images
+
     this.slider = document.createElement('div');
     this.slider.classList.add('product__slider');
     this.imgContainer = document.createElement('div');
@@ -106,7 +100,7 @@ export default class ProductPage {
       imgArray.push(image);
       sliderButtons.append(sliderButton);
     });
-    //Slider Mechanic
+
     if (sliderButtonsArray.length > 1) {
       sliderButtonsArray[0].classList.add('slider-button_active');
     }
@@ -117,7 +111,7 @@ export default class ProductPage {
         el.classList.add('slider-button_active');
       });
     });
-    // Modal Mechanic
+
     imgArray.forEach((img) => {
       img.addEventListener('click', () => {
         const image = this.slider.cloneNode(true) as HTMLElement;
@@ -147,7 +141,6 @@ export default class ProductPage {
   }
 
   async addToCart(productInfo: IProduct) {
-    console.log(productInfo);
     this.disableButton();
 
     if (cartState.getCartId() === null) {
@@ -161,7 +154,6 @@ export default class ProductPage {
       productInfo.sku,
     );
 
-    console.log(response);
     const data = getNeededCartData(response);
     basket.reRenderCount(data.totalQuantity);
   }
@@ -169,14 +161,12 @@ export default class ProductPage {
   disableButton() {
     this.button.innerText = 'Already In Cart';
     this.button.disabled = true;
-
     this.deleteButton.classList.remove('hidden');
   }
 
   enableButton() {
     this.button.innerText = 'Add to cart';
     this.button.disabled = false;
-
     this.deleteButton.classList.add('hidden');
   }
 

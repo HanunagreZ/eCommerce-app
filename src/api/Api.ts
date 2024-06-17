@@ -1,15 +1,15 @@
 import axios, { AxiosError } from 'axios';
-import { ICustomerRegistration, ICustomerLogin, IPersonalData, IAddress } from './interfaces/interfaces';
-import Modal from './components/Modal/Modal';
-import { modalProps } from './data/data';
-import userState from './states/UserState';
-import Loading from './components/Loading/Loading';
-import personal from './Pages/Profile/Personal/Personal';
-import router from '.';
-import header from './components/Header/Header';
-import { ProductsForPage } from './data/constants';
-import cartState from './states/CartState';
-import basket from './components/Header/Basket/Basket';
+import { ICustomerRegistration, ICustomerLogin, IPersonalData, IAddress } from '../interfaces/interfaces';
+import Modal from '../components/Modal/Modal';
+import { modalProps } from '../data/data';
+import userState from '../states/UserState';
+import Loading from '../components/Loading/Loading';
+import personal from '../Pages/Profile/Personal/Personal';
+import router from '..';
+import header from '../components/Header/Header';
+import { ProductsForPage } from '../data/constants';
+import cartState from '../states/CartState';
+import basket from '../components/Header/Basket/Basket';
 
 class Api {
   async getAccessToken() {
@@ -53,6 +53,17 @@ class Api {
       }
     }
   }
+
+  async isRefreshTokenExist() {
+    if (userState.getRefreshToken()) {
+      return;
+    } else {
+      this.getAccessToken();
+      userState.removeUserName();
+    }
+  }
+
+  /* Customer  Api */
 
   async createCustomer(payload: ICustomerRegistration) {
     const loading = new Loading();
@@ -136,137 +147,6 @@ class Api {
     } catch (error) {
       console.error(error);
     }
-  }
-
-  async isRefreshTokenExist() {
-    if (userState.getRefreshToken()) {
-      return;
-    } else {
-      this.getAccessToken();
-      userState.removeUserName();
-    }
-  }
-
-  async queryProducts() {
-    let result;
-    try {
-      const accessToken = userState.getAccessToken();
-      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=100`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      result = response.data.results;
-    } catch (error) {
-      console.error(error);
-      result = error;
-      console.log(error);
-    }
-    return result;
-  }
-
-  async getProductsForPage(page = 1) {
-    let result;
-    try {
-      const accessToken = userState.getAccessToken();
-      const response = await axios.get(
-        `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
-
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-
-      result = response.data;
-    } catch (error) {
-      console.error(error);
-      result = error;
-      console.log(error);
-    }
-    return result;
-  }
-
-  async getSelectedProducts(page: number, filter: string, sorting: string) {
-    await this.getAccessToken();
-    await this.isRefreshTokenExist();
-    let result;
-    try {
-      const accessToken = userState.getAccessToken();
-      const response = await axios.get(
-        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections/search?${filter}&${sorting}&limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}&expand=categories[*].ancestors[*]`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-
-      result = response.data;
-    } catch (error) {
-      console.error(error);
-      result = error;
-      console.log(error);
-    }
-    return result;
-  }
-
-  async getAllCategories() {
-    let result;
-    try {
-      const accessToken = userState.getAccessToken();
-      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/categories`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      result = response.data.results;
-    } catch (error) {
-      console.error(error);
-      result = error;
-    }
-    return result;
-  }
-
-  async getCategory(id: string) {
-    let result;
-    try {
-      const accessToken = userState.getAccessToken();
-      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/categories/${id}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      result = response.data.name['en-US' as keyof typeof response.data.name];
-    } catch (error) {
-      console.error(error);
-      result = error;
-    }
-    return result;
-  }
-
-  async getExtendedProducts() {
-    await this.getAccessToken();
-    await this.isRefreshTokenExist();
-    let result;
-    try {
-      const accessToken = userState.getAccessToken();
-      const response = await axios.get(
-        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections?limit=200&expand=categories[*].ancestors[*]`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-      result = response.data.results;
-    } catch (error) {
-      console.error(error);
-      result = error;
-    }
-    return result;
   }
 
   async getCustomerById(id: string) {
@@ -556,6 +436,130 @@ class Api {
     }
   }
 
+  /* Catalog Api */
+
+  async queryProducts() {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=100`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      result = response.data.results;
+    } catch (error) {
+      console.error(error);
+      result = error;
+      console.log(error);
+    }
+    return result;
+  }
+
+  async getProductsForPage(page = 1) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/products?limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}`,
+
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+      console.log(error);
+    }
+    return result;
+  }
+
+  async getSelectedProducts(page: number, filter: string, sorting: string) {
+    await this.getAccessToken();
+    await this.isRefreshTokenExist();
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections/search?${filter}&${sorting}&limit=${ProductsForPage}&offset=${(page - 1) * ProductsForPage}&expand=categories[*].ancestors[*]`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      result = response.data;
+    } catch (error) {
+      console.error(error);
+      result = error;
+      console.log(error);
+    }
+    return result;
+  }
+
+  async getAllCategories() {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/categories`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      result = response.data.results;
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  async getCategory(id: string) {
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(`${process.env.API_URL}/${process.env.PROJECT_KEY}/categories/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      result = response.data.name['en-US' as keyof typeof response.data.name];
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
+  async getExtendedProducts() {
+    await this.getAccessToken();
+    await this.isRefreshTokenExist();
+    let result;
+    try {
+      const accessToken = userState.getAccessToken();
+      const response = await axios.get(
+        `${process.env.API_URL}/${process.env.PROJECT_KEY}/product-projections?limit=200&expand=categories[*].ancestors[*]`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      result = response.data.results;
+    } catch (error) {
+      console.error(error);
+      result = error;
+    }
+    return result;
+  }
+
   async getProductByKey(key: string) {
     let result;
     try {
@@ -595,7 +599,7 @@ class Api {
     return result;
   }
 
-  //===== методы для корзины =====
+  /* Basket Api */
 
   async createCart() {
     let result;
@@ -884,5 +888,4 @@ class Api {
 }
 
 const api = new Api();
-
 export default api;

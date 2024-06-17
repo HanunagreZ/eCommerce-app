@@ -1,7 +1,6 @@
 export default class Input {
   private element: HTMLInputElement;
 
-  //implement parentElement as optional parameter for creating element without rendering
   constructor(placeholder: string, className: string, parentElement?: HTMLElement) {
     this.element = document.createElement('input');
     this.element.classList.add(className);

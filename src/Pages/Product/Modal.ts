@@ -21,8 +21,6 @@ function addModal(slider: HTMLElement) {
   document.body.classList.add('modal-open');
   document.body.append(overlay, modalContainer);
 
-  //Slider
-
   const imageContainer = modalImage.querySelector('.img__container') as HTMLDivElement;
   const sliderButtons = modalImage.querySelectorAll('.slider-button');
   sliderButtons.forEach((el, idx) => {

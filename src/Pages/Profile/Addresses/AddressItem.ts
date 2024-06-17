@@ -1,4 +1,4 @@
-import api from '../../../Api';
+import api from '../../../api/Api';
 import { profile } from '../../../data/data';
 import { IAddressData } from '../../../interfaces/interfaces';
 import Button from '../../../ui-components/Button/Button';
@@ -119,7 +119,6 @@ export class AddressItem {
     this.addressFields.changePostalCode();
     this.editButton.get().classList.add('hidden');
     this.removeButton.get().classList.add('hidden');
-
     this.cancelButton.get().classList.remove('hidden');
     this.saveButton.get().classList.remove('hidden');
     this.disableInputsMode(false);
@@ -130,7 +129,6 @@ export class AddressItem {
     e?.preventDefault();
     this.editButton.get().classList.remove('hidden');
     this.removeButton.get().classList.remove('hidden');
-
     this.cancelButton.get().classList.add('hidden');
     this.saveButton.get().classList.add('hidden');
     this.disableInputsMode(true);
@@ -152,7 +150,6 @@ export class AddressItem {
       const newAddressData = this.formAddressData();
 
       await this.setDefaultAddresses();
-
       await api.changeCustomerAddress(newAddressData, this.addressData.id);
 
       this.renderDisableMode(e);

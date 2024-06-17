@@ -7,7 +7,7 @@ import Span from '../../ui-components/Span/Span';
 import Button from '../../ui-components/Button/Button';
 import Link from '../../ui-components/Link/Link';
 import { CheckInputs } from '../../utils/checkInputs';
-import api from '../../Api';
+import api from '../../api/Api';
 import userState from '../../states/UserState';
 import { CopyAnonItems } from '../../utils/CopyAnonItems';
 import basket from '../../components/Header/Basket/Basket';
@@ -77,7 +77,6 @@ export default class Login {
   }
 
   async createCart() {
-    //получаем корзину зарегистрированного пользователя
     const cart = await api.getCartByCustomerId();
     basket.reRenderCount(cart.totalLineItemQuantity);
     userState.setCustomerCartId(cart.id);
