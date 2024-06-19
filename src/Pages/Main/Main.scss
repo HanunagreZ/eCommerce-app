@@ -1,0 +1,36 @@
+@import '../../styles.scss';
+
+.main {
+  height: calc(100% - 134px);
+  max-width: 1440px;
+  display: flex;
+  flex-wrap: wrap;
+
+  /* Временное решение для проверки */
+  text-align: center;
+  font-size: 22px;
+
+  .main__imageContainer {
+    height: 480px;
+    width: 100%;
+    background-image: url('../../assets/main/backgroundPops.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .main {
+    .main__imageContainer {
+      height: 360px;
+    }
+  }
+}
+
+@media screen and (max-width: 765px) {
+  .main {
+    .main__imageContainer {
+      height: 300px;
+    }
+  }
+}

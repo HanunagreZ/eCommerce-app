@@ -1,0 +1,21 @@
+@import '../../../styles.scss';
+
+.profile__personal {
+  width: 100%;
+  max-width: 930px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin-top: 60px;
+}
+
+.profile__personal-form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 766px) {
+  .profile__personal {
+    margin: 0;
+  }
+}
