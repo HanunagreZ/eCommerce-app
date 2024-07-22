@@ -48,3 +48,6 @@ To run the script, enter the command in the console: `npm run script-name`
 3.  Install dependencies with npm command `npm install`
 4.  Start building the project or local server using commands `npm run build` or `npm run serve`
 
+## Demonstration
+
+https://disk.yandex.ru/d/a3Itfjf30j5WWw
